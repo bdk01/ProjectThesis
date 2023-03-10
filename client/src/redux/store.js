@@ -24,7 +24,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["socket","auth"],
+  blacklist: ["socket","auth","message"],
   /*  transforms: [JSOGTransform], */
 }; 
 const rootReducer = combineReducers({

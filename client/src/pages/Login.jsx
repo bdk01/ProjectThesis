@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Form, Button, Input, Typography, message } from "antd";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginandNavigateUser } from "../api/authAPI";
@@ -79,7 +79,8 @@ const { Title } = Typography;
 function Login() {
      const dispatch = useDispatch()
   const [form] = Form.useForm();
-  const history = useHistory()
+  /* const history = useHistory() */
+  const navigate = useNavigate();
   const success = () => {
     message.success({
       content: "Đăng nhập thành công",
@@ -121,7 +122,8 @@ function Login() {
       LoginandNavigateUser(dispatch, response.data)
     /*   const { data } = response.data; */
       setTimeout(() => {
-            history.push("/")
+            /* history.push("/") */
+         navigate('/home', { replace: true });
            }, 1000);
      console.log(response)
       

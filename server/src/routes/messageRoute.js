@@ -7,6 +7,7 @@ const messageRoute = express.Router();
 messageRoute.post("/message",auth,  messageCtrl.createMessage);
 
 messageRoute.get("/conversations", auth, messageCtrl.getConversations);
+messageRoute.post("/create-conversation", auth, messageCtrl.createConversation);
 messageRoute.get("/message/:id", auth, messageCtrl.getMessages);
 
 

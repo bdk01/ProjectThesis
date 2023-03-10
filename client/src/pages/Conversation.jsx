@@ -10,13 +10,13 @@ export default function Conversation() {
  
     setIduser(id)
   },[id])
-  return <div className="mx-16  border-[2px] border-gray-400 grid grid-cols-8 h-[90vh]">
-        <div className="col-span-2  border-gray-400 border-r-[2px]">
+  return <div className="mx-6  border-[2px] border-gray-400 grid grid-cols-5 h-[570px]">
+        <div className="col-span-1  border-gray-400 border-r-[2px]">
           <div className="flex mb-6  flex-col   ">
               <LeftSide/>
           </div>
         </div>
-        <div className="col-span-6 min-h-[100%]">
+        <div className="col-span-4 min-h-[100%]">
 
            { iduser ?     <RightSide/>:
         <div className="flex  h-[100%] items-center justify-center">

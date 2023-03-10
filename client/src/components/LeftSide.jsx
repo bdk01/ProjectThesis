@@ -1,6 +1,6 @@
 import axios from '../axios';
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory, useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import UserCard from './UserCard';
 import { useDispatch, useSelector } from "react-redux";
 import { getConversations } from '../api/messageAPI';
@@ -11,7 +11,7 @@ export default function LeftSide() {
     const [searchUsers, setSearchUsers] = useState([])
     const { id } = useParams()
     const dispatch = useDispatch()
-    const history = useHistory()
+    const navigate = useNavigate()
     const pageEnd = useRef()
     const [page, setPage] = useState(0)
       useEffect(() => {
@@ -20,13 +20,19 @@ export default function LeftSide() {
        let page =1
        getConversations(auth,page,dispatch)
     },[dispatch, auth])
+   /*    useEffect(() => {
+        dispatch()
+    },[dispatch, auth,id]) */
     // Function
        const handleSearch = async e => {
         e.preventDefault()
         if(!search) return setSearchUsers([]);
         try {
-          const res = await axios.get(`/user/search?username=${search}`)
-          setSearchUsers(res.data.users)
+          const res = await axios.get(`/api/search?meetingName=${search}`,{
+        headers: { Authorization: auth.accesstoken },
+      })
+          console.log(res.data)
+          setSearchUsers(res.data)
         } catch (err) {
           console.log(err)
         }
@@ -35,11 +41,12 @@ export default function LeftSide() {
         setSearch('')
         setSearchUsers([])
         console.log("adduser")
-       
+        
       dispatch(AddUser({ ...user, text: '', media: [] }))
      /*  dispatch({ type: MESS_TYPES.CHECK_ONLINE_OFFLINE, payload: online }) */
       /* AddUser */
-        return history.push(`/conversation/${user._id}`)
+     return navigate(`/conversation/${user.conversation}`, { replace: true });
+    /*     return history.push(`/conversation/${user._id}`) */
     }
   /* useEffect(() => {
     if (message.firstLoad) {
@@ -73,22 +80,14 @@ export default function LeftSide() {
                          :
                          <>
                            {
-                            message.users.map(user => (
+                            message?.users.map(user => (
                               <div key={user._id} className={`hover:bg-slate-300 hover:transition-all cursor-pointer flex flex-row items-center justify-between `}
                                 onClick={() => handleAddUser(user)}>
                                  
                                     <UserCard user={user} msg={true} >
-                                      {/*   {
-                                            user.online
-                                            ? <i className="fas fa-circle text-success" />
-                                            : auth.user.following.find(item => 
-                                                item._id === user._id
-                                            ) && 
-                                                
-                                        } */}
+                                  
                                     </UserCard>
                                     <div className="bg-green-500 w-[12px] h-[12px] mr-2 rounded-[50%]" />
-                                  {/*   <div className="bg-gray-500 w-[12px] h-[12px] mr-2 rounded-[50%]" /> */}
                                 </div>
                             ))
                         }

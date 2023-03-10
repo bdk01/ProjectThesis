@@ -20,81 +20,79 @@ class APIfeatures {
 const messageCtrl = {
   createMessage: async (req, res) => {
     try {
-      const { sender, recipient, text,media ,call } = req.body;
-      if (!recipient || (!text.trim() && media.length === 0 && !call)) return;
-      const newConversation = await Conversations.findOneAndUpdate(
+      const { sender, text, media, call, conversation } = req.body;
+      if ((!text.trim() && media.length === 0 && !call)) return;
+         const newMessage = new Messages({
+           conversation: conversation,
+           sender:sender,
+           call,
+           text,
+           media,
+         });
+
+         await newMessage.save();
+      await Conversations.updateOne(
         {
-          $or: [
-            { recipients: [sender, recipient] },
-            { recipients: [recipient, sender] },
-          ],
+          _id: conversation,
         },
-        {
-          recipients: [sender, recipient],
-          text,
-          media,
-          call,
-        },
+        { $push: { messages: newMessage._id } },
         { new: true, upsert: true }
       );
-       const newMessage = new Messages({
-         conversation: newConversation._id,
-         sender,
-         call,
-         recipient,
-         text,
-         media,
+    let newmessage = await newMessage.populate('sender')
+
+      res.status(200).json( newmessage );
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  createConversation: async (req, res) => {
+    try {
+      const  attendees  = req.body.attendees;
+   /*    attendees.push(req.user._id) */
+      console.log(attendees)
+    /*   if (!attendees || (!text.trim() && media.length === 0 && !call)) return; */
+       const newConversation = new Conversations({
+         attendees:attendees
        });
 
-      await newMessage.save();
+      await newConversation.save();
 
-      res.status(200).json({ msg: "Create Success!" });
+      res.status(200).json( newConversation );
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
   getConversations: async (req, res) => {
     try {
-     
+  
+   const conversations = await Conversations.find({
+     attendees: { $in:[req.user._id] },
+   }).sort({ UpdatedAt: -1 }).populate('event');
+    res.status(200).json({
+      conversations,
+      result: conversations.length,
+    });
    
-      const features = new APIfeatures(
-        Conversations.find({
-          recipients: req.user._id,
-        }),
-        req.query
-      ).paginating();
-
-      const conversations = await features.query
-        .sort("-updatedAt")
-        .populate("recipients", "avatar username fullname");
-
-      res.json({
-        conversations,
-        result: conversations.length,
-      });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
   getMessages: async (req, res) => {
     try {
-     console.log(req.params.id)
-      const features = new APIfeatures(
-        Messages.find({
-          $or: [
-            { sender: req.user._id, recipient: req.params.id },
-            { sender: req.params.id, recipient: req.user._id },
-          ],
-        }),
+       const {id} = req.params
+    /*   const features = new APIfeatures(
+        Messages.find(),
         req.query
       ).paginating();
 
-      const messages = await features.query.sort("-createdAt").populate('recipient', 'avatar username fullname');
-      
-      res.json({
-        messages,
-        result: messages.length,
+      const messages = await features.query.sort("-createdAt").populate('recipient', 'avatar username fullname'); */
+       const conversation = await Conversations.findById(id).populate({path: 'messages'  ,populate: { path: 'sender' }});
+       /* console.log(conversation) */
+       /*         lay themn user  */
+      res.status(200).json({
+        conversation,
       });
+    
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const postSchema = mongoose.Schema(
   {
     user: { type: mongoose.Types.ObjectId, ref: "Users" },
-    desc: { type: String, required: true },
+    description: { type: String, required: true },
     likes: [],
     createdAt: {
       type: Date,

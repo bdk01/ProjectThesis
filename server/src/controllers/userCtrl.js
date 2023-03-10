@@ -18,6 +18,25 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  searchAllUser: async (req, res) => {
+    try {
+      const users = await Users.find({}).select("fullname username ");
+      
+      res.json({ users });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  getUser: async (req, res) => {
+    try { 
+      const {id} = req.params
+      const users = await Users.findById(id).select("-password")
+
+      res.json({ users });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   resetPassword: async (req, res) => {
     try {
       const { username, email } = req.body;

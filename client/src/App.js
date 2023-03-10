@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { DefaultLayout } from "./components/DefaultLayout/DefaultLayout";
+/* import { DefaultLayout } from "./components/DefaultLayout/DefaultLayout"; */
 import Conversation from "./pages/Conversation";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,6 +13,10 @@ import { getSocket } from "./redux/socketSlice";
 import SocketClient from "./SocketClient";
 import Header from "./components/Header/Header";
 import { refreshToken } from "./api/authAPI";
+import Main from "./components/Main";
+import NotFound from "./pages/NotFound/NotFound";
+import CreateMeeting from "./pages/CreateMeeting";
+import Meeting from "./pages/Meeting";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,8 +32,8 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Router>
-      {auth.accesstoken && <DefaultLayout />}
+   /*  <Router>
+   
       {auth.accesstoken && <SocketClient />}
       <div>
         <Route exact path="/register" component={Register} />
@@ -46,38 +50,59 @@ function App() {
         />
        
       </div>
-    </Router>
+    </Router> */
 
-    /*  <BrowserRouter>
+    <BrowserRouter>
+       {auth.accesstoken && <SocketClient/>    }
       <Routes>
- 
+    
             <Route
-              path="/"
+              path="/home"
               element={
-                <DefaultLayout>
+                <Main>
                   <Home />
-                </DefaultLayout>
+                </Main>
               }
             />
-        {isAuth && <Route  element={<SocketClient />} >
-        
-        
-        </Route>
-        
-        }
+ 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/conversation"
           element={
-            <DefaultLayout>
+            <Main>
               <Conversation />
-            </DefaultLayout>
+            </Main>
           }
         />
+        <Route
+          path="/conversation/:id"
+          element={
+            <Main>
+              <Conversation />
+            </Main>
+          }
+        />
+        <Route
+          path="/create-schedule"
+          element={
+            <Main>
+              <CreateMeeting />
+            </Main>
+          }
+        />
+        <Route
+          path="/meeting"
+          element={
+            <Main>
+              <Meeting />
+            </Main>
+          }
+        />
+         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  */
+ 
   );
 }
 

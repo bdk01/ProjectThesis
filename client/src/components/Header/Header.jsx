@@ -43,10 +43,9 @@ export default function Header() {
     }
   return (
     
-        <div className=" bg-black grid grid-cols-8 p-2 ">
-          
+        <div className=" bg-black grid grid-cols-8 p-2 w-[100%] ">
                 <div className="col-span-2 flex justify-center items-center">
-                  <Link to="/" className="logo">
+                  <Link to="/home" className="logo">
                       <h1 className="text-white text-2xl"
                       onClick={() => window.scrollTo({top: 0})}>
                           TA-NETWORK

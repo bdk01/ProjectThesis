@@ -7,11 +7,16 @@ export default function MsgDisplay({user, msg, data,sender}) {
     
   return <div>
       <div className={sender ?` flex flex-col` :' flex flex-col'}>
-            <div className={sender ? ` flex justify-end items-center mr-3` : ' flex justify-start items-center ml-3'}>
+            <div className={sender ? ` flex justify-start items-center mr-3` : ' flex justify-start items-center ml-3'}>
                     <div className="w-[20px] h-[20px] mr-1">
-                   <img src={user.avatar} className="w-[100%] h-[100%] rounded-[50%]" alt="" />
+             { user ?     <img src={user?.avatar} className="w-[100%] h-[100%] rounded-[50%]" alt="" />
+                  :    <img src={sender?.avatar} className="w-[100%] h-[100%] rounded-[50%]" alt="" />
+            }
                     </div>
-              <span className="mr-1">{user.username}</span>
+             { user ?    <span className="mr-1">{user?.username}</span>
+                  :    <span className="mr-1">{sender?.username}</span>
+            }
+              
 
             </div>
              <div className="flex justify-end    w-[100%] ">

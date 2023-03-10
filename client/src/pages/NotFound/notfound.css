@@ -1,0 +1,12 @@
+.containernotfound{
+    width:80%;
+    height:80vh;
+    display: flex;
+    background-color: #f0f0e9;
+    justify-content:center;
+    align-items:center;
+}
+.containernotfound img{
+    width: 100%;
+    height: 100%;
+}

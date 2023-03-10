@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Input, Select, Typography, message, Modal } from "antd";
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useContext } from 'react';
 import axios from '../axios';
@@ -81,7 +81,7 @@ function Register() {
   let customer_type = Form.useWatch('customer_type', form);
   let password = Form.useWatch('password', form);
   let verify_password = Form.useWatch('confirmPassword', form);
-  const history = useHistory()
+  const navigate = useNavigate()
 
 
   //message cua register
@@ -143,7 +143,7 @@ function Register() {
      
       console.log(response)
         success();
-        setTimeout(() => { history.push("/") }, 1000);
+      setTimeout(() => { navigate('/login', { replace: true }); }, 1000);
     } catch(error){
       if(error.response.data.message === "user is exist"){
         existed();
