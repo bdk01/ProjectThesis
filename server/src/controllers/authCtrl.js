@@ -2,6 +2,16 @@ import Users from "../models/userModel";
 
 import bcrypt from "bcrypt";
 import jwt from"jsonwebtoken";
+import { sendEmail } from "../helper/sendemail";
+import dotenv from "dotenv";
+
+dotenv.config();
+let buildURLEmail = (token) => {
+  let result = ``;
+
+  result = `${process.env.URL_REACT}/reset-password/${token}`; /* truyen clientside */
+  return result;
+};
 const authCtrl = {
   register: async (req, res) => {
     try {
@@ -58,6 +68,51 @@ const authCtrl = {
     try {
       res.clearCookie("refreshtoken", { path: "/auth/refresh_token" });
       return res.json({ msg: "Logged out!" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  forgotPassword: async (req, res) => {
+    try {
+       const {email} = req.body
+        const user = await Users.findOne({ email }).select("-password");
+        if (!user) return res.status(400).json({ msg: "User does not exist." });
+         const token = jwt.sign(
+           { user:user },
+           process.env.ACCESS_TOKEN_SECRET,
+           { expiresIn: "30m" }
+         );
+       await sendEmail({ redirectLink: buildURLEmail(token),user:user });
+        
+      return res.json({ msg: "check email" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  resetPassword: async (req, res) => {
+    try {
+     const token = req.params.token;
+
+     const password = req.body.password;
+      jwt.verify(
+        token,
+        process.env.ACCESS_TOKEN_SECRET,
+        async (err, result) => {
+          if (err)
+            return res.status(400).json({ msg: "wq" });
+          const user = await Users.findById(result.user._id).select("-password");
+          if (!user) return res.status(400).json({ msg: "This does not exist." });
+            const passwordHash = await bcrypt.hash(password, 10);
+           await Users.updateOne(
+             {
+               _id: user._id,
+             },
+             { password: passwordHash },
+             { new: true, upsert: true }
+           );
+           return res.status(200).json({ msg: "update success" });
+        }
+      );
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

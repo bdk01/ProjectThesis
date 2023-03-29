@@ -15,10 +15,13 @@ export default function LeftSide() {
     const pageEnd = useRef()
     const [page, setPage] = useState(0)
       useEffect(() => {
-        if(message.firstLoad) return;
+        if(auth.accesstoken){
+          if(message.firstLoad) return;
+  
+         let page =1
+         getConversations(auth,page,dispatch)
 
-       let page =1
-       getConversations(auth,page,dispatch)
+        }
     },[dispatch, auth])
    /*    useEffect(() => {
         dispatch()

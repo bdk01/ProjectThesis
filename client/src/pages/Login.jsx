@@ -19,19 +19,27 @@ const LoginForm = styled.div`
     }
     justify-content: center;
     align-items: center;
-    padding-top: 100px;
-    padding-bottom: 50px;
-    background-color: #fbab7e;
-    background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
-    overflow: auto;
+  
+    background-color: #9053c7;
+    background-image: linear-gradient(-135deg,#c850c0,#4158d0);
+    overflow: hidden;
   }
   .Login-header {
-    max-width: 500px;
+    height:70vh;
+    max-width: 840px;
     width: 100%;
+    display:flex;
+    justify-content: space-around;
     background-color: #fff;
     padding: 25px 30px;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  }
+  .Div-img{
+    width: 35%;
+  }
+  .Img{
+    max-width: 100%;
   }
   .ant-typography {
     font-size: 45px;
@@ -49,7 +57,8 @@ const LoginForm = styled.div`
       rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
   }
   .sign {
-    text-align: right;
+    display:flex;
+    justify-content:flex-end;
   }
 `;
 const ButtonContainer = styled.div`
@@ -64,10 +73,10 @@ const ButtonContainer = styled.div`
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background-color: #fbab7e;
-    &:hover {
-      background-color: #fbab7e;
-      background-image: linear-gradient(250deg, #e3ed1f 0%, #f7ce68 100%);
+     background-color: #bd59d4;
+    &:hover{
+     background-color: #4b2354;
+       box-shadow: 0 10px 30px 0 rgb(189 89 212 / 80%);
     }
   }
 `;
@@ -140,7 +149,14 @@ function Login() {
     <LoginForm>
       <div className="Login">
         <div className="Login-header">
+          <div className="Div-img">
+            <img
+              className="Img"
+              src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png"
+            />
+          </div>
           <Form
+            className="px-6 w-[60%]"
             form={form}
             autoComplete="off"
             labelCol={{ span: 10 }}
@@ -150,10 +166,23 @@ function Login() {
               console.log({ error });
             }}
           >
-            <Title level={2} className="text-center">
-              Đăng nhập
-            </Title>
-
+            {/* <Title level={1} className="text-center">
+                qw
+            </Title> */}
+            <div className="flex justify-center items-center mb-3 ">
+              <div className="py-[7px] px-12 ml-[50px]  bg-gray-200 text-base font-semibold border-r-[1px] rounded-tl-md rounded-bl-md cursor-pointer">
+                <Link to="/register">SIGN UP</Link>
+              </div>
+              <div className="py-[7px] px-12  bg-gray-400 text-base font-semibold rounded-tr-md rounded-br-md cursor-pointer">
+                SIGN IN
+              </div>
+            </div>
+            <div className="flex justify-start items-center mb-4 flex-col">
+              <div className="ml-[50px] text-3xl font-bold text-left">
+                Login
+              </div>
+              {/*  <div className="text-sm font-thin text-left">welcome back</div> */}
+            </div>
             <Form.Item
               name="email"
               label="Email"
@@ -162,9 +191,9 @@ function Login() {
                   required: true,
                   message: "Vui lòng nhập email hoặc số điện thoại",
                 },
-                 {
-                  type: 'email',
-                  message: 'Vui lòng nhập E-mail!',
+                {
+                  type: "email",
+                  message: "Vui lòng nhập E-mail!",
                 },
               ]}
               hasFeedback
@@ -196,31 +225,39 @@ function Login() {
 
             <Form.Item wrapperCol={{ span: 24 }}>
               <div className="sign">
-                Bạn chưa có tài khoản?
-                <Link to="/register" className="font-semibold text-blue-700">
-                  Đăng ký tài khoản
-                </Link>
-              </div>
-            </Form.Item>
-
-            <Form.Item wrapperCol={{ span: 24 }}>
-              <div className="sign">
+                Don't have a account?
                 <Link
-                  to="/quen-mat-khau"
+                  to="/register"
                   className="font-semibold text-blue-700"
                 >
-                  Quên mật khẩu
+                  <div className="pl-1">Sign up</div>
                 </Link>
               </div>
             </Form.Item>
 
             <Form.Item wrapperCol={{ span: 24 }}>
-              <ButtonContainer>
-                <Button block type="primary" htmlType="submit">
-                  Đăng nhập
+              <div className="flex justify-end mt-[-20px]">
+                <Link
+                  to="/forgot-password"
+                  className="font-semibold text-blue-700"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </Form.Item>
+
+            <div className="flex justify-end mt-[-10px]">
+              <ButtonContainer className="w-[312px]">
+                <Button
+                  block
+                  type="primary"
+                  htmlType="submit"
+                  className="w-[100%]"
+                >
+                  Login
                 </Button>
               </ButtonContainer>
-            </Form.Item>
+            </div>
           </Form>
         </div>
       </div>

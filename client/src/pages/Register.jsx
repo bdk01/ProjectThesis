@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Input, Select, Typography, message, Modal } from "antd";
+import { Form, Button, Input,  Typography, message } from "antd";
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useContext } from 'react';
@@ -7,7 +7,7 @@ import axios from '../axios';
 
 const RegisForm = styled.div`
 .Regis{
-    height: 150vh;
+    height: 100vh;
     display: flex;
     flex-direction:row;
     @media (max-width: 768px) {
@@ -20,21 +20,29 @@ const RegisForm = styled.div`
     }
     justify-content: center;
     align-items: center;
-    padding-top: 100px;
+    padding-top: 50px;
     padding-bottom: 50px;
     background-color: #FBAB7E;
-    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+      background-image: linear-gradient(-135deg,#c850c0,#4158d0);
+    overflow: hidden;
 }
 .Regis-header{
-    max-width: 500px;
+    height:80vh;
+    max-width: 860px;
     width: 100%;
+    display:flex;
+    justify-content: space-around;
     background-color: #fff;
     padding: 25px 30px;
-    margin-top: 10px;
     border-radius: 5px;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.15);
-    overflow:auto;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
+ .Div-img{
+    width: 35%;
+  }
+  .Img{
+    max-width: 100%;
+  }
 .ant-typography{
     font-size: 45px;
     font-weight: 500;
@@ -58,21 +66,21 @@ const ButtonContainer = styled.div`
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background-color: #FBAB7E;
+    background-color: #bd59d4;
     &:hover{
-        background-color: #FBAB7E;
-        background-image: linear-gradient(250deg, #e3ed1f 0%, #F7CE68 100%);
+     background-color: #4b2354;
+       box-shadow: 0 10px 30px 0 rgb(189 89 212 / 80%);
     }
 }`;
 
-function isValidEmail(email) {
-  return /\S+@\S+\.\S+/.test(email);
-}
 
-const { Title } = Typography;
 
 function Register() {
   
+
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
 
   const [form] = Form.useForm();
   let email = Form.useWatch('email', form);
@@ -163,138 +171,155 @@ function Register() {
 
   return (
     <div>
-      <RegisForm> 
-          <div className="Regis">
-            <div className="Regis-header">
-              <Form
-                  form ={form}
-                  autoComplete="off"
-                  labelCol={{ span: 10 }}
-                  wrapperCol={{ span: 14 }}
-                  onFinish={(onFinish)}
-                  onFinishFailed={(error) => {
-                    console.log({ error });
-                  } }
-              >
-                  <Title level={2} className="text-center">
-                      Đăng kí
-                  </Title>
-
-                  <Form.Item
-                      name="fullname"
-                      label="Tên đầy đủ"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng nhập tên đầy đủ",
-                        },
-                        
-                      ]}
-                      hasFeedback
-                  >
-                      <Input placeholder="Nhập tên tài khoản" />
-                  </Form.Item>
-                  <Form.Item
-                      name="username"
-                      label="Tên tài khoản"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng nhập tên tài khoản",
-                        },
-                        
-                      ]}
-                      hasFeedback
-                  >
-                      <Input placeholder="Nhập tên tài khoản" />
-                  </Form.Item>
-
-                  <Form.Item
-                      name="email"
-                      label="Email"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng nhập email ",
-                        },      
-                        {
-                          type: 'email',
-                          message: 'The input is not valid E-mail!',
-                        },       
-                                   
-                      ]}
-                      hasFeedback
-                      >
-                      <Input placeholder="Nhập email " />
-                  </Form.Item>
-
-                  <Form.Item
-                      name="password"
-                      label="Mật khẩu"
-                      rules={[
-                          {
-                            required: true,
-                            message: "Vui lòng nhập mật khẩu",
-                          },
-                          { 
-                            min: 6,
-                            message: "Mật khẩu phải dài hơn 6 chữ số",
-                          },
-                          {
-                            max: 24,
-                            message: "Mật khẩu chỉ được tối đa 24 chữ số",
-                          },
-                      ]}
-                      hasFeedback
-                  >
-                    <Input.Password placeholder="Nhập mật khẩu" />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="confirmPassword"
-                    label="Xác nhận mật khẩu"
-                    dependencies={["password"]}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Mật khẩu không khớp"
-                      },
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          if (!value || getFieldValue("password") === value) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(
-                            "Mật khẩu không khớp"
-                          );
-                        },
-                      }),
-                    ]}
-                    hasFeedback
-                  >
-                    <Input.Password placeholder="Xác nhận mật khẩu" />
-                  </Form.Item>
-
-
-                  <Form.Item wrapperCol={{ span: 24 }}>
-                      <div className='sign'>
-                          Bạn đã có tài khoản?  
-                          <Link to="/login" className="font-semibold text-blue-700">
-                              Đăng nhập
-                          </Link>
-                      </div>
-                  </Form.Item>
-
-                  <Form.Item wrapperCol={{ span: 24 }}>
-                      <ButtonContainer>
-                          <Button block type="primary" htmlType="submit">
-                              Đăng ký
-                          </Button>
-                      </ButtonContainer>
-                  </Form.Item>
-              </Form>
+       <RegisForm>
+        <div className="Regis">
+          <div className="Regis-header">
+            <div className="Div-img">
+              <img
+                className="Img"
+                src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png"
+              />
             </div>
+            <Form
+              className="px-6 w-[60%]"
+              form={form}
+              autoComplete="off"
+              labelCol={{ span: 10 }}
+              wrapperCol={{ span: 14 }}
+              onFinish={onFinish}
+              onFinishFailed={(error) => {
+                console.log({ error });
+              }}
+            >
+              <div className="flex justify-center items-center mb-3 ">
+                <div className="py-[7px] px-12 ml-[50px] bg-gray-400  text-base font-semibold border-r-[1px] rounded-tl-md rounded-bl-md cursor-pointer">
+                  SIGN UP
+                </div>
+                <div className="py-[7px] px-12   bg-gray-200 text-base font-semibold rounded-tr-md rounded-br-md cursor-pointer">
+                  <Link to="/login">SIGN IN</Link>
+                </div>
+              </div>
+              <div className="flex justify-start items-center mb-4 flex-col">
+                <div className="ml-[50px] text-3xl font-bold text-left">
+                  Register
+                </div>
+              </div>
+
+           
+              <Form.Item
+                name="fullname"
+                label="Full name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập tên tài khoản",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input placeholder="Nhập tên tài khoản" />
+              </Form.Item>
+              <Form.Item
+                name="username"
+                label="User name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập tên tài khoản",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input placeholder="Nhập tên tài khoản" />
+              </Form.Item>
+
+              <Form.Item
+                name="email"
+                label="Email"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập email ",
+                  },
+                  {
+                    type: "email",
+                    message: "The input is not valid E-mail!",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input placeholder="Nhập email " />
+              </Form.Item>
+
+              <Form.Item
+                name="password"
+                label="Password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mật khẩu",
+                  },
+                  {
+                    min: 6,
+                    message: "Mật khẩu phải dài hơn 6 chữ số",
+                  },
+                  {
+                    max: 24,
+                    message: "Mật khẩu chỉ được tối đa 24 chữ số",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password placeholder="Nhập mật khẩu" />
+              </Form.Item>
+
+              <Form.Item
+                name="confirmPassword"
+                label="Confirm password"
+                dependencies={["password"]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Mật khẩu không khớp",
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject("Mật khẩu không khớp");
+                    },
+                  }),
+                ]}
+                hasFeedback
+              >
+                <Input.Password placeholder="Xác nhận mật khẩu" />
+              </Form.Item>
+
+              <Form.Item wrapperCol={{ span: 24 }}>
+                <div className="sign">
+                  You already have a account?
+                  <Link to="/login" className="font-semibold text-blue-700 ml-1">
+                    Sign In
+                  </Link>
+                </div>
+              </Form.Item>
+
+              <div className="flex justify-end mt-[-18px]">
+                <ButtonContainer className="w-[312px]     ">
+                  <Button
+                    block
+                    type="primary"
+                    htmlType="submit"
+                    className="w-[100%]     "
+                  >
+                    Register
+                  </Button>
+                </ButtonContainer>
+              </div>
+            </Form>
           </div>
+        </div>
       </RegisForm>
     </div>
   );

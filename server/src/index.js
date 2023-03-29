@@ -7,6 +7,7 @@ import appRouter from './routes';
 import cookieParser from 'cookie-parser'
 
 import { createServer } from "http";
+import {ExpressPeerServer } from "peer";
 import { Server } from "socket.io";
 import SocketServer from './socketServer';
 import messageRoute from './routes/messageRoute';
@@ -19,7 +20,7 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
@@ -36,7 +37,8 @@ io.on("connection", socket => {
   console.log(socket.id +' connected')
   SocketServer(socket);
 });
-
+// Create peer server
+/* ExpressPeerServer(httpServer, { path: "/" }); */
 /* Routes */
 app.use(appRouter);
 /* app.use(messageRoute) */

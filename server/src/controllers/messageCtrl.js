@@ -77,7 +77,7 @@ const messageCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-  getMessages: async (req, res) => {
+  getMessage: async (req, res) => {
     try {
        const {id} = req.params
     /*   const features = new APIfeatures(
@@ -87,10 +87,44 @@ const messageCtrl = {
 
       const messages = await features.query.sort("-createdAt").populate('recipient', 'avatar username fullname'); */
        const conversation = await Conversations.findById(id).populate({path: 'messages'  ,populate: { path: 'sender' }});
-       /* console.log(conversation) */
-       /*         lay themn user  */
+        const features = new APIfeatures(
+          Messages.find({
+            conversation: id,
+          }),
+          req.query
+        ).paginating();
+        const messages = await features.query
+          .sort("-createdAt")
+          .populate("sender");
       res.status(200).json({
         conversation,
+        messages,
+        result: messages.length,
+      });
+    
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  getMessages: async (req, res) => {
+    try {
+       const {id} = req.params
+     
+
+       /*    const conversation = await Conversations.findById(id).populate({path: 'messages'  ,populate: { path: 'sender' }}); */
+       const features = new APIfeatures(
+         Messages.find({
+           conversation:id
+         }),
+         req.query
+       ).paginating();
+       const messages = await features.query.sort("-createdAt");
+        /*   const messages = await features.query.sort("-createdAt").populate('recipient', 'avatar username fullname'); */
+         /* limit va page */
+   
+      res.status(200).json({
+        messages,
+        result:messages.length
       });
     
     } catch (err) {

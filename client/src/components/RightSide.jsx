@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { AiOutlineSend } from "react-icons/ai";
 import MsgDisplay from "./MsgDisplay";
-import { addMessages, getMessages } from "../api/messageAPI";
+import { addMessages, getMessages, getMoreMessages } from "../api/messageAPI";
+import { v4 as uuidv4 } from 'uuid';
+import { getRoom } from "../redux/peerSlice";
 export default function RightSide() {
-    const { auth, message, socket } = useSelector(state => state)
+    const { auth, message} = useSelector(state => state)
+    const { socket } = useSelector(state => state.socket)
   const { id } = useParams()
   const dispatch = useDispatch()
   const [user, setUser] = useState([])
@@ -15,9 +18,10 @@ export default function RightSide() {
   const [isLoadMore, setIsLoadMore] = useState(0)
     const [data, setData] = useState([])
    const refDisplay = useRef()
+     const navigate = useNavigate()
     const pageEnd = useRef()
  
-  const handleSubmit = (e)=>{
+  const handleSubmit = async(e)=>{
     e.preventDefault()
       if (!text.trim()) return;
 
@@ -32,33 +36,32 @@ export default function RightSide() {
       }
     
 
-      addMessages(msg,auth,socket,dispatch)
-     /*  if (refDisplay.current) {
-          refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-      } */
+       await addMessages(msg,auth,socket,dispatch)
+       if(refDisplay.current){
+              setTimeout(() => {
+                    refDisplay.current.scrollIntoView({behavior: 'smooth', block: 'end'})
+                },50)
+        }
+     
   
   }
     useEffect(() => {
-        const getMessagesData = async () => {
-            if (message?.data?.every(item => item?._id !== id)) {
-               
-               await getMessages( auth, id,page,dispatch )
-           /*      setTimeout(() => {
-                    refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-                }, 50) */
+        if(auth.accesstoken){
+            const getMessagesData = async () => {
+                if (message?.data?.every(item => item?._id !== id)) {
+                   await getMessages( {auth, id,dispatch} )
+                 
+                    setTimeout(() => {
+                    refDisplay.current.scrollIntoView({behavior: 'smooth', block: 'end'})
+                },10)
+            }
         }
-    }
-        getMessagesData()
-    }, [id, dispatch, auth, message.data])
+            getMessagesData()
+
+        }
+    }, [id, dispatch, auth, message.data.message])
    
-    useEffect(() => {
-        if (id && message.users.length > 0) {
-           
-            const newUser = message?.users?.find(user => user._id === id)
-            if (newUser) setUser(newUser)
-            console.log(newUser)
-        }
-    }, [message.users, id])
+
     useEffect(() => {
         const newData = message?.data?.find(item => item._id === id)
       
@@ -71,43 +74,50 @@ export default function RightSide() {
          } 
     }, [message.data, id])
     
-   /*  useEffect(() => {
-        console.log(refDisplay)
-        console.log(pageEnd)
-
-    }, [refDisplay, pageEnd])
+        
+        useEffect(() => {
+            
+            const observer = new IntersectionObserver(entries => {
+                if (entries[0].isIntersecting) {
+                    setIsLoadMore(p => p + 1)
+                }
+            }, {
+                threshold: 0.1
+            })
+            console.log(observer)
+            observer.observe(pageEnd.current)
+        }, [setIsLoadMore])
     useEffect(() => {
-        if (id && message.users.length > 0) {
-            setTimeout(() => {
-                refDisplay.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-            }, 50)
+        setTimeout(()=>{
+            if (isLoadMore > 1) {
+                if (result >= page * 9) {
+                    dispatch(getMoreMessages({ auth, id:id, page: page + 1,dispatch }))
+                    setIsLoadMore(1)
+                }
+            }
 
-            const newUser = message.users.find(user => user._id === id)
-            if (newUser) setUser(newUser)
-        }
-    }, [message.users, id])
-    useEffect(() => {
-        const observer = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                setIsLoadMore(p => p + 1)
-            }
-        }, {
-            threshold: 0.1
-        })
-        console.log(observer)
-        observer.observe(pageEnd.current)
-    }, [setIsLoadMore]) */
- /*    useEffect(() => {
-        if (isLoadMore > 1) {
-            if (result >= page * 9) {
-                dispatch(loadMoreMessages({ auth, id, page: page + 1 }))
-                setIsLoadMore(1)
-            }
-        }
+        },150)
        
-    }, [isLoadMore]) */
+    }, [isLoadMore])
+    const handleJoin = ()=>{
+         dispatch(getRoom())
+         setTimeout(()=>{
+             socket.emit('create-room')
+              socket.on("room-created", ({ roomId }) => {
+            console.log({ roomId });
+            navigate(`/meeting/${roomId}`);
+       });
+         },0)
+    }
+  /*   useEffect(()=>{
+        if(peer.room){
+
+       
+        }
+    },[peer.room]) */
+
   return <div className="flex flex-col h-[100%] ">
-        <div className="py-1 px-4  flex flex-row justify-between bg-slate-300 border-gray-400  border-b-[2px] cursor-pointer w-[100%]">
+        <div className="py-1 px-4 h-[58px] flex flex-row justify-between bg-slate-300 border-gray-400  border-b-[2px] cursor-pointer w-[100%]">
        
            <div className="flex">
                     <div className="w-[46px] h-[46px]" >
@@ -119,63 +129,66 @@ export default function RightSide() {
                 </div>
            </div>
            <div className="flex justify-center items-center">
-            <button className="px-2 py-2 bg-gray-700 text-white text-sm rounded-[8%]"> 
+            <button className="px-2 py-2 bg-gray-700 text-white text-sm rounded-[8%]" onClick={handleJoin}> 
               Join with us
             </button>
            </div>
         </div>
-      <div className=" h-[100%] flex justify-end flex-col " ref={refDisplay}>
-{/* grid grid-rows-6  row-span-5 row-span-1 */}
-  
-     
-              <button style={{ marginTop: '-25px' }} ref={pageEnd}>
-                  Load more
-              </button>
-        <div className=" h-[82%] flex flex-col  justify-end">
-              <div className="flex justify-start">
+        <div className=" h-[calc(100%-58px)] w-[100%] overflow-y-auto overflow-x-hidden" >
 
-       
-            </div>
-              {
-                  data.map((msg, index) => (
-                      <div key={index}>
-                          {
-                              msg?.sender?._id !== auth?.user._id &&
-                              <div className="flex justify-start ml-2">
-                                      <MsgDisplay sender={msg.sender} msg={msg} />
-                                </div>
-                          }
+            <div className=" min-h-[100%] flex justify-end flex-col " ref={refDisplay}>
+        {/* grid grid-rows-6  row-span-5 row-span-1 */}
+        
+                    <button style={{ marginTop: '-21px',backgroundColor:"red" }} ref={pageEnd}>
+                        Load more
+                    </button>
+            
+                <div className=" h-[100%] flex flex-col  justify-end">
+                    <div className="flex justify-start">
 
-                          {
-                              msg?.sender._id  === auth?.user._id &&
-                               <div className="flex justify-end ">
-                                      <MsgDisplay user={auth.user} msg={msg} sender="true" data={data} />
-                                </div>
-                          }
-                      </div>
-                  ))
-              }
-         </div>
-        <div className=" h-[8%]">
-           <form className="relative   border-gray-400  border-t-[2px]" onSubmit={handleSubmit}  >
-                <input type="text" placeholder="Enter you message..."
-                value={text} onChange={e => setText(e.target.value)}  className="w-[90%] border-none outline-none py-1 px-6 text-black"
-                />
+            
+                    </div>
+                    {
+                        data.map((msg, index) => (
+                            <div key={index}>
+                                {
+                                    msg?.sender._id !== auth?.user._id &&
+                                    <div className="flex justify-start ml-2">
+                                            <MsgDisplay sender={msg.sender} msg={msg} />
+                                        </div>
+                                }
 
-             {/*    <Icons setContent={setText} content={text} theme={theme} />
-
-                <div className="file_upload">
-                    <i className="fas fa-image text-danger" />
-                    <input type="file" name="file" id="file"
-                    multiple accept="image/*,video/*" onChange={handleChangeMedia} />
-                </div> */}
-
-                <button type="submit" className="absolute px-1 right-[-2px] top-[10px] cursor-pointer " 
-                /* disabled={text > 0 ? true : false}  */>
-                    <AiOutlineSend className="text-xl"/>
-                </button>
-            </form>
+                                {
+                                    msg?.sender._id  === auth?.user._id &&
+                                    <div className="flex justify-end ">
+                                            <MsgDisplay user={auth.user} msg={msg} sender="true" data={data} />
+                                        </div>
+                                }
+                            </div>
+                        ))
+                    }
+                </div>
+                </div>
         </div>
-        </div>
+                <div className=" h-[40px]">
+                <form className="relative   border-gray-400  border-t-[2px]" onSubmit={handleSubmit}  >
+                        <input type="text" placeholder="Enter you message..."
+                        value={text} onChange={e => setText(e.target.value)}  className="w-[90%] border-none outline-none py-1 px-6 text-black"
+                        />
+
+                    {/*    <Icons setContent={setText} content={text} theme={theme} />
+
+                        <div className="file_upload">
+                            <i className="fas fa-image text-danger" />
+                            <input type="file" name="file" id="file"
+                            multiple accept="image/*,video/*" onChange={handleChangeMedia} />
+                        </div> */}
+
+                        <button type="submit" className="absolute px-1 right-[-2px] top-[10px] cursor-pointer " 
+                        /* disabled={text > 0 ? true : false}  */>
+                            <AiOutlineSend className="text-xl"/>
+                        </button>
+                    </form>
+                </div>
      </div>;
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {  useLocation, useNavigate } from 'react-router-dom';
 import Header from './Header/Header';
 
+import { SiGooglemeet } from "react-icons/si";
 
 
 
@@ -92,24 +93,10 @@ const LeftNavItem = [
   {
     index: 4,
     icon: (
-      <svg
-        className="w-[30px] h-[30px] text-gray-500 transition duration-75"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 30 30"
-        fill="black"
-      >
-        <path d="M14.25 25.5002V23.793C10.5248 23.5784 8.26172 21.6593 8.25 18.7502H11.625C11.708 19.9849 12.7434 20.9276 14.25 21.094V16.5002L12.9952 16.1721C10.1358 15.5074 8.60578 13.857 8.60578 11.3871C8.60578 8.47571 10.6912 6.56649 14.25 6.28149V4.50024H15.75V6.28149C19.3777 6.57681 21.3281 8.5193 21.375 11.2502H18C17.9644 10.1224 17.258 9.21634 15.75 9.09399V13.4065L17.1947 13.7477C20.2317 14.4124 21.75 15.9846 21.75 18.5627C21.75 21.5787 19.6997 23.5259 15.75 23.7809V25.5002H14.25ZM14.25 13.1252V9.09399C12.9567 9.16524 12.0342 9.95977 12.0342 11.0876C12.0342 12.1329 12.8025 12.8163 14.25 13.1252ZM15.75 16.7815V21.094C17.5383 21.0218 18.3928 20.2071 18.3928 18.9485C18.3928 17.7963 17.5383 17.0205 15.75 16.7815Z" />
-      </svg>
+      <SiGooglemeet className='w-[28px] h-[28px]'/>
     ),
     iconActive: (
-      <svg
-        className="w-[30px] h-[30px] text-gray-500 transition duration-75 "
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 30 30"
-        fill="black"
-      >
-        <path d="M14.25 25.5002V23.793C10.5248 23.5784 8.26172 21.6593 8.25 18.7502H11.625C11.708 19.9849 12.7434 20.9276 14.25 21.094V16.5002L12.9952 16.1721C10.1358 15.5074 8.60578 13.857 8.60578 11.3871C8.60578 8.47571 10.6912 6.56649 14.25 6.28149V4.50024H15.75V6.28149C19.3777 6.57681 21.3281 8.5193 21.375 11.2502H18C17.9644 10.1224 17.258 9.21634 15.75 9.09399V13.4065L17.1947 13.7477C20.2317 14.4124 21.75 15.9846 21.75 18.5627C21.75 21.5787 19.6997 23.5259 15.75 23.7809V25.5002H14.25ZM14.25 13.1252V9.09399C12.9567 9.16524 12.0342 9.95977 12.0342 11.0876C12.0342 12.1329 12.8025 12.8163 14.25 13.1252ZM15.75 16.7815V21.094C17.5383 21.0218 18.3928 20.2071 18.3928 18.9485C18.3928 17.7963 17.5383 17.0205 15.75 16.7815Z" />
-      </svg>
+      <SiGooglemeet className='w-[28px] h-[28px]'/>
     ),
     path: 'meeting',
     name: 'Meeting',
@@ -127,6 +114,7 @@ function Main({ children }) {
 
   const [opened, setOpened] = useState(true);
 
+
 /*   const onSignout = async () => {
     await signout();
     navigate('/sign-in', { replace: true });
@@ -137,7 +125,7 @@ function Main({ children }) {
    
       <div className='flex fixed z-20 w-[100%]'>
 
-         <Header />
+         <Header setOpened={setOpened} opened={opened}  />
       </div>
     <div className="flex h-[100vh] mt-[56px]">
       <div className='fixed'>
@@ -148,7 +136,7 @@ function Main({ children }) {
         } relative transition-all duration-500 `}
         aria-label="Sidebar"
       >
-           <button
+         {/*   <button
           type="button"
           className={`absolute right-[-15px] top-[280px] cursor-pointer transition-all duration-500 ${
             opened ? '' : 'rotate-180'
@@ -189,7 +177,7 @@ function Main({ children }) {
               </linearGradient>
             </defs>
           </svg>
-        </button>
+        </button> */}
         <div className="overflow-y-auto py-[12px]   pl-2 pr-3 mr-1 bg-white h-[100vh]">
           <ul className="space-y-2 flex justify-start flex-col">
             {LeftNavItem.map((item) => (

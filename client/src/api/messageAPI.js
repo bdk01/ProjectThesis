@@ -20,19 +20,39 @@ export const getConversations = async ( auth,page ,dispatch) => {
      console.log(err)
     }
   };
-export const getMessages = async ( auth,id,page,dispatch) => {
+export const getMessages = async ( {auth,id,page=1,dispatch}) => {
     try {
-      const res = await axios.get(`/api/message/${id}`,{
+      console.log(page)
+      const res = await axios.get(`/api/message/${id}?limit=${page * 9}`, {
         headers: { Authorization: auth.accesstoken },
       });
-    
+         console.log(res);
     /*   const newData = { messages: res.data.conversation.messages }; */
       const newData = {
         ...res.data,
-        messages: res.data.conversation.messages,
+        messages: res.data.messages.reverse(),
       };
  
-      dispatch(GetMessage({...newData,_id:id,page:page} ));
+     await dispatch(GetMessage({...newData,_id:id,page:page} ));
+ 
+    } catch (err) {
+     console.log(err)
+  };
+}
+export const getMoreMessages = async ( {auth,id,page=1,dispatch}) => {
+    try {
+      console.log(id)
+     const res = await axios.get(`/api/message/${id}?limit=${page * 9}`, {
+       headers: { Authorization: auth.accesstoken },
+     });
+      console.log(res)
+    /*   const newData = { messages: res.data.conversation.messages }; */
+      const newData = {
+        ...res.data,
+        messages: res.data.messages.reverse(),
+      };
+ 
+   await   dispatch(GetMessage({...newData,_id:id,page:page} ));
  
     } catch (err) {
      console.log(err)

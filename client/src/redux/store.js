@@ -11,6 +11,7 @@
 import storage from "redux-persist/lib/storage";
 import authReducer from "./authSlice";
 import socketReducer from "./socketSlice";
+import peerReducer from "./peerSlice";
 import messageReducer from "./messageSlice";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import createTransform from "redux-persist/es/createTransform";
@@ -24,12 +25,13 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["socket","auth","message"],
+  blacklist: ["socket","auth","message",'peer'],
   /*  transforms: [JSOGTransform], */
 }; 
 const rootReducer = combineReducers({
       auth: authReducer,
       socket: socketReducer,
+      peer: peerReducer,
       message:messageReducer
 });
 

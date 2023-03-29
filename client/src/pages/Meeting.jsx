@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { FcEndCall } from "react-icons/fc";
 import { BsChatDots,BsPeople,BsCameraVideo,BsCameraVideoOff,BsMic,BsMicMute} from "react-icons/bs";
 import { FiShare } from "react-icons/fi";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import VideoPlay from "../components/VideoPlay";
+import { RoomContext } from "../context/RoomContext";
 
 export default function Meeting() {
-  
-  return <div className="mx-6  border-[2px] border-gray-400  h-[570px] ">
+  const {id} = useParams()
+  const {socket} = useSelector(state=>state.socket)
+  const {peer} = useSelector(state=>state.peer)
+      const { stream,peers,shareScreen } = useContext(RoomContext);
+  const enterRoom = ({roomId})=>{
+    console.log({roomId})
+  }
+ 
+  return <div className="  border-[2px] border-gray-400  h-[570px] ">
         <div className=" border-gray-400 w-[100%] h-[60px]">
          <div className="mb-1 px-4  flex flex-row justify-between bg-slate-300 border-gray-400  border-b-[2px] cursor-pointer w-[100%]">
             <div className="flex">
@@ -43,7 +54,7 @@ export default function Meeting() {
                      Mic
                     </div>   
                 </div>
-                 <div className="flex flex-col px-4 justify-center items-center ">
+                 <div className="flex flex-col px-4 justify-center items-center " onClick={shareScreen}>
                    <FiShare className="text-2xl mr-1"/> 
                     <div className="text-sm">
                      Share
@@ -60,8 +71,14 @@ export default function Meeting() {
         </div>
         <div className=" h-[calc(100%-60px)]">
 
-          <div className="flex  h-[100%] items-center justify-center">
-          qweqwe
+          <div className="  h-[100%] ">
+            <div className="grid grid-cols-3 gap-3">
+              <VideoPlay stream={stream}  />
+              {Object.values(peers).map(peer1=>(
+                  <VideoPlay stream={peer1?.stream}  />
+              ))}
+
+            </div>
           </div>
         </div>
     </div>;

@@ -16,9 +16,9 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
       setOptions([]);
       setFetching(true);
       fetchOptions(value).then((newOptions) => {
-           console.log(value)
+        /*    console.log(value)
            console.log(newOptions)
-           
+            */
         if (fetchId !== fetchRef.current) {
      
           return;
@@ -42,7 +42,7 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
 }
 // Usage of DebounceSelect
 async function fetchUserList(username) {
-  console.log('fetching user', username);
+ /*  console.log('fetching user', username); */
   return  await axios.get(`/user/search?username=${username}`)
     .then((response) => response.data)
     .then((data) =>
@@ -82,8 +82,7 @@ export default function CreateMeeting() {
              /*   } */  
           },[value])
           const onChangeDate = (value, dateString) => {
-       /*    console.log('Selected Time: ', value);
-          console.log('Formatted Selected Time: ', dateString); */
+ 
           };
           const onOk = (dateString) => {
           let start = dayjs(dateString[0].$d).format('YYYY-MM-DDTHH:mm:ssZ')
@@ -105,7 +104,7 @@ export default function CreateMeeting() {
                ...date,
                attendees:attendee,
            })
-         console.log(form)
+      
            
      },[information,date,attendee])
      const HandleExist= (e)=>{
@@ -114,18 +113,17 @@ export default function CreateMeeting() {
      const handleSubmit = async(e)=>{
         
            e.preventDefault();
-           console.log("submit")
+     
           try{
-              console.log(form.attendees)
+           
                const conversation = await axios.post('/api/create-conversation',{attendees:form.attendees},{
         headers: { Authorization: auth.accesstoken },
       })
-      console.log(conversation.data._id)
-               console.log(conversation)
+   
                  const response = await axios.post('/api/create-event',{...form,conversation:conversation.data._id},{
           headers: { Authorization: auth.accesstoken },
           })
-                 console.log(response)
+             
           }
           catch(err){
                console.log(err)

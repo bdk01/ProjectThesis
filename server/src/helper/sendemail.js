@@ -2,7 +2,9 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const sendEmail = async (datasend) => {
+export const sendEmail = async ({redirectLink, user}) => {
+  console.log(redirectLink)
+  console.log(user.email)
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -12,32 +14,24 @@ export const sendEmail = async (datasend) => {
       pass: process.env.EMAIL_APP_PASSWORD, // generated ethereal password
     },
   });
-  console.log(datasend.email);
+  console.log(user.email);
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: "buidangkhoa252001@gmail", // sender address
-    to: datasend.email, // list of receivers
-    subject: "Thong tin lich kham benh", // Subject line
-    text: "Hello world?", // plain text body
-    html: getBodyHTMLEmail(datasend),
+    to: user.email, // list of receivers
+    subject: "Change password", // Subject line
+    text: "This is a link for you to change a password", // plain text body
+    html: getBodyHTMLEmail({ redirectLink, user }),
   });
 };
-let getBodyHTMLEmail = (datasend) => {
-    let result = `
-                    <h2>Tieng viet Xin chao2 ${datasend.email}</h2>
-                    <p>Chúc mừng bạn đã nhận email này</p>
+let getBodyHTMLEmail = ({ redirectLink, user }) => {
+  let result = `
+                    <h2> Xin chao ${user.fullname}</h2>
+                    <p>Vui long bam vao link duoi day de co the reset passowrd</p>
                     <div>
-                    <h2>Thời gian 123</h2>
-                    </div>
-                    <div>
-                    <h2>Bác sĩ Khoa</h2>
-                    </div>
-                    <div>
-                    <p>Hãy xác nhận qua đường link</p>
-                    
+                     <a href=${redirectLink} target="_blank">Click here </a>
                     </div>
                     `;
-  
   return result;
 };
