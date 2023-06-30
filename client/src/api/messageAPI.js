@@ -59,8 +59,7 @@ export const getMoreMessages = async ( {auth,id,page=1,dispatch}) => {
   };
 }
 export const addMessages = async ( msg,auth,socket,dispatch) => {
-  console.log("add")
-   
+
 /*    */
   /* socket.emit('addMessage', {...msg, user: { _id, avatar, fullname, username } }) */
   try {

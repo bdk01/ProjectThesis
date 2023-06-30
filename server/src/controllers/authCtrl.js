@@ -48,7 +48,8 @@ const authCtrl = {
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ msg: "Incorrect password." });
-
+        const userInf = await Users.findOne({ email }).select('-password')
+            .populate("followers following", "-password")
       // If login success , create access token and refresh token
        const accesstoken = createAccessToken({ id: user._id });
      const refresh_token = createRefreshToken({ id: user._id });
@@ -59,7 +60,7 @@ const authCtrl = {
       });
     
 
-      res.status(200).json({ accesstoken, user });
+      res.status(200).json({ accesstoken, user:userInf });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -126,7 +127,7 @@ const authCtrl = {
       jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, async(err, result) => {
         if (err)
           return res.status(400).json({ msg: "Please login or register" });
-         const user = await Users.findById(result.id).select("-password")
+         const user = await Users.findById(result.id).select("-password").populate("followers following", "-password")
          if (!user)
             return res.status(400).json({ msg: "This does not exist." });
         const accesstoken = createAccessToken({ id: user.id });
@@ -148,7 +149,7 @@ const authCtrl = {
         async (err, result) => {
           if (err) return res.status(400).json({ msg: "Please login now." });
 
-          const user = await Users.findById(result.id).select("-password")
+          const user = await Users.findById(result.id).select("-password").populate("followers following", "-password")
           if (!user)
             return res.status(400).json({ msg: "This does not exist." });
 

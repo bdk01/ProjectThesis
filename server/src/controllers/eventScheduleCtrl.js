@@ -1,5 +1,5 @@
 import EventSchedule from "../models/eventScheduleModel";
-
+import Conversations from "../models/conversationModel";
 const eventScheduleCtrl = {
 
   createEvent: async (req, res) => {
@@ -17,6 +17,14 @@ const eventScheduleCtrl = {
         attendees
       });
         await newEvet.save();
+      /*   const  */
+       /* const newConversation = await EventSchedule.findById(conversation); */
+        const newConversation = await Conversations.findByIdAndUpdate(
+          conversation,
+          { $set: { event: newEvet._id } },
+          { new: true }
+        );
+    console.log(newConversation)
          res.status(200).json(newEvet);
     } catch (err) {
      return res.status(500).json({ msg: err.message });
@@ -103,7 +111,47 @@ const eventScheduleCtrl = {
   res.status(404).json({ message: err.message });
     }
   },
+   findOrCreateConversation : async (req, res) => {
+       const { sender,recipient,senderName,recipientName } = req.body;
+ 
+    try {
+        const conversationRoom = await Conversations.findOne(
+            {
+                $or: [
+                    {attendees: [sender, recipient]},
+                    {attendees: [recipient, sender]}
+                ]
+            }
+        )
+        if(conversationRoom){
 
+          res.json(conversationRoom)
+        }
+        else{
+            const conversation = new Conversations({
+         attendees:[sender,recipient]
+       });
+         await conversation.save();
+            const newEvent = new EventSchedule({
+            conversation:conversation._id,
+            meetingName:`${senderName} & ${recipientName}`,
+            description:'',
+            creatorId: sender,
+            attendees:[sender,recipient]
+          });
+        await newEvent.save();
+           const newConversation = await Conversations.findByIdAndUpdate(
+          conversation._id,
+          { $set: { event: newEvent._id } },
+          { new: true }
+        );
+        res.json(newEvent)
+        }
+     
+    } catch (err) {
+  res.status(404).json({ message: err.message });
+    }
+  },
 
 
 };

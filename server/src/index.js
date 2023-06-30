@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import appRouter from './routes';
 import cookieParser from 'cookie-parser'
-
+import fileUpload from "express-fileupload";
 import { createServer } from "http";
 import {ExpressPeerServer } from "peer";
 import { Server } from "socket.io";
@@ -20,9 +20,15 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-app.use(bodyParser.urlencoded({extended:true}));
+
+/* app.use(bodyParser.urlencoded({extended: true })); */
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+  })
+);
 app.use(cookieParser());
 
 //socket

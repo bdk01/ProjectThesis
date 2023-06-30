@@ -4,7 +4,7 @@ import { BsChatDots,BsPeople,BsCameraVideo,BsCameraVideoOff,BsMic,BsMicMute} fro
 import { FiShare } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import VideoPlay from "../components/VideoPlay";
+import VideoPlay from "../components/meeting/VideoPlay";
 import { RoomContext } from "../context/RoomContext";
 
 export default function Meeting() {

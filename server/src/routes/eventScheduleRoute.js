@@ -5,6 +5,7 @@ const eventScheduleRoute = express.Router();
 
 eventScheduleRoute.post("/create-event",auth, eventSchedule.createEvent);
 eventScheduleRoute.get("/search", auth, eventSchedule.searchEvent);
+eventScheduleRoute.post("/findOrCreate-Conversation", auth, eventSchedule.findOrCreateConversation);
 
 
 

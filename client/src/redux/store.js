@@ -13,6 +13,13 @@ import authReducer from "./authSlice";
 import socketReducer from "./socketSlice";
 import peerReducer from "./peerSlice";
 import messageReducer from "./messageSlice";
+import statusReducer from "./statusSlice";
+import notifyReducer from "./notifySlice";
+import postReducer from "./postSlice";
+import profileReducer from "./profileSlice";
+import suggestionsReducer from "./suggestionsSlice";
+import detailPostReducer from "./detailPostSlice";
+import modalReducer from "./modalSlice";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import createTransform from "redux-persist/es/createTransform";
 import JSOG from "jsog";
@@ -25,14 +32,21 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["socket","auth","message",'peer'],
+  blacklist: ["socket","auth","message",'peer','status','homePosts','notify','profile','detailPostr','suggestions','modal'],
   /*  transforms: [JSOGTransform], */
 }; 
 const rootReducer = combineReducers({
-      auth: authReducer,
-      socket: socketReducer,
-      peer: peerReducer,
-      message:messageReducer
+  auth: authReducer,
+  socket: socketReducer,
+  peer: peerReducer,
+  message: messageReducer,
+  status: statusReducer,
+  homePosts: postReducer,
+  notify: notifyReducer,
+  profile:profileReducer,
+  detailPostr:detailPostReducer,
+  suggestions:suggestionsReducer,
+  modal:modalReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import LeftSide from "../components/LeftSide";
-import RightSide from "../components/RightSide";
+import LeftSide from "../components/conversation/LeftSide";
+import RightSide from "../components/conversation/RightSide";
 import Message from "../assets/img/message2.svg"
 export default function Conversation() {
   const { id } = useParams()

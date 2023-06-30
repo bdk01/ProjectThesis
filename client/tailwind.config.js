@@ -1,16 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-const colors = require("tailwindcss/colors");
-const windmill = require("@windmill/react-ui/config");
+
+
 module.exports = {
   mode: "jit",
-  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [ "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    /*  colors: {
-      rose: colors.rose,
-      fuchsia: colors.fuchsia,
-      indigo: colors.indigo,
-      slate: colors.slate,
-    }, */
+   
     extend: {
       colors: {
         gray: {
@@ -80,4 +74,5 @@ module.exports = {
     },
   },
   plugins: [],
+
 };

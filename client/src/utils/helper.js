@@ -35,3 +35,14 @@ export function formatAMPM(date) {
   var strTime = hours + ":" + minutes + " " + ampm;
   return strTime;
 }
+export const EditData = (data, id, post) => {
+    const newData = data.map(item => 
+        (item._id === id ? post : item)
+    )
+    return newData;
+}
+
+export const DeleteData = (data, id) => {
+    const newData = data.filter(item => item._id !== id)
+    return newData;
+}

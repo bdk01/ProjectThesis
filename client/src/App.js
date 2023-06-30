@@ -9,14 +9,14 @@ import { MeetingAppProvider } from "./MeetingAppContextDef";
 import { getSocket } from "./redux/socketSlice";
 import io from "socket.io-client";
 import SocketClient from "./SocketClient";
-import Main from "./components/Main";
+
 import NotFound from "./pages/NotFound/NotFound";
 import CreateMeeting from "./pages/CreateMeeting";
 import Meeting from "./pages/Meeting";
 import Conversation from "./pages/Conversation";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+
+import Register from "./pages/Auth/Register";
 import {
   BrowserRouter,
   BrowserRouter as Router,
@@ -26,9 +26,34 @@ import {
 
 import { refreshToken } from "./api/authAPI";
 import { useDispatch, useSelector } from "react-redux";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
+import CreatePost from "./pages/CreatePost";
+
+import Post from "./pages/Post";
+import { getPosts } from "./api/postAPI";
+import { getNotifies } from "./api/notifyAPI";
+import Profile1 from "./pages/Profile1";
+import Profile from "./pages/Profile";
+import RegisterTA from "./pages/RegisterTA";
+import RegisterSubject from "./pages/Teacher/CreateSubject";
+import CreateSubject from "./pages/Teacher/CreateSubject";
+import CreateTaSchedule from "./pages/Teacher/CreateTaSchedule";
+
+import ManageTaSchedule from "./pages/Teacher/ManageTaSchedule";
+import ManageTa from "./pages/Teacher/ManageTa";
+import Login from "./pages/Auth/Login";
+import Layout from "./components/Layout";
+
+
+import ReviewTA from "./pages/Teacher/ReviewTA";
+import UserRoute from "./ProtectRoute/UserRoute";
+import ManageSubject from "./pages/Admin/ManageSubject";
+import ManageUser from "./pages/Admin/ManageUser";
+
+
 const App = () => {
+
   const [token, setToken] = useState("");
   const [meetingId, setMeetingId] = useState("");
   const [participantName, setParticipantName] = useState("");
@@ -67,45 +92,167 @@ const App = () => {
       };
     }
   }, [isMobile]);
-
+    useEffect(() => {
+    if(auth.accesstoken) {
+     /*  dispatch(getPosts(auth.token)) */
+ /*      dispatch(getSuggestions(auth.token)) */
+      getNotifies({auth,dispatch})
+    }
+  }, [dispatch, auth.accesstoken])
   return (
     <BrowserRouter>
+   
       <Routes>
-        <Route
-          path="/home"
-          element={
-            <Main>
-              <Home />
-            </Main>
-          }
-        />
-
+           {/* <Route path="/" element={<Layout />}>
+            <Route
+                path="home"
+              element={
+                  <Home />
+              }
+            />
+      
+          </Route> */}
+         <Route
+                path="/home"
+              element={
+                <Layout>
+                  <Home />
+                </Layout>
+              }
+            />
+         <Route
+                path="/"
+              element={
+                <UserRoute>
+               {/*    <Home /> */}
+                </UserRoute>
+              }
+            />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+     
+
+        <Route
+          path="create-post"
+          element={
+              <CreatePost />
+          }
+        />
+        <Route
+          path="review-ta"
+          element={
+                 <Layout>
+
+                   <ReviewTA />
+                 </Layout>
+          }
+        />
+   
+        <Route
+          path="/profile1"
+          element={
+            <Layout>
+              <Profile1 />
+            </Layout>
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <Layout>
+              <Profile />
+            </Layout>
+          }
+        />
         <Route
           path="/conversation"
           element={
-            <Main>
+            <Layout>
               <Conversation />
-            </Main>
+            </Layout>
           }
         />
         <Route
           path="/conversation/:id"
           element={
-            <Main>
+            <Layout>
               <Conversation />
-            </Main>
+            </Layout>
           }
         />
+        
         <Route
           path="/create-schedule"
           element={
-            <Main>
+            <Layout>
               <CreateMeeting />
-            </Main>
+            </Layout>
+          }
+        />
+        <Route
+          path="/post/:id"
+          element={
+            <Layout>
+              <Post />
+            </Layout>
+          }
+        />
+        <Route
+          path="/registerTA/:id"
+          element={
+            <Layout>
+              <RegisterTA />
+            </Layout>
+          }
+        />
+        <Route
+          path="/createSubject"
+          element={
+            <Layout>
+              <CreateSubject />
+            </Layout>
+          }
+        />
+        <Route
+          path="/createTaSchedule"
+          element={
+            <Layout>
+              <CreateTaSchedule />
+            </Layout>
+          }
+        />
+        <Route
+          path="/manageTaSchedule"
+          element={
+            <Layout>
+              <ManageTaSchedule />
+            </Layout>
+          }
+        />
+        <Route
+          path="/manageTa"
+          element={
+            <Layout>
+              <ManageTa/>
+            </Layout>
+          }
+        />
+        <Route
+          path="/manage-user"
+          element={
+            <Layout>
+              <ManageUser/>
+            </Layout>
+          }
+        />
+        <Route
+          path="/review-subject"
+          element={
+            <Layout>
+              <ManageSubject/>
+            </Layout>
           }
         />
         <Route

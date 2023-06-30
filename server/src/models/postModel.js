@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 const postSchema = mongoose.Schema(
   {
     user: { type: mongoose.Types.ObjectId, ref: "Users" },
-    description: { type: String, required: true },
-    likes: [],
-    createdAt: {
-      type: Date,
-      default: new Date(),
+    content: String,
+    likes: [{ type: mongoose.Types.ObjectId, ref: "Users" }],
+    comments: [{ type: mongoose.Types.ObjectId, ref: "Comments" }],
+    images: {
+      type: Array,
+      required: true,
     },
-    image: String,
   },
   {
     timestamps: true,

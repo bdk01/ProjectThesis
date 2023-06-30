@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce';
 import dayjs from 'dayjs';
 import axios from '../axios';
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const { RangePicker } = DatePicker;
 function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
   const [fetching, setFetching] = useState(false);
@@ -43,7 +44,7 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
 // Usage of DebounceSelect
 async function fetchUserList(username) {
  /*  console.log('fetching user', username); */
-  return  await axios.get(`/user/search?username=${username}`)
+  return  await axios.get(`/api/user/search?username=${username}`)
     .then((response) => response.data)
     .then((data) =>
 
@@ -55,6 +56,7 @@ async function fetchUserList(username) {
     );
 }
 export default function CreateMeeting() {
+     const navigate = useNavigate()
        const { auth} = useSelector(state => state)
      const [information, setInformation] = useState({
           location:"",
@@ -123,7 +125,7 @@ export default function CreateMeeting() {
                  const response = await axios.post('/api/create-event',{...form,conversation:conversation.data._id},{
           headers: { Authorization: auth.accesstoken },
           })
-             
+               navigate(`/conversation`, { replace: true })
           }
           catch(err){
                console.log(err)
@@ -135,22 +137,22 @@ export default function CreateMeeting() {
                  <div className=" relative ">
                       <div className="flex justify-start flex-col  border-b-2  pl-4 pb-3 pt-3">
                            <div className="text-xl font-bold mb-1 lg:text-2xl mt-2">
-                                Tạo cuộc họp mới
+                                Create Meeting Chat
                            </div>
                           
                       </div>
-                      <form className="  my-4 " onSubmit={handleSubmit}>
-                           <div className="  justify-items-start  ">
+                      <form className="  my-4  " onSubmit={handleSubmit}>
+                           <div className="  justify-items-start mx-3 ">
 
-                                     <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
+                                     <div className="flex mb-6 sm:py-1 flex-row   w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
-                                               <label className=" mr-3  text-yellow-600 lg:text-lg text-base">
+                                               <label className=" mr-3  font-semibold lg:text-lg text-base">
                                                     MeetingName:
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none bg-white border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="meetingName"
                                                     onChange={handleForm}
@@ -160,13 +162,13 @@ export default function CreateMeeting() {
                                      </div>
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
-                                               <label className=" mr-3  text-yellow-600 lg:text-lg text-base">
+                                                <label className=" mr-3  font-semibold  lg:text-lg text-base">
                                                     Description:
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none bg-white  border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="description"
                                                     onChange={handleForm}
@@ -176,13 +178,13 @@ export default function CreateMeeting() {
                                      </div>
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
-                                               <label className=" mr-3  text-yellow-600 lg:text-lg text-base">
+                                               <label className=" mr-3 font-semibold lg:text-lg text-base">
                                                     Location:
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none bg-white border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="location"
                                                     onChange={handleForm}
@@ -192,7 +194,7 @@ export default function CreateMeeting() {
                                      </div>
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
-                                                <label className=" mr-3  text-yellow-600 lg:text-lg text-base">
+                                                <label className=" mr-3  font-semibold lg:text-lg text-base">
                                                     Date:
                                                </label>
                                           </div>
@@ -209,7 +211,7 @@ export default function CreateMeeting() {
                                      </div>
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
-                                                <label className=" mr-3  text-yellow-600 lg:text-lg text-base">
+                                                <label className=" mr-3  font-semibold lg:text-lg text-base">
                                                     Attendees:
                                                </label>
                                           </div>
@@ -240,7 +242,7 @@ export default function CreateMeeting() {
                                      <label className="text-gray-500 mr-3  "></label>
                                 </div>
                                 <div className="flex ">
-                                     <button onClick={()=>setExist(false)} className="py-2 px-4 mt-2 mb-4 round-md font-extrabold bg-[#ffd124]  hover:translate-y-[-1px] transition-all text-[#00003B] rounded-sm" type="submit">
+                                     <button onClick={()=>setExist(false)} className="py-2 px-4 mt-2 mb-4 round-md font-medium bg-red-600  hover:translate-y-[-1px] transition-all text-white rounded-sm" type="submit">
                                           Cập nhật
                                      </button>
                                 </div>

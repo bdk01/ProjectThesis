@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { UserRole } from "../constant";
 
 const { Schema } = mongoose;
 
@@ -30,12 +31,26 @@ const UserSchema = new Schema(
       maxlength: 25,
       unique: true,
     },
+    phone: {
+      type: Number,
+    },
     avatar: {
       type: String,
       default:
         "https://res.cloudinary.com/khoa252001/image/upload/v1668777257/socialmedia/duck_orrdvy.jpg",
     },
-    role: { type: String, default: "user" },
+    studentId: {
+      type: String,
+    },
+    followers: [{type: mongoose.Types.ObjectId, ref: 'Users'}],
+    following: [{type: mongoose.Types.ObjectId, ref: 'Users'}],
+    role: {
+            type: String,
+            enum: Object.values(UserRole),
+            required: true,
+            default: UserRole.USER
+    },
+   subjectTa:{type: mongoose.Types.ObjectId, ref: 'Subjects'},
   },
   { timestamps: true }
 );

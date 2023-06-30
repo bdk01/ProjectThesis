@@ -8,10 +8,10 @@ import {
 import { BottomBar } from "./components/BottomBar";
 import { SidebarConatiner } from "../components/sidebar/SidebarContainer";
 import MemorizedParticipantView from "./components/ParticipantView";
-import { PresenterView } from "../components/PresenterView";
+import { PresenterView } from "../components/meeting/PresenterView";
 import { nameTructed, trimSnackBarText } from "../utils/helper";
 import WaitingToJoinScreen from "../components/screens/WaitingToJoinScreen";
-import {ConfirmBox} from "../components/ConfirmBox";
+import { ConfirmBox } from "../components/meeting/ConfirmBox";
 import useIsMobile from "../hooks/useIsMobile";
 import useIsTab from "../hooks/useIsTab";
 import { useMediaQuery } from "react-responsive";

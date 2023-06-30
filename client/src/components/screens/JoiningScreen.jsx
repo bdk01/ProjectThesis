@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { MeetingDetailsScreen } from "../MeetingDetailsScreen";
+import { MeetingDetailsScreen } from "../meeting/MeetingDetailsScreen";
 import { createMeeting, getToken, validateMeeting } from "../../api";
 import { CheckCircleIcon } from "@heroicons/react/outline";
-import SettingDialogueBox from "../SettingDialogueBox";
-import {ConfirmBox} from "../ConfirmBox";
+import SettingDialogueBox from "../meeting/SettingDialogueBox";
+import { ConfirmBox } from "../meeting/ConfirmBox";
 import { meetingTypes } from "../../utils/common";
 import { Constants } from "@videosdk.live/react-sdk";
 import useIsMobile from "../../hooks/useIsMobile";
@@ -431,14 +431,14 @@ export function JoiningScreen({
                             handleClickOpen();
                           }}
                         >
-                          <div className="flex flex-row items-center justify-center m-1">
+                       {/*    <div className="flex flex-row items-center justify-center ">
                             <button className="text-white">
                               <CheckCircleIcon className="h-5 w-5" />
                             </button>
-                            <p className="text-base text-white ml-1">
+                            <p className="text-base text-white ">
                               Check your audio and video
                             </p>
-                          </div>
+                          </div> */}
                         </div>
                       )}
                   </div>
