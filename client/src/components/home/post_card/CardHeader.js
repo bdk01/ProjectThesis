@@ -35,7 +35,8 @@ const CardHeader = ({post}) => {
     }
 
     const handleCopyLink = () => {
-        navigator.clipboard.writeText(`local/post/${post._id}`)
+       
+        navigator.clipboard.writeText(`http://localhost:3000/post/${post._id}`)
     }
 
     return (
@@ -46,10 +47,10 @@ const CardHeader = ({post}) => {
                                 <div className="flex flex-1 items-center space-x-4">
                                    
                                         <div className="bg-gradient-to-tr from-yellow-600 to-pink-600 p-0.5 rounded-full">  
-                                            <img src={auth.user.avatar} className="bg-gray-200 border border-white rounded-full w-10 h-10" />
+                                            <img src={post.user.avatar} className="bg-gray-200 border border-white rounded-full w-10 h-10" />
                                         </div>
                                     <div>
-                                    <span className="block capitalize font-semibold "> {auth.user.username} </span>
+                                    <span className="block capitalize font-semibold "> {post.user.username} </span>
                                     <small className="text-muted">
                                         {moment(post.createdAt).fromNow()}
                                     </small>
@@ -57,7 +58,7 @@ const CardHeader = ({post}) => {
                                     </div>
                                 </div>
                    <div className="nav-item dropdown cursor-pointer">
-                <span className="material-icons" id="moreLink" data-toggle="dropdown">
+                <span className="material-icons " id="moreLink" data-toggle="dropdown">
                     more_horiz
                 </span>
 

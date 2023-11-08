@@ -7,7 +7,7 @@ import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import axios from "../../axios"
 import { useSelector } from "react-redux";
-import ApproveTa from "../../components/Teacher/ManageScheduleTA/ApproveTa";
+import EditTa from "../../components/Teacher/ManageTA/EditTA";
 
 
 
@@ -74,15 +74,15 @@ function ManageTa() {
                title: "",
                dataIndex: "action",
                render: (a, record) => (
-                    <div className="flex flex-row gap-y-1 gap-x-3">
+                    <div className="flex flex-row gap-y-1 ">
                          <button
-                              className="flex items-baseline gap-x-1 hover:text-blue-600"
+                              className="flex items-baseline  hover:text-blue-600"
                               onClick={() => handleClickEdit(record)}
                          >
                               <AiFillEdit className="translate-y-[1px]" />
                               Sửa
                          </button>
-                         <button
+                        {/*  <button
                               className="flex items-baseline gap-x-1 hover:text-red-600"
                               onClick={() => {
                                    setIsDeleteVisible(true);
@@ -92,7 +92,7 @@ function ManageTa() {
                          >
                               <AiOutlineDelete className="translate-y-[1px]" />
                               Xóa
-                         </button>
+                         </button> */}
                     </div>
                ),
           },
@@ -174,12 +174,12 @@ function ManageTa() {
                          placeholder="Nhập từ khóa"
                          onSearch={searchByKeyword}
                     />
-                    <button
+              {/*       <button
                          className="px-5 py-2 border border-neutral-800 text-center hover:bg-slate-300"
                          onClick={() => setIsAddVisible(true)}
                     >
                          + Thêm mới
-                    </button>
+                    </button> */}
                </div>
                <Table
                     className="flex-1 z-0"
@@ -198,15 +198,15 @@ function ManageTa() {
                     />
                )}
                {isEditVisible && (
-                    <ApproveTa
+                    <EditTa
                          onClose={() => setIsEditVisible(false)}
                          data={dataForEdit}
                          refetchData={() => fetchData(params)}
                     />
                )}
-               <ConfirmModal //Modal delete career
+               <ConfirmModal 
                     isVisible={isDeleteVisible}
-                    /* text={`xóa form  `} */ /* ${nameCompare} */
+                  
                     onClose={() => setIsDeleteVisible(false)}
                     loading={loading}
                     disable={isDisable}

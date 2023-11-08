@@ -14,18 +14,18 @@ export const notifySlice = createSlice({
        state.data=[payload, ...state.data]
     },
     getNotify: (state,{payload}) => {
-      console.log(payload)
+    /*   console.log(payload) */
        state.data=payload
      /*  state.data =payload; */
  
     },
     updateNotify: (state,{payload}) => {
-      console.log(payload)
+    /*   console.log(payload) */
    
      state.data = EditData(state.data, payload._id,payload)
     },
     removeNotify: (state,{payload}) => {
-      console.log(payload)
+     /*  console.log(payload) */
      
 /*      state.data = DeleteData(state.data, payload._id) */
        state.data =  state.data.filter(item => (

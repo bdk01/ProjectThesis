@@ -67,7 +67,7 @@ const messageCtrl = {
   
    const conversations = await Conversations.find({
      attendees: { $in:[req.user._id] },
-   }).sort({ UpdatedAt: -1 }).populate('event');
+   }).sort({ updatedAt: -1 }).populate('event');
     res.status(200).json({
       conversations,
       result: conversations.length,

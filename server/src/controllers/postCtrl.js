@@ -43,8 +43,19 @@ const postCtrl = {
     },
     getPosts: async (req, res) => {
         try {
+            const users = await Users.find({
+                role: "teacher",
+              })
+             
+              const teacherUser = users.map(user=>user._id)
+             
+            const newArr = [...req.user.following, req.user._id,...teacherUser]
+           
+           const uniq = [...new Set(newArr)]
+         
+
             const features =  new APIfeatures(Posts.find({
-                user: [...req.user.following, req.user._id]
+                user: uniq
             }), req.query).paginating()
    
             const posts = await features.query.sort('-createdAt')
@@ -164,20 +175,31 @@ const postCtrl = {
     },
     getPostsDicover: async (req, res) => {
         try {
-
-            const newArr = [...req.user.following, req.user._id]
-
+            const users = await Users.find({
+                role: "teacher",
+              })
+             
+              const teacherUser = users.map(user=>user._id)
+              console.log(teacherUser)
+            const newArr = [...req.user.following, req.user._id,...teacherUser]
+            console.log(newArr)
+           const uniq = [...new Set(newArr)]
+           console.log(uniq)
+           /*   const getNewArr = newArr.filter(newAr=>newAr!==teacherUser) */
+           /*   console.log(getNewArr) */
             const num  = req.query.num || 9
 
             const posts = await Posts.aggregate([
-                { $match: { user : { $nin: newArr } } },
+                { $match: { user : { $in: uniq } } },
                 { $sample: { size: Number(num) } },
+                { $sort: { updatedAt : -1 } },
             ])
 
             return res.json({
                 msg: 'Success!',
                 result: posts.length,
-                posts
+                posts,
+            
             })
 
         } catch (err) {

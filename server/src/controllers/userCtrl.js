@@ -185,7 +185,23 @@ const userCtrl = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
-      }
+      },
+        editProfileUser: async (req, res) => {
+        try {
+          console.log('gg')
+            const { avatar, fullname,username,phone,introduction } = req.body
+           
+
+            await Users.findOneAndUpdate({_id: req.user._id}, {
+                avatar, fullname,username,phone,introduction
+            })
+
+            res.json({msg: "Update Success!"})
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
 };
 
 export default userCtrl;

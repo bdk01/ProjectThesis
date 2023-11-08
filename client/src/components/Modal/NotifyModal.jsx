@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'/* 
 import { isReadNotify, NOTIFY_TYPES, deleteAllNotifies } from '../redux/actions/notifyAction' */
 import { deleteAllNotifies, isReadNotify } from '../../api/notifyAPI'
+import { useTranslation } from 'react-i18next'
 
 const NotifyModal = () => {
+    const { t } = useTranslation();
     const { auth, notify } = useSelector(state => state)
     const dispatch = useDispatch()
 
@@ -32,7 +34,7 @@ const NotifyModal = () => {
     return (
         <div style={{minWidth: '300px'}}>
             <div className="d-flex justify-content-between align-items-center px-3">
-                <h3>Notification</h3>
+                <h3>{t('Notification')}</h3>
                 {
                     notify?.sound 
                     ? <i className="fas fa-bell text-danger" 
@@ -102,7 +104,7 @@ const NotifyModal = () => {
             <hr className="my-1" />
             <div className="text-right text-danger mr-2" style={{cursor: 'pointer'}}
             onClick={handleDeleteAll}>
-                Delete All
+               {t('Delete all')}
             </div>
 
         </div>

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import axios from '../../axios'
+import { useTranslation } from "react-i18next";
 /* import "./SearchBar.css"; */
 
 export const SearchBar = ({ results,setResults, setInput, input }) => {
     /*  const [input, setInput] = useState(""); */
-
+    const { t } = useTranslation();
      const fetchData = async(value) => {
           if(!value) return setResults([])
       
@@ -14,7 +15,7 @@ export const SearchBar = ({ results,setResults, setInput, input }) => {
       
                     console.log(res.data)
                     setResults(res.data.users);
-               
+                    if(!value) return setResults([])
                }
                catch(err){
                     console.log(err)
@@ -31,7 +32,7 @@ export const SearchBar = ({ results,setResults, setInput, input }) => {
                <FaSearch id="search-icon" className="text-[royalblue] ml-[8px] text-xl" />
                <input
                className="bg-transparent border-none height-[100%] text-base w-[100%] ml-[12px] focus:outline-none  "
-                    placeholder="Type to search..."
+                    placeholder={t('Enter to search')}
                     value={input}
                     onChange={(e) => handleChange(e.target.value)}
                />

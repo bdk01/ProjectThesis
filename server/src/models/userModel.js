@@ -34,6 +34,9 @@ const UserSchema = new Schema(
     phone: {
       type: Number,
     },
+    introduction: {
+      type: String,
+    },
     avatar: {
       type: String,
       default:

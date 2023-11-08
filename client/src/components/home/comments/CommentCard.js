@@ -31,7 +31,7 @@ const CommentCard = ({children, comment, post, commentId}) => {
         if(comment.likes.find(like => like._id === auth.user._id)){
             setIsLike(true)
         }
-    },[comment, auth.user._id])
+    },[comment, auth.user._id,dispatch])
 
     const handleUpdate = async() => {
         if(comment.content !== content){

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Form, Input, DatePicker, Button, Select } from "antd";
 import moment from "moment";
 import axios from "../../../axios";
-/* import { END_POINT } from "../../../utils/constant"; */
+
 import { useSelector } from "react-redux";
 
-/* import { MainContext } from "../../../context/MainContext"; */
+
 const { Option } = Select;
 const { Item } = Form;
 function EditUser({ onClose, data, refetchData }) {
@@ -22,7 +22,7 @@ function EditUser({ onClose, data, refetchData }) {
                console.log('gg')
                console.log(dataEdit)
 
-             /*   console.log() */
+               console.log()
                const approve = {
                     email: dataEdit.email,
                     username: dataEdit.username,

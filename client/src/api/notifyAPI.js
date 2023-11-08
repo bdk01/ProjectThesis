@@ -1,20 +1,22 @@
 import axios from "../axios"
 import { getNotify, removeAllNotify, updateNotify } from "../redux/notifySlice"
-export const createNotify = async ({msg, auth, dispatch}) => {
+export const createNotify = async ({msg, auth, dispatch,socket}) => {
     try {
-        console.log(msg)
+     /*    console.log(msg) */
        const res =   await axios.post("/api/notify", msg , {
                 headers: { Authorization: auth.accesstoken }
             })
-         console.log(res)
-            /*  socket.emit('createNotify', {
+       /*   console.log(res) */
+     
+             socket.emit('createNotify', {
             ...res.data.notify,
             user: {
                 username: auth.user.username,
                 avatar: auth.user.avatar
             }
-        }) */
-
+        })
+        
+        
     } catch (err) {
      console.log(err)
     }
@@ -26,16 +28,10 @@ export const getNotifies= async ({auth,dispatch}) => {
        const res =   await axios.get("/api/notifies", {
                 headers: { Authorization: auth.accesstoken }
             })
-          console.log(res)
+        /*   console.log(res) */
             /*   dispatch({ type: NOTIFY_TYPES.GET_NOTIFIES, payload: res.data.notifies }) */
             dispatch(getNotify(res.data.notifies))
-            /*  socket.emit('createNotify', {
-            ...res.data.notify,
-            user: {
-                username: auth.user.username,
-                avatar: auth.user.avatar
-            }
-        }) */
+         
 
     } catch (err) {
      console.log(err)
@@ -43,7 +39,7 @@ export const getNotifies= async ({auth,dispatch}) => {
 }
 export const removeNotify= async ({auth,msg,dispatch}) => {
     try {
-     console.log('getnotify')
+   /*   console.log('getnotify') */
        const res =   await axios.delete(`/api/${msg.id}?url=${msg.url}`, {
                 headers: { Authorization: auth.accesstoken }
             })

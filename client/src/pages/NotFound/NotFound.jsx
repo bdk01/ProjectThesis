@@ -1,7 +1,8 @@
 import React from 'react';
 import "./notfound.css"
 import notfound from "./notfound.png"
-import Header from '../../components/Header';
+import Header from '../../components/Header/Header';
+
 
 const NotFound= () => {
     return (

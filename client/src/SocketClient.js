@@ -1,77 +1,133 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import Peer from "peerjs";
-import { addpeers, getPeer, getStream } from "./redux/peerSlice";
-const SocketClient = ({ children }) => {
-  const { auth } = useSelector((state) => state);
-  const { socket } = useSelector((state) => state.socket);
-  const { peer,stream } = useSelector((state) => state.peer);
-  const [stream1,setStream1] = useState()
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { createNotify, getNotifies } from "./api/notifyAPI"
+import { follow } from "./api/profileAPI"
+import { GetUserInf } from "./redux/authSlice"
+import { addMessages, getConversations } from "./api/messageAPI"
+import { AddMessage, AddUser } from "./redux/messageSlice"
+import { showNotification } from "./utils/helper"
 
-  const navigate = useNavigate();
-    const dispatch = useDispatch();
-   const getUsers = ({ participants }) => {
-     console.log({ participants });
-   };
-   const enterRooms = ({ roomId }) => {
-     console.log({ roomId });
-      navigate(`/meeting/${roomId}`);
-   };
+export default function SocketClient() {
+  const { auth,  notify } = useSelector(state => state)
+  const { socket } = useSelector(state => state.socket)
+  const dispatch = useDispatch()
+
+  /* const audioRef = useRef() */
+
+  // joinUser
   useEffect(() => {
-    if (!socket) return;
-    setTimeout(() => {
-      console.log("create-room");
-      
-      try {
-        navigator.mediaDevices
-          .getUserMedia({ video: true, audio: true })
-          .then((stream1) => {
-            setStream1(stream1);
-            dispatch(getStream(stream1));
-          });
-      } catch (err) {
-        console.log(err);
-      }
+    
+      socket.emit('joinUser', auth.user)
+    
+  },[socket, auth.user])
 
-     
-      socket.on("get-users", getUsers);
-      console.log("gg");
-    }, 0);
-  }, [ ]);
-  useEffect(()=>{
-      if(!peer) return;
-    if(!stream) return;
-     setTimeout(()=>{
-      console.log("123");
+  // Likes
+  useEffect(() => {
+      socket.on('likeToClient', newPost =>{
+       /*    dispatch({type: POST_TYPES.UPDATE_POST, payload: newPost}) */
+      })
 
-      socket.on("user-joined", ({ peerId }) => {
-     
-        const call = peer.call(peerId, stream);
-        console.log("strewam socket1");
-        console.log(call)
-        call.on("stream", (peerStream) => {
-          console.log("strewam socket");
-          console.log(peerStream);
-          dispatch(addpeers({peerId, peerStream}));
-        });
-      });
-      peer.on("call", (call) => {
-        call.answer(stream);
-        console.log("strewam socket3");
-        call.on("stream", (peerStream) => {
-          console.log("call,peer");
-          console.log(call);
-          console.log(peerStream);
-            
-          dispatch(addpeers({peerId:call.peer, peerStream}));
-        });
-      });
-   },0)
-  },[peer,stream,socket])
+      return () => socket.off('likeToClient')
+  },[socket, dispatch])
+
+  useEffect(() => {
+      socket.on('unLikeToClient', newPost =>{
+       /*    dispatch({type: POST_TYPES.UPDATE_POST, payload: newPost}) */
+      })
+
+      return () => socket.off('unLikeToClient')
+  },[socket, dispatch])
+
+
+  // Comments
+  useEffect(() => {
+      socket.on('createCommentToClient', newPost =>{
+       /*    dispatch({type: POST_TYPES.UPDATE_POST, payload: newPost}) */
+      })
+
+      return () => socket.off('createCommentToClient')
+  },[socket, dispatch])
+
+  useEffect(() => {
+      socket.on('deleteCommentToClient', newPost =>{
+        /*   dispatch({type: POST_TYPES.UPDATE_POST, payload: newPost}) */
+      })
+
+      return () => socket.off('deleteCommentToClient')
+  },[socket, dispatch])
+
 
  
-  return <> {children} </>;
-};
-export default SocketClient;
+  useEffect(() => {
+      socket.on('followToClient', newUser =>{
+        console.log('followsocket')
+         /*  dispatch({type: GLOBALTYPES.AUTH, payload: {...auth, user: newUser}}) */
+          dispatch(GetUserInf({...auth, user: newUser}))
+      })
+
+      return () => socket.off('followToClient')
+  },[socket, dispatch, auth])
+
+  useEffect(() => {
+      socket.on('unFollowToClient', newUser =>{
+        /*   dispatch({type: GLOBALTYPES.AUTH, payload: {...auth, user: newUser}}) */
+      })
+
+      return () => socket.off('unFollowToClient')
+  },[socket, dispatch, auth])
+
+
+  // Notification
+  useEffect(() => {
+      socket.on('createNotifyToClient', msg =>{
+        console.log('msg')
+        console.log(msg)
+        createNotify({msg, auth, dispatch,socket})
+     
+        getNotifies({auth,dispatch})
+        showNotification('success','You have new notification !')
+      })
+      return () => socket.off('createNotifyToClient')
+  },[socket, dispatch, auth.user])
+
+  useEffect(() => {
+      socket.on('removeNotifyToClient', msg =>{
+        /*   dispatch({type: NOTIFY_TYPES.REMOVE_NOTIFY, payload: msg}) */
+      })
+
+      return () => socket.off('removeNotifyToClient')
+  },[socket, dispatch])
+
+
+  // Message
+  useEffect(() => {
+      socket.on('addMessageToClient',({msg,authuser,people})=>{
+    
+     /*   addMessages(msg,auth,socket,dispatch,attendees) */
+     /*   ) */
+     console.log({msg,authuser,people})
+     dispatch(AddMessage({...msg,sender:authuser.user}));
+     let page =1
+     getConversations(auth,page,dispatch)
+    /*  dispatch(AddUser({...msg.user,  text: msg.text, media: msg.media})) */
+     /* let page =1
+     getConversations(auth,page,dispatch) */
+         /*  dispatch({type: MESS_TYPES.ADD_MESSAGE, payload: msg}) */
+       /*    dispatch({
+              type: MESS_TYPES.ADD_USER, 
+              payload: {
+                  ...msg.user, 
+                  text: msg.text, 
+                  media: msg.media
+              }
+          }) */
+
+      })
+
+      return () => socket.off('addMessageToClient')
+  },[socket, dispatch])
+
+
+ 
+}
+

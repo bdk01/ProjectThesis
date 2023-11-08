@@ -4,9 +4,11 @@ import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { OpenStatus } from '../../redux/statusSlice'
 import StatusModal from '../Modal/StatusModal'
+import { useTranslation } from 'react-i18next'
 
 
 const Status = () => {
+  const { t } = useTranslation();
     const { auth } = useSelector(state => state)
     const  [open,setOpen] = useState(false)
     const dispatch = useDispatch()
@@ -28,7 +30,7 @@ const Status = () => {
           className="w-[85%] bg-gray-200 rounded-full border-none outline-none py-2 px-3 text-[#424242] text-start"
           onClick={() => dispatch(OpenStatus({ status: true }))}
         >
-          {auth.user.username}, what are you thinking?
+          {auth.user.username},{t('what are you thinking?')}
         </button>
       </div>
     );

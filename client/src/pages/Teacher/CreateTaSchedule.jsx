@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce';
 import dayjs from 'dayjs';
 import axios from '../../axios';
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const { RangePicker } = DatePicker;
 function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
      const [fetching, setFetching] = useState(false);
@@ -55,6 +56,7 @@ async function fetchUserList(subject) {
           );
 }
 export default function CreateTaSchedule() {
+     const navigate = useNavigate();
      const { auth } = useSelector(state => state)
      const [information, setInformation] = useState({
           requirement: "",
@@ -119,6 +121,7 @@ export default function CreateTaSchedule() {
                     headers: { Authorization: auth.accesstoken },
                })
                console.log(response)
+               navigate(`/manageTaSchedule`);
           }
           catch (err) {
                console.log(err)

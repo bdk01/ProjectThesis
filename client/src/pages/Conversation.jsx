@@ -10,8 +10,8 @@ export default function Conversation() {
  
     setIduser(id)
   },[id])
-  return <div className="mx-6  border-[2px] border-gray-400 grid grid-cols-5 h-[570px]">
-        <div className="col-span-1  border-gray-400 border-r-[2px]">
+  return <div className="  border-[2px] border-gray-400 grid grid-cols-6 sm:grid-cols-5 h-[570px]">
+        <div className="col-span-2 sm:col-span-1 min-h-[100%]  border-gray-400 border-r-[2px]">
           <div className="flex mb-6  flex-col   ">
               <LeftSide/>
           </div>

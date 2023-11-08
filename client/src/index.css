@@ -37,7 +37,15 @@ code {
 
 button:active {
      border: none;
-  
+     outline: none;
+}
+button:focus {
+     border: none;
+     outline: none;
+}
+svg:focus {
+     border: none;
+     outline: none;
 }
 button {
      border: none;

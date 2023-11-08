@@ -1,13 +1,13 @@
 import { Table, Input } from "antd";
 import { useContext, useEffect, useState } from "react";
 import AddNewSubject from "../../components/Admin/ManageSubject/AddNewSubject";
-import EditCareer from "../../components/Teacher/ManageScheduleTA/EditSchedule";
+
 import ConfirmModal from "../../components/Modal/ConfirmModal";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import axios from "../../axios"
 import { useSelector } from "react-redux";
-import ApproveTa from "../../components/Teacher/ManageScheduleTA/ApproveTa";
+import EditSubject from "../../components/Admin/ManageSubject/EditSubject";
 
 
 
@@ -65,12 +65,12 @@ function ManageSubject() {
                dataIndex: ['subjectTa', 'subjectName'],
 
           }, */
-          {
+          /* {
                title: "Profile",
                dataIndex: "_id",
-               /*  render: (a) => <a>{`$${URL}/a`}</a>, */
+             
                render: text => <Link to={`/profile/${text}`}>Profile</Link>
-          },
+          }, */
          
           {
                title: "",
@@ -200,7 +200,7 @@ function ManageSubject() {
                     />
                )}
                {isEditVisible && (
-                    <ApproveTa
+                    <EditSubject
                          onClose={() => setIsEditVisible(false)}
                          data={dataForEdit}
                          refetchData={() => fetchData(params)}

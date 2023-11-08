@@ -13,7 +13,9 @@ export const getConversations = async ( auth,page ,dispatch) => {
       res.data.conversations.forEach((item) => {
         newArr.push(...item.event)
       });
-
+      console.log(res.data)
+      console.log('xemnewArr')
+        console.log(newArr)
       dispatch(GetConversations({ newArr, result: res.data.result }));
  
     } catch (err) {
@@ -22,11 +24,11 @@ export const getConversations = async ( auth,page ,dispatch) => {
   };
 export const getMessages = async ( {auth,id,page=1,dispatch}) => {
     try {
-      console.log(page)
+    /*   console.log(page) */
       const res = await axios.get(`/api/message/${id}?limit=${page * 9}`, {
         headers: { Authorization: auth.accesstoken },
       });
-         console.log(res);
+        
     /*   const newData = { messages: res.data.conversation.messages }; */
       const newData = {
         ...res.data,
@@ -41,11 +43,11 @@ export const getMessages = async ( {auth,id,page=1,dispatch}) => {
 }
 export const getMoreMessages = async ( {auth,id,page=1,dispatch}) => {
     try {
-      console.log(id)
+    
      const res = await axios.get(`/api/message/${id}?limit=${page * 9}`, {
        headers: { Authorization: auth.accesstoken },
      });
-      console.log(res)
+     
     /*   const newData = { messages: res.data.conversation.messages }; */
       const newData = {
         ...res.data,
@@ -58,15 +60,18 @@ export const getMoreMessages = async ( {auth,id,page=1,dispatch}) => {
      console.log(err)
   };
 }
-export const addMessages = async ( msg,auth,socket,dispatch) => {
+export const addMessages = async ( msg,auth,socket,dispatch,attendees) => {
 
-/*    */
-  /* socket.emit('addMessage', {...msg, user: { _id, avatar, fullname, username } }) */
   try {
+    /*    */
+
+    const people = attendees.attendees.filter(attendee => attendee!==auth.user._id)
+
+      socket.emit('addMessage', {msg,auth,people})
     const res = await axios.post(`/api/message`,msg,{
       headers: { Authorization: auth.accesstoken },
     }); 
-    console.log(res.data)
+  
     dispatch(AddMessage({...msg,sender:res.data.sender}));
     } catch (err) {
      console.log(err)

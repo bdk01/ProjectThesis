@@ -11,7 +11,7 @@ export const SearchResultsList = ({ results, setResults, setInput }) => {
           navigate(`/profile/${id}`, { replace: true });
      }
      return (
-          <div className="absolute w-[49%] bg-white flex flex-col shadow-md rounded-[10px] mt-[5px] max-h-[300px] overflow-y-auto">
+          <div className="absolute w-[40%] bg-white flex flex-col shadow-md rounded-[10px] mt-[6px] max-h-[300px] overflow-y-auto">
                {results.map((result) => {
                 /*     return <SearchResult result={result} key={result._id} />; */
                 return    <div

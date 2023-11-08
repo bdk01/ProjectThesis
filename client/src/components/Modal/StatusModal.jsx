@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { CloseStatus } from '../../redux/statusSlice'
 import axios from '../../axios'
 import { BsCardImage } from "react-icons/bs";
-import { createPost } from '../../api/postAPI';
+import { createPost, editPost } from '../../api/postAPI';
 import { useNavigate } from "react-router-dom";
 import { updatePost } from '../../redux/postSlice';
 import { imageUpload } from '../../utils/imageUpload';
@@ -89,8 +89,9 @@ const StatusModal = () => {
         }) */
 
         if(status.onEdit){
-          console.log(status)
-           updatePost({content, images, auth, status,dispatch})
+          
+         /*   updatePost({content, images, auth, status,dispatch}) */
+          await editPost({ content, images, auth, status, dispatch })
         }else{
      /*      createPost({content, images, auth, socket,dispatch}) */
           await  createPost({images:images,content:content,auth:auth,socket,dispatch})

@@ -22,7 +22,7 @@ const Posts = ({auth, id, dispatch, profile}) => {
     },[profile.posts, id])
 
     const handleLoadMore = async () => {
-    /*     setLoad(true) */
+        setLoad(true)
        /*  const res = await getDataAPI(`user_posts/${id}?limit=${page * 9}`, auth.token)
         const newData = {...res.data, page: page + 1, _id: id}
         dispatch({type: PROFILE_TYPES.UPDATE_POST, payload: newData})
@@ -40,7 +40,7 @@ const Posts = ({auth, id, dispatch, profile}) => {
 
               <div className="flex justify-center mt-6" id="toggle">
             <LoadMoreBtn result={result} page={page}
-            load={load} /* handleLoadMore={handleLoadMore} */ />
+            load={load} handleLoadMore={handleLoadMore} />
 
               </div>
             

@@ -1,12 +1,13 @@
 import axios from '../../axios';
 import React, { useEffect, useRef, useState } from "react";
-import {  useNavigate, useParams } from 'react-router-dom';
+import {  useLocation, useNavigate, useParams } from 'react-router-dom';
 import UserCard from './UserCard';
 import { useDispatch, useSelector } from "react-redux";
 import { getConversations } from '../../api/messageAPI';
 import { AddUser } from '../../redux/messageSlice';
 export default function LeftSide() {
     const [search, setSearch] = useState('')
+const pathname = useLocation()
       const { auth,message } = useSelector(state => state)
     const [searchUsers, setSearchUsers] = useState([])
     const { id } = useParams()
@@ -16,13 +17,13 @@ export default function LeftSide() {
     const [page, setPage] = useState(0)
       useEffect(() => {
         if(auth.accesstoken){
-          if(message.firstLoad) return;
-  
+          
+          console.log(pathname)
          let page =1
          getConversations(auth,page,dispatch)
-
+        
         }
-    },[dispatch, auth])
+    },[dispatch, auth,pathname,message.userChat])
    /*    useEffect(() => {
         dispatch()
     },[dispatch, auth,id]) */
@@ -34,7 +35,7 @@ export default function LeftSide() {
           const res = await axios.get(`/api/search?meetingName=${search}`,{
         headers: { Authorization: auth.accesstoken },
       })
-          console.log(res.data)
+    
           setSearchUsers(res.data)
         } catch (err) {
           console.log(err)
@@ -43,20 +44,31 @@ export default function LeftSide() {
     const handleAddUser = (user)=>{
         setSearch('')
         setSearchUsers([])
-        console.log("adduser")
+        console.log("adduserleft")
         console.log(user)
-        
-      dispatch(AddUser({ ...user, text: '', media: [] }))
-     /*  dispatch({ type: MESS_TYPES.CHECK_ONLINE_OFFLINE, payload: online }) */
+       /*  if(!id){ */
+          dispatch(AddUser({ ...user, text: '', media: [] }))
+
+       /*  } */
+
       /* AddUser */
-     return navigate(`/conversation/${user.conversation}`, { replace: true });
-    /*     return history.push(`/conversation/${user._id}`) */
+     return navigate(`/conversation/${user.conversation}`);
+
     }
-  /* useEffect(() => {
-    if (message.firstLoad) {
-      dispatch(Online(online))
+    const handleGetUser = (user)=>{
+        setSearch('')
+        setSearchUsers([])
+        console.log("getuserleft")
+        console.log(user)
+       /*  if(!id){ */
+       
+       /*  } */
+
+      /* AddUser */
+     return navigate(`/conversation/${user.conversation}`);
+
     }
-  }, [online, message.firstLoad, dispatch]) */
+
 
   return <div>
           <form className="w-[100%]" onSubmit={handleSearch} >
@@ -74,7 +86,7 @@ export default function LeftSide() {
                             //them user o handleAdduser
                             searchUsers.map(user => (
                               <div key={user._id} className="hover:bg-slate-300 hover:transition-all cursor-pointer"
-                                onClick={() => handleAddUser(user)}>
+                                onClick={() => handleGetUser(user)}>
                                     <UserCard user={user} />
                                 </div>
                             ))

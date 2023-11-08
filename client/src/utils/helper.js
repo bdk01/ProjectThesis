@@ -1,3 +1,7 @@
+
+import { notification } from 'antd';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
 export const trimSnackBarText = (text = "") => {
   const maxLength = 52;
 
@@ -45,4 +49,45 @@ export const EditData = (data, id, post) => {
 export const DeleteData = (data, id) => {
     const newData = data.filter(item => item._id !== id)
     return newData;
+}
+
+
+export const showNotification = (type ,description) => {
+
+  notification[type]({
+    message: 'Notification Title',
+    description
+    
+  });
+
+};
+export const scrollToTop = () => {
+  window.scrollTo(0, 0);
+};
+/* export const formatISODateToMomment = (date?: string): Moment | undefined => {
+  return date ? moment(date) : moment(date);
+};
+export const formatMomentToString = (date?: Moment): string | undefined => {
+  return date ? moment(date).format(EFormat.DATE) : undefined;
+}; */
+export const formatISODateToMomment = (date) => {
+  return date ? moment(date) : moment(date);
+};
+/* export const formatMomentToString = (date) => {
+  return date ? moment(date).format(date) : undefined;
+}; */
+export const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handleDebounce = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return ()=> {
+      clearTimeout(handleDebounce);
+    };
+  }, [value, delay]);
+
+  return debouncedValue
 }

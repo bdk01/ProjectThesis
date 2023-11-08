@@ -7,7 +7,8 @@ import { follow, unfollow } from '../../api/profileAPI'
 const FollowBtn = ({user}) => {
     const [followed, setFollowed] = useState(false)
 
-    const { auth, profile, socket } = useSelector(state => state)
+    const { auth, profile } = useSelector(state => state)
+    const {  socket } = useSelector(state => state.socket)
     const dispatch = useDispatch()
 
     const [load, setLoad] = useState(false)
@@ -22,12 +23,12 @@ const FollowBtn = ({user}) => {
 
     const handleFollow =  async () => {
         if(load) return;
-        console.log(user)
+      
         setFollowed(true)
         setLoad(true)
-        console.log(user)
+    
      /*    await dispatch(follow({users: profile.users, user, auth, socket})) */
-        follow({users: profile.users, user, auth,dispatch})
+      follow({users: profile.users, user, auth,dispatch,socket})
         setLoad(false)
     }
 
@@ -37,7 +38,7 @@ const FollowBtn = ({user}) => {
         setFollowed(false)
         setLoad(true)
         console.log(user)
-        unfollow({users: profile.users, user, auth,dispatch})
+      await  unfollow({users: profile.users, user, auth,dispatch})
 
         setLoad(false)
     }

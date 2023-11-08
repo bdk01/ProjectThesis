@@ -32,7 +32,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["socket","auth","message",'peer','status','homePosts','notify','profile','detailPostr','suggestions','modal'],
+  blacklist: ["socket","auth","message",'peer','status','homePosts','notify','profile','detailPost','suggestions','modal'],
   /*  transforms: [JSOGTransform], */
 }; 
 const rootReducer = combineReducers({
@@ -44,7 +44,7 @@ const rootReducer = combineReducers({
   homePosts: postReducer,
   notify: notifyReducer,
   profile:profileReducer,
-  detailPostr:detailPostReducer,
+  detailPost:detailPostReducer,
   suggestions:suggestionsReducer,
   modal:modalReducer
 });

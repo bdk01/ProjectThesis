@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Status from "../components/home/Status";
 import RightHome from "../components/home/RightHome";
@@ -10,9 +10,13 @@ import Posts from "../components/home/Posts";
 import LoadMoreBtn from "../components/home/LoadMoreBtn";
 import { getPost } from "../redux/postSlice";
 import RightSideBar from "../components/home/RightSideBar";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 /* import Posts from "../components/home/Posts"; */
 export default function Home() {
+    const { t } = useTranslation();
     const dispatch = useDispatch()
+    const navigate = useNavigate();
     const {  auth,homePosts,status,suggestions } = useSelector(state => state)
     const [load, setLoad] = useState(false)
     const handleLoadMore = async () => {
@@ -29,17 +33,22 @@ export default function Home() {
     }
     
     useEffect(() => {
+        if(auth.user.role==='admin'){
+            navigate(`/manage-user`);
+        }
         if (auth.accesstoken || status.status) {
             getPosts(auth, dispatch)
         }
     }, [auth.accesstoken, dispatch, status])
 
   return <div className="mx-3">
-    <h1 className="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-3"> New Feed </h1>
+    <h1 className="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-3"> {t('New Feed')} </h1>
       <div className="lg:flex justify-center lg:space-x-10 lg:space-y-0 space-y-5">
 
-                 
+
+               
                     <div className="space-y-5 flex-shrink-0 lg:w-7/12">
+                 <Suspense fallback={<h2>Loading...</h2>}>
                          <Status/>
                     {
                         homePosts.loading
@@ -48,7 +57,7 @@ export default function Home() {
                                 ? <h2 className="text-center">No Post</h2>
                                 : <Posts />
                     }       
-                     
+                       </Suspense>
                       
                     
                         <div className="flex justify-center mt-6" id="toggle">

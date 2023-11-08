@@ -9,6 +9,7 @@ export const LoginandNavigateUser =async (dispatch,data) =>{
           dispatch(loginSuccess(data));
 
           localStorage.setItem("firstLogin", true);
+          
      }
      catch(err){
           dispatch(loginFailure())
@@ -21,8 +22,9 @@ export const Logout =async (dispatch) =>{
         
         /*   dispatch(logOutSocket())  */
         await axios.post("/auth/logout");
-        console.log("logout r")
-        window.location.href = "/";
+      
+     
+        window.location.href = "/login";
         localStorage.removeItem('firstLogin')
      }
      catch(err){

@@ -166,11 +166,11 @@ const subjectCtrl = {
       updateSubject: async (req, res) => {
         try {
           console.log('app')
-            const { subjectName,description,teacher,teachingAssistant } = req.body
+            const { subjectName,description,teacher,id} = req.body
           
 
             await Subjects.findOneAndUpdate({_id: id}, {
-               subjectName,description,teacher,teachingAssistant
+               subjectName,description,teacher
             }, {new: true})
 
             res.json({msg: "Update Success!"})

@@ -15,7 +15,7 @@ const CardFooter = ({post}) => {
 
     const [isShare, setIsShare] = useState(false)
 
-    const { auth, socket } = useSelector(state => state)
+    const { auth, socket,homePosts } = useSelector(state => state)
     const dispatch = useDispatch()
 
     const [saved, setSaved] = useState(false)
@@ -28,11 +28,11 @@ const CardFooter = ({post}) => {
         }else{
             setIsLike(false)
         }
-    }, [post.likes, auth.user._id])
+    }, [post.likes, auth.user._id,dispatch,homePosts.posts])
 
     const handleLike = async () => {
         if(loadLike) return;
-        
+        console.log('like')
         setLoadLike(true)
         await likePost(post, auth,dispatch, socket)
       /*   await dispatch(likePost({post, auth, socket})) */
@@ -41,7 +41,7 @@ const CardFooter = ({post}) => {
 
     const handleUnLike = async () => {
         if(loadLike) return;
-            console.log('un')
+           
         setLoadLike(true)
                 await unLikePost(post, auth,dispatch, socket)
      /*    await dispatch(unLikePost({post, auth, socket})) */

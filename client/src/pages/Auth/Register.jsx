@@ -29,13 +29,13 @@ const RegisForm = styled.div`
 }
 .Regis-header{
    opacity: 0.92;
-    height:90vh;
+    height:95vh;
     max-width: 860px;
     width: 100%;
     display:flex;
     justify-content: space-around;
     background-color: #fff;
-    padding: 25px 30px;
+    padding: 20px 30px;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
@@ -67,7 +67,7 @@ const ButtonContainer = styled.div`
     font-weight: 500;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.3s ease;
+  
     background-color: #bd59d4;
     &:hover{
      background-color: #4b2354;
@@ -307,7 +307,7 @@ function Register() {
                 </div>
               </Form.Item>
 
-              <div className="flex justify-end mt-[-18px]">
+              <div className="flex justify-end mt-[-20px]">
                 <ButtonContainer className="w-[312px]     ">
                   <Button
                     block

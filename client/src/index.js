@@ -38,7 +38,8 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import i18n from "./i18ns/i18n.config"
+import { I18nextProvider } from "react-i18next";
 ReactDOM.render(
      <Provider store={store}>
   <React.StrictMode>
@@ -60,7 +61,11 @@ ReactDOM.render(
       pauseOnHover
       theme="light"
     />
+   <I18nextProvider i18n={i18n}>
     <App />
+ 
+
+    </I18nextProvider>
   </React.StrictMode>
      </Provider>,
   document.getElementById("root")

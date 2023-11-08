@@ -3,13 +3,15 @@ import { useSelector, useDispatch } from 'react-redux'
 /* import { checkImage } from '../../utils/imageUpload'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes'
 import { updateProfileUser } from '../../redux/actions/profileAction' */
-
+import './profile.css'
+import axios from '../../axios'
+import { updateProfileUser } from '../../api/profileAPI'
 const EditProfile = ({setOnEdit}) => {
     const initState = {
-        fullname: '', mobile: '', address: '', website: '', story: '', gender: ''
+        fullname: '', phone: '',username:'',introduction:''
     }
     const [userData, setUserData] = useState(initState)
-    const { fullname, mobile, address, website, story, gender } = userData
+    const { fullname, phone, username,introduction } = userData
 
     const [avatar, setAvatar] = useState('')
 
@@ -21,15 +23,32 @@ const EditProfile = ({setOnEdit}) => {
     }, [auth.user])
 
 
-    const changeAvatar = (e) => {
-        const file = e.target.files[0]
+    const changeAvatar = async(e) => {
+          console.log('fgf')
+        e.preventDefault()
+        try {
 
-      /*   const err = checkImage(file)
-        if(err) return dispatch({
-            type: GLOBALTYPES.ALERT, payload: {error: err}
-        }) */
+        /*     if (user.role !== 1) retuqrn alert("you are not admin") */
+            const file = e.target.files[0]
 
-        setAvatar(file)
+            if (!file) return alert("file is not exist!")
+            if (file.size > 1024 * 1024) return alert("Size is too large")
+            if (file.type !== "image/jpeg" && file.type !== "image/png") return alert("File is not the image")
+            console.log(file)
+            let formData = new FormData()
+            formData.append('file', file);
+            console.log(formData)
+            console.log(auth.accesstoken)
+            const res = await axios.post("/api/upload", formData, {
+                headers: { "Content-Type": "multipart/form-data", Authorization: auth.accesstoken }
+            })
+            console.log(res)
+             setAvatar(res.data.url)
+        }
+        catch (err) {
+            alert(err.respone.data.msg)
+        }
+
     }
 
     const handleInput = e => {
@@ -39,20 +58,40 @@ const EditProfile = ({setOnEdit}) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-   /*      dispatch(updateProfileUser({userData, avatar, auth})) */
+        console.log(userData)
+        console.log(avatar)
+        updateProfileUser({userData, avatar, auth,dispatch})
+        setOnEdit(false)
     }
 
     return (
-        <div className="edit_profile">
+       /*  <div className="flex justify-center items-center fixed top-0 left-0 w-[100%] h-[100vh] bg-[#0008] z-[109] overflow-auto">
+
+                <button className="absolute top-[4px] right-[4px] bg-red-500"
+                onClick={() => setOnEdit(false)} >
+                    Close
+                </button>
+            <form onSubmit={handleSubmit} className='max-w-[450px] w-[100%] bg-white p-[20px] rounded-lg mx-[20px] my-auto'>
+                <div className="w-[150px] h-[150px] overflow-hidden rounded-[50%] relative mx-[15px] my-auto border-black boder-1px cursor-pointer hover:bottom-[-15%]">
+                    <img src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar} 
+                    alt="avatar" className='w-[100%] h-[100%] block object-cover' />
+                    <span className='absolute bottom-[-100%] left-0 w-[100%] h-[50%] text-center text-orange-500 transition-all bg-[#fff5] '>
+                        <i className="fas fa-camera" />
+                        <p>Change</p>
+                        <input type="file" name="file" id="file_up" className='absolute top-0 left-0 w-[100%] h-[100%] cursor-pointer opacity-0'
+                        accept="image/*" onChange={changeAvatar} />
+                    </span>
+                </div> */
+             <div className="edit_profile">
             <button className="btn btn-danger btn_close"
             onClick={() => setOnEdit(false)}>
                 Close
             </button>
-
+        
             <form onSubmit={handleSubmit}>
                 <div className="info_avatar">
-                    <img src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar} 
-                    alt="avatar" style={{filter: theme ? 'invert(1)' : 'invert(0)'}} />
+                    <img /* src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}  */src={avatar ? avatar : auth.user.avatar}
+                    alt="avatar"  />
                     <span>
                         <i className="fas fa-camera" />
                         <p>Change</p>
@@ -60,7 +99,6 @@ const EditProfile = ({setOnEdit}) => {
                         accept="image/*" onChange={changeAvatar} />
                     </span>
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="fullname">Full Name</label>
                     <div className="position-relative">
@@ -74,45 +112,24 @@ const EditProfile = ({setOnEdit}) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="mobile">Mobile</label>
-                    <input type="text" name="mobile" value={mobile}
+                    <label htmlFor="phone">Phone</label>
+                    <input type="text" name="phone" value={phone}
                     className="form-control" onChange={handleInput} />
                 </div>
-
                 <div className="form-group">
-                    <label htmlFor="address">Address</label>
-                    <input type="text" name="address" value={address}
+                    <label htmlFor="username">Username</label>
+                    <input type="text" name="username" value={username}
                     className="form-control" onChange={handleInput} />
                 </div>
-
                 <div className="form-group">
-                    <label htmlFor="website">Website</label>
-                    <input type="text" name="website" value={website}
+                    <label htmlFor="username">Introduction</label>
+                    <input type="text" name="introduction" value={introduction}
                     className="form-control" onChange={handleInput} />
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="story">Story</label>
-                    <textarea name="story" value={story} cols="30" rows="4"
-                    className="form-control" onChange={handleInput} />
+   
 
-                    <small className="text-danger d-block text-right">
-                        {story.length}/200
-                    </small>
-                </div>
-
-                <label htmlFor="gender">Gender</label>
-                <div className="input-group-prepend px-0 mb-4">
-                    <select name="gender" id="gender" value={gender}
-                    className="custom-select text-capitalize"
-                    onChange={handleInput}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-
-                <button className="btn btn-info w-100" type="submit">Save</button>
+                <button className="btn btn-info font-normal text-slate-600 w-100" type="submit">Save</button>
             </form>
         </div>
     )

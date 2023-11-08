@@ -12,6 +12,7 @@ export default function RightSide() {
   const { id } = useParams()
   const dispatch = useDispatch()
   const [user, setUser] = useState([])
+  const [attendee, setAttendee] = useState([])
   const [text, setText] = useState('')
     const [result, setResult] = useState(9)
     const [page, setPage] = useState(1)
@@ -34,16 +35,15 @@ export default function RightSide() {
           media: newArr,
           createdAt: new Date().toISOString()
       }
-    
+    console.log('message')
+    const attendees = {attendees:message.data[0].conversation.attendees}
 
-       await addMessages(msg,auth,socket,dispatch)
+       await addMessages(msg,auth,socket,dispatch,attendees)
        if(refDisplay.current){
               setTimeout(() => {
                     refDisplay.current.scrollIntoView({behavior: 'smooth', block: 'end'})
                 },50)
         }
-     
-  
   }
     useEffect(() => {
         if(auth.accesstoken){
@@ -64,9 +64,10 @@ export default function RightSide() {
 
     useEffect(() => {
         const newData = message?.data?.find(item => item._id === id)
-      
-       /*  console.log(newData) */
+        
+        
         if (newData) {
+          
             setData(newData.messages)
             setResult(newData.result)
             setPage(newData.page)
@@ -84,7 +85,7 @@ export default function RightSide() {
             }, {
                 threshold: 0.1
             })
-            console.log(observer)
+           
             observer.observe(pageEnd.current)
         }, [setIsLoadMore])
     useEffect(() => {
@@ -99,16 +100,16 @@ export default function RightSide() {
         },150)
        
     }, [isLoadMore])
-    const handleJoin = ()=>{
+  /*   const handleJoin = ()=>{
          dispatch(getRoom())
          setTimeout(()=>{
              socket.emit('create-room')
               socket.on("room-created", ({ roomId }) => {
-            console.log({ roomId });
+          
             navigate(`/meeting/${roomId}`);
        });
          },0)
-    }
+    } */
   /*   useEffect(()=>{
         if(peer.room){
 
@@ -129,9 +130,9 @@ export default function RightSide() {
                 </div>
            </div>
            <div className="flex justify-center items-center">
-            <button className="px-2 py-2 bg-gray-700 text-white text-sm rounded-[8%]" onClick={handleJoin}> 
+           {/*  <button className="px-2 py-2 bg-gray-700 text-white text-sm rounded-[8%]" onClick={handleJoin}> 
               Join with us
-            </button>
+            </button> */}
            </div>
         </div>
         <div className=" h-[calc(100%-58px)] w-[100%] overflow-y-auto overflow-x-hidden" >
@@ -153,14 +154,14 @@ export default function RightSide() {
                             <div key={index}>
                                 {
                                     msg?.sender._id !== auth?.user._id &&
-                                    <div className="flex justify-start ml-2">
+                                    <div key={index} className="flex justify-start ml-2">
                                             <MsgDisplay sender={msg.sender} msg={msg} />
                                         </div>
                                 }
 
                                 {
                                     msg?.sender._id  === auth?.user._id &&
-                                    <div className="flex justify-end ">
+                                    <div key={index} className="flex justify-end ">
                                             <MsgDisplay user={auth.user} msg={msg} sender="true" data={data} />
                                         </div>
                                 }
@@ -170,10 +171,10 @@ export default function RightSide() {
                 </div>
                 </div>
         </div>
-                <div className=" h-[40px]">
-                <form className="relative   border-gray-400  border-t-[2px]" onSubmit={handleSubmit}  >
+                <div className=" h-[40px] relative ">
+                <form className="  border-gray-400  border-t-[2px] h-[100%]" onSubmit={handleSubmit}  >
                         <input type="text" placeholder="Enter you message..."
-                        value={text} onChange={e => setText(e.target.value)}  className="w-[90%] border-none outline-none py-1 px-6 text-black"
+                        value={text} onChange={e => setText(e.target.value)}  className="w-[90%] h-[70%] border-none outline-none  px-6 text-black"
                         />
 
                     {/*    <Icons setContent={setText} content={text} theme={theme} />

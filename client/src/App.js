@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { Constants, MeetingProvider } from "@videosdk.live/react-sdk";
 import { LeaveScreen } from "./components/screens/LeaveScreen";
 import { JoiningScreen } from "./components/screens/JoiningScreen";
@@ -14,7 +14,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import CreateMeeting from "./pages/CreateMeeting";
 import Meeting from "./pages/Meeting";
 import Conversation from "./pages/Conversation";
-import Home from "./pages/Home";
+/* import Home from "./pages/Home"; */
 
 import Register from "./pages/Auth/Register";
 import {
@@ -43,13 +43,20 @@ import CreateTaSchedule from "./pages/Teacher/CreateTaSchedule";
 import ManageTaSchedule from "./pages/Teacher/ManageTaSchedule";
 import ManageTa from "./pages/Teacher/ManageTa";
 import Login from "./pages/Auth/Login";
-import Layout from "./components/Layout";
+import Layout from "./Layout/Layout";
 
 
 import ReviewTA from "./pages/Teacher/ReviewTA";
-import UserRoute from "./ProtectRoute/UserRoute";
+import UserRoute from "./routes/UserRoute";
 import ManageSubject from "./pages/Admin/ManageSubject";
 import ManageUser from "./pages/Admin/ManageUser";
+import ScrollToTop from "./hooks/ScrollToTop";
+import { Pages } from "./routes/routers";
+
+import i18n from "./i18ns/i18n.config";
+import { getSuggestions } from "./api/suggestionsAPI";
+import LayoutAdmin from "./Layout/LayoutAdmin";
+import NewPage from "./pages/NewPage";
 
 
 const App = () => {
@@ -69,17 +76,17 @@ const App = () => {
   const [isMeetingStarted, setMeetingStarted] = useState(false);
   const [isMeetingLeft, setIsMeetingLeft] = useState(false);
   const [meetingType, setMeetingType] = useState(meetingTypes.MEETING);
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-   const { auth, socket } = useSelector((state) => state);
-      useEffect(() => {
-        refreshToken(dispatch);
-        const socket = io("ws://localhost:8000");
+  const { auth, socket } = useSelector((state) => state);
+  useEffect(() => {
+    refreshToken(dispatch);
+    const socket = io("ws://localhost:8000");
 
-        dispatch(getSocket(socket));
+    dispatch(getSocket(socket));
 
-        return () => socket.close();
-      }, [dispatch]);
+    return () => socket.close();
+  }, [dispatch]);
 
   const isMobile = window.matchMedia(
     "only screen and (max-width: 768px)"
@@ -92,64 +99,118 @@ const App = () => {
       };
     }
   }, [isMobile]);
-    useEffect(() => {
-    if(auth.accesstoken) {
-     /*  dispatch(getPosts(auth.token)) */
- /*      dispatch(getSuggestions(auth.token)) */
-      getNotifies({auth,dispatch})
+  useEffect(() => {
+    if (auth.accesstoken) {
+      /*     dispatch(getPosts(auth.token))
+          dispatch(getSuggestions(auth.token)) */
+      getSuggestions({ auth, dispatch })
+      getNotifies({ auth, dispatch })
     }
-  }, [dispatch, auth.accesstoken])
+  }, [dispatch, auth.accesstoken, socket])
+  /*  useEffect(()=>{
+     i18n.changeLanguage('vi')
+   },[]) */
+  const Home = lazy(() => import('./pages/Home'));
   return (
-    <BrowserRouter>
-   
+    <Router>
+      <ScrollToTop />
+      {auth.accesstoken && socket && <SocketClient />}
       <Routes>
-           {/* <Route path="/" element={<Layout />}>
-            <Route
-                path="home"
-              element={
-                  <Home />
-              }
-            />
-      
-          </Route> */}
-         <Route
-                path="/home"
-              element={
-                <Layout>
-                  <Home />
-                </Layout>
-              }
-            />
-         <Route
+
+        <Route path='/' element={<Layout />}>
+          <Route
+            path="home"
+            /*   lazy={() => import('./pages/Home')} */
+            element={
+              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                <Pages.Home />
+
+              </Suspense>
+            }
+          />
+          <Route
+            path=""
+            /*   lazy={() => import('./pages/Home')} */
+            element={
+              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                 <Pages.Home />
+
+              </Suspense>
+            }
+          />
+          <Route
+            path="profile"
+            /*   lazy={() => import('./pages/Home')} */
+            element={
+              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                <Pages.Profile />
+
+              </Suspense>
+            }
+          />
+          <Route
+            path="profile/:id"
+            /*   lazy={() => import('./pages/Home')} */
+            element={
+              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                <Pages.Profile />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route
+          path="/login"
+          /*   lazy={() => import('./pages/Home')} */
+          element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+              <Pages.Login />
+
+            </Suspense>
+          }
+        />
+
+
+        <Route
+          path="/register"
+          /*   lazy={() => import('./pages/Home')} */
+          element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+              <Pages.Register />
+
+            </Suspense>
+          }
+        />
+
+        {/*  <Route
                 path="/"
               element={
                 <UserRoute>
-               {/*    <Home /> */}
+              
                 </UserRoute>
               }
-            />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+            /> */}
+        {/*  <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} /> */}
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-     
+
 
         <Route
           path="create-post"
           element={
-              <CreatePost />
+            <CreatePost />
           }
         />
         <Route
           path="review-ta"
           element={
-                 <Layout>
+            <Layout>
 
-                   <ReviewTA />
-                 </Layout>
+              <ReviewTA />
+            </Layout>
           }
         />
-   
+
         <Route
           path="/profile1"
           element={
@@ -158,14 +219,14 @@ const App = () => {
             </Layout>
           }
         />
-        <Route
+        {/*  <Route
           path="/profile/:id"
           element={
             <Layout>
               <Profile />
             </Layout>
           }
-        />
+        /> */}
         <Route
           path="/conversation"
           element={
@@ -174,6 +235,7 @@ const App = () => {
             </Layout>
           }
         />
+
         <Route
           path="/conversation/:id"
           element={
@@ -182,7 +244,7 @@ const App = () => {
             </Layout>
           }
         />
-        
+
         <Route
           path="/create-schedule"
           element={
@@ -235,24 +297,24 @@ const App = () => {
           path="/manageTa"
           element={
             <Layout>
-              <ManageTa/>
+              <ManageTa />
             </Layout>
           }
         />
         <Route
           path="/manage-user"
           element={
-            <Layout>
-              <ManageUser/>
-            </Layout>
+            <LayoutAdmin>
+              <ManageUser />
+            </LayoutAdmin>
           }
         />
         <Route
           path="/review-subject"
           element={
-            <Layout>
-              <ManageSubject/>
-            </Layout>
+            <LayoutAdmin>
+              <ManageSubject />
+            </LayoutAdmin>
           }
         />
         <Route
@@ -335,7 +397,8 @@ const App = () => {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+
+    </Router>
   );
 };
 

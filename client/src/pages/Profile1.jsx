@@ -3,6 +3,7 @@ import axios from '../axios'
 import photo from '../assets/img/message2.svg'
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { showNotification } from "../utils/helper";
 
 export default function Profile1() {
       const [images, setImages] = useState(false)
@@ -58,7 +59,7 @@ export default function Profile1() {
             }, {
                 headers: { Authorization: auth.accesstoken }
             })
-            alert("update all success")
+            showNotification('SUCCESS','update success !')
           /*   getUser(dispatch, currentToken.accesstoken) */
             navigate("/", { replace: true })
 

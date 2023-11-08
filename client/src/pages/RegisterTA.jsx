@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import dayjs from 'dayjs';
 import axios from '../axios';
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function RegisterTA() {
        const { auth} = useSelector(state => state)
@@ -16,7 +16,7 @@ export default function RegisterTA() {
           gpaSubject:"",
           studentId:"",
      });
-
+     const navigate = useNavigate();
  
    
      
@@ -47,7 +47,7 @@ export default function RegisterTA() {
           headers: { Authorization: auth.accesstoken },
           })
           console.log(response)
-             
+               navigate(`/home`);
           }
           catch(err){
                console.log(err)
@@ -148,7 +148,7 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                 <label className=" mr-3  font-semibold  lg:text-lg text-base">
-                                                    gpaTotal:
+                                                    GpaTotal:
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
@@ -164,7 +164,7 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                 <label className=" mr-3  font-semibold  lg:text-lg text-base">
-                                                    gpaSubject:
+                                                    GpaSubject:
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
@@ -180,7 +180,7 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                <label className=" mr-3 font-semibold lg:text-lg text-base">
-                                                    fullName:
+                                                    FullName:
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">

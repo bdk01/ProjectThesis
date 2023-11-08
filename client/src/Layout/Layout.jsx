@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
-import {  Outlet, useLocation, useNavigate } from 'react-router-dom';
-import Header from './Header';
+import { useState, useEffect, Suspense } from 'react';
+import {  Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+
 import { FaWpforms } from "react-icons/fa";
 import { BsFilePerson } from "react-icons/bs";
 import { SiGooglemeet} from "react-icons/si";
 import { useSelector } from 'react-redux';
-import StatusModal from './Modal/StatusModal';
+import StatusModal from '../components/Modal/StatusModal';
 import { AiOutlineSchedule } from "react-icons/ai";
 import { FaUserGraduate } from "react-icons/fa";
+import Header from '../components/Header/Header';
+import { useTranslation } from 'react-i18next';
 
 const LeftNavItem = [
   {
@@ -87,36 +89,11 @@ const LeftNavItem = [
 
 ];
 const AdminNavItem = [
-  {
-    index:1,
-    icon: (
-      <svg
-      viewBox="0 0 1024 1024"
-      fill="black"
- 
-  className="w-[35px] h-[35px] text-gray-500 transition duration-75 cursor-pointer"
-    >
-      <path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 00-44.4 0L77.5 505a63.9 63.9 0 00-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0018.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z" />
-    </svg>
-    ),
-    iconActive: (
-     <svg
-      viewBox="0 0 1024 1024"
-      fill="black"
- 
-    className="w-[35px] h-[35px] text-gray-500 transition duration-75 cursor-pointer"
-    >
-      <path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 00-44.4 0L77.5 505a63.9 63.9 0 00-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0018.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z" />
-    </svg>
-    ),
-    path: 'home',
-    name: 'Home',
-    subIcon: [],
-  },
+  
  
  
   {
-    index: 2,
+    index: 1,
     icon: (
       <svg fill="none" viewBox="0 -2 25 30" className="w-[35px] h-[35px] text-gray-500 transition duration-75 cursor-pointer" >
       <path fill="black" d="M8 9a1 1 0 100 2h8a1 1 0 100-2H8z" />
@@ -146,7 +123,7 @@ const AdminNavItem = [
   
   
   {
-    index: 3,
+    index: 2,
     icon: (
       <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer'/>
     ),
@@ -384,18 +361,7 @@ const TaNavItem = [
     name: 'Meeting',
     subIcon: [],
   },
-  /* {
-    index: 5,
-    icon: (
-      <FaWpforms className='w-[35px] h-[35px] cursor-pointer' />
-    ),
-    iconActive: (
-      <FaWpforms className='w-[35px] h-[35px] cursor-pointer' />
-    ),
-    path: 'createTaSchedule',
-    name: 'TaSchedule',
-    subIcon: [],
-  }, */
+
   {
     index: 5,
     icon: (
@@ -405,7 +371,7 @@ const TaNavItem = [
       <BsFilePerson className='w-[35px] h-[35px] cursor-pointer' />
     ),
     path: 'review-ta',
-    name: 'Information Ta',
+    name: 'Thông tin TA',
     subIcon: [],
   },
 
@@ -424,6 +390,7 @@ function Layout({children}) {
   const [admin, setAdmin] = useState(false)
   const [ta, setTa] = useState(false)
   const [opened, setOpened] = useState(true);
+  const [openedMobile, setOpenedMobile] = useState(false);
   useEffect(() => {
     if (auth.user.role === 'teacher' ) {
       setTeacher(true)
@@ -439,20 +406,43 @@ function Layout({children}) {
     } 
   }, [auth.user])
 
-/*   const onSignout = async () => {
-    await signout();
-    navigate('/sign-in', { replace: true });
-  }; */
+
 
   return (
     <div className="relative flex flex-col">
       {status && <StatusModal />}
       <div className='flex fixed z-20 w-[100%]'>
+    <Suspense fallback={<h2>Loading...</h2>}>
 
-         <Header setOpened={setOpened} opened={opened}  />
+         <Header setOpened={setOpened} opened={opened} openedMobile={openedMobile} setOpenedMobile={setOpenedMobile} />
+    </Suspense>
+         <ul className={` border-t-[1px] sm:hidden border-gray-300 md:pb-1 grid grid-cols-2 md:grid-cols-5 sm:grid-cols-3 absolute  bg-white md:z-auto  left-0 w-full   pl-9 transition-all duration-500  ${openedMobile ? 'top-[60px] z-10 ease-out':'ease-in top-[-490px] z-10 opacity-5 '}`}>
+    {
+      ta &&   <><li  className='text-lg my-2 col-span-1'>
+      <Link to="/home" className='text-black hover:text-gray-400 duration-500'>Home</Link>
+    </li>
+    <li  className='text-lg my-2 col-span-1'>
+      <Link to="/conversation" className='text-black hover:text-gray-400 duration-500'>Conversation</Link>
+    </li>
+    <li  className='text-lg my-2 col-span-1'>
+      <Link to="/create-schedule"className='text-black hover:text-gray-400 duration-500'>Create Meeting </Link>
+    </li>
+    <li  className='text-lg my-2 col-span-1'>
+      <Link to="/meeting" className='text-black hover:text-gray-400 duration-500'> Meeting </Link>
+    </li>
+    <li  className='text-lg my-2 col-span-1'>
+      <Link to="/review-ta" className='text-black hover:text-gray-400 duration-500'> Information TA </Link>
+    </li></>  
+    }    
+
+     
+       
+         </ul>
       </div>
     <div className="flex h-[100vh] mt-[56px]">
       <div className='fixed'>
+<Suspense fallback={<h2>Loading...</h2>}>
+
 
       <aside
         className={`${
@@ -461,7 +451,7 @@ function Layout({children}) {
         aria-label="Sidebar"
       >
         
-        <div className="overflow-y-auto py-[12px]   pl-2 pr-2 mr-1 bg-white h-[100vh]">
+        <div className="overflow-y-auto py-[12px]  hidden sm:block pl-2 pr-2 mr-1 bg-white h-[100vh]">
           <ul className="space-y-2 flex justify-start flex-col">
             {teacher && 
                   TeacherNavItem.map((item) => (
@@ -765,14 +755,15 @@ function Layout({children}) {
           </ul>
         </div>
       </aside>
+      </Suspense>
       </div>
         <div className={`${opened ? 'w-[170px]' : 'w-[70px]'
-          }  transition-all duration-500 z-[-30]`}> 
+          } hidden sm:block transition-all duration-500 z-[-30]`}> 
         
-      </div>{/* ${opened ? 'max-w-[300px]' : 'max-w-[700px]' } */}
-        <div className={`overflow-x-auto flex flex-col flex-1 ml-[10px] bg-[#F0F3F6] mt-2 `}>            
+      </div>
+        <div className={`overflow-x-auto flex flex-col flex-1  sm:ml-[16px] sm:mr-2 bg-white mt-2 `}>            
                        {children}     
-        {/*   <Outlet /> */}
+          <Outlet />
                           
       </div>
     </div>

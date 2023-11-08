@@ -7,18 +7,18 @@ const CardBody = ({post}) => {
     
     return (
         <div className="card_body">
-            <div className="card_body-content " 
+            <div className="mx-2" 
            >
-                <span className='mx-3'>
+                <span className='mr-3 ml-2'>
                     {
-                        post.content.length < 60 
+                        post.content.length < 65 
                         ? post.content 
-                        : readMore ? post.content + ' ' : post.content.slice(0, 60) + '.....'
+                        : readMore ? post.content + ' ' : post.content.slice(0, 65) + '.....'
                     }
                 </span>
                 {
-                    post.content.length > 60 &&
-                    <span className="readMore" onClick={() => setReadMore(!readMore)}>
+                    post.content.length > 65 &&
+                    <span className="readMore cursor-pointer " onClick={() => setReadMore(!readMore)}>
                         {readMore ? 'Hide content' : 'Read more'}
                     </span>
                 }

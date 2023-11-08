@@ -16,6 +16,8 @@ export const messageSlice = createSlice({
       state.resultUsers = payload.result;
     },
     AddUser: (state, { payload }) => {
+      console.log('adduser')
+      console.log(payload)
       state.userChat = payload
        if(state.users.every(item => item._id !== payload._id)){
                     state.users=[payload, ...state.users]
@@ -47,20 +49,7 @@ export const messageSlice = createSlice({
          (user) => user.conversation !== payload.conversation
        );
          state.users=[{ ...state.userChat  } , ...state.users] 
-      /*  state.users.map(user => {
-              if(user._id === payload.recipient || user._id === payload.sender){
-                state.users= [ {
-                  ...user, 
-                  text: payload.text, 
-                 media: payload.media,      
-             }]
-            }
-            else{
-                state.users={...user}
-              }
-            }
-         )   */
-      /*   console.log(state.users) */
+    
     },
   },
 });

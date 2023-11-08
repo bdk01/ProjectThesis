@@ -11,6 +11,9 @@ import {ExpressPeerServer } from "peer";
 import { Server } from "socket.io";
 import SocketServer from './socketServer';
 import messageRoute from './routes/messageRoute';
+import logger from './utils/logger';
+import connect from "./config/connectDB";
+
 
 dotenv.config();
 const app = express();
@@ -40,7 +43,7 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", socket => {
-  console.log(socket.id +' connected')
+  console.log(socket.id +' connected2')
   SocketServer(socket);
 });
 // Create peer server
@@ -48,23 +51,19 @@ io.on("connection", socket => {
 /* Routes */
 app.use(appRouter);
 /* app.use(messageRoute) */
-
-/* Connect to  mongodb */
-const URL = process.env.MONGODB_URL;
-mongoose.set("strictQuery", false);
-mongoose.connect(
-  URL,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  },
-  (err) => {
-    if (err) throw err;
-    console.log("Connected to mongodb");
-  }
-);
-
-const PORT = process.env.PORT || 7000;
-httpServer.listen(PORT, () => {
-  console.log("Server is running on port", PORT);
+/* var task = cron.schedule('1 * * * * *', () =>  {
+  console.log('will execute every minute until stopped');
 });
+task.start(); */
+/* Connect to  mongodb */
+
+
+/* await connect() */
+const PORT = process.env.PORT || 7000;
+httpServer.listen(PORT, async() => {
+  logger.info(`App is running a1l http://localhost:${PORT}`);
+ /*  console.log('run') */
+   await connect();
+});
+
+export default app

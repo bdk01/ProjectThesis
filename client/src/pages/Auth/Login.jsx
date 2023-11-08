@@ -30,7 +30,7 @@ const LoginForm = styled.div`
   }
   .Login-header {
     opacity: 0.92;
-    height:70vh;
+    height:75vh;
     max-width: 840px;
     width: 100%;
     display:flex;
@@ -77,7 +77,7 @@ const ButtonContainer = styled.div`
     font-weight: 500;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.3s ease;
+  
      background-color: #bd59d4;
     &:hover{
      background-color: #4b2354;
@@ -251,7 +251,7 @@ function Login() {
               </div>
             </Form.Item>
 
-            <div className="flex justify-end mt-[-10px]">
+            <div className="flex justify-end mt-[-4px]">
               <ButtonContainer className="w-[312px]">
                 <Button
                   block

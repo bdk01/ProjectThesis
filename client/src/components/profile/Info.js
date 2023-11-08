@@ -44,6 +44,7 @@ const Info = ({id, auth, profile, dispatch}) => {
       console.log(res.data)
       const user = res.data
       navigate(`/conversation/${res.data.conversation}`);
+      console.log('info')
        dispatch(AddUser({ ...user, text: '', media: [] }))
        /*     navigate(`/conversation`) */
           /*   window.location.href = `/conversation/${res.data._id}`; */
@@ -67,7 +68,7 @@ const Info = ({id, auth, profile, dispatch}) => {
                     {/*     <Avatar src={user.avatar} size="supper-avatar" /> */}
                          <div className=" flex justify-end w-[110px] h-[110px] mr-1 ">
                             <img
-                                src={auth.user.avatar}
+                                src={user.avatar}
                                 className=" w-[100%] h-[100%] rounded-[50%]"
                                 /*   onClick={handleClick} */
                             />
@@ -103,19 +104,19 @@ const Info = ({id, auth, profile, dispatch}) => {
                                 </span>
                             </div>
 
-                            <h6>{user.fullname} <span className="text-danger">{user.mobile}</span></h6>
-                            <p className="m-0">{user.address}</p>
-                            <h6 className="m-0">{user.email}</h6>
-                            <a href={user.website} target="_blank" rel="noreferrer">
-                                {user.website}
-                            </a>
+                            <h6 className='mb-[2px]'>Name: {user.fullname} <span className="text-danger">{user.mobile}</span></h6>
+                         
+                            <h6 className="m-0 mb-[2px]">Email: {user.email}</h6>
+                            <h4 className="m-0 mb-[2px]">{user.introduction}</h4>
+                            <h4 className="m-0 mb-[2px]">Contact: {user.phone}</h4>
+                          
                          {/*    <p>{user.story}</p> */}
                         </div>
 
                         {
                             onEdit && <EditProfile setOnEdit={setOnEdit} />
                         }
-  {/*   <EditProfile setOnEdit={setOnEdit} /> */}
+
                         {
                             showFollowers &&
                             <Followers 

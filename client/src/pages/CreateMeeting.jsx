@@ -152,7 +152,7 @@ export default function CreateMeeting() {
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none bg-white border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none  border-black bg-white border-[1px] sm:px-2 rounded-md py-[6px] px-1  text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="meetingName"
                                                     onChange={handleForm}
@@ -168,7 +168,7 @@ export default function CreateMeeting() {
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none bg-white  border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none bg-white border-black  border-[1px] sm:px-2 rounded-md py-[6px] px-1  text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="description"
                                                     onChange={handleForm}
@@ -184,7 +184,7 @@ export default function CreateMeeting() {
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none bg-white border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none bg-white border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-black text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="location"
                                                     onChange={handleForm}

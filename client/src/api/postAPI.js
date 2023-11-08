@@ -1,4 +1,5 @@
 import axios from "../axios"
+import { getDetailPost } from "../redux/detailPostSlice"
 
 import { deleteOnePost, getPost, updatePost, } from "../redux/postSlice"
 import { DeleteData, EditData } from "../utils/helper"
@@ -12,7 +13,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
             alert("success create post")
-            console.log(res)
+          /*   console.log(res) */
         // Notify
         /* console.log(images) */
         const msg = {
@@ -24,7 +25,7 @@ import { createNotify } from "./notifyAPI"
             image: images[0].url
         }
         console.log(msg)
-        dispatch(createNotify({msg, auth, socket,dispatch}))
+        dispatch(createNotify({msg, auth,dispatch, socket}))
 
     } catch (err) {
    
@@ -39,9 +40,10 @@ import { createNotify } from "./notifyAPI"
         && imgOldUrl.length === status.images.length
     ) return;
     try {
-     console.log('gg')
+   /*   console.log('gg') */
+      
       /*  if(imgNewUrl.length > 0) media = await imageUpload(imgNewUrl) */
-        const res = await axios.post(`/api/post/${status._id}`, { 
+        const res = await axios.post(`/api/update-post/${status.post._id}`, { 
             content, images: [...imgOldUrl, ...media] 
         }, {
                 headers: { Authorization: auth.accesstoken }
@@ -50,6 +52,7 @@ import { createNotify } from "./notifyAPI"
      /*    const res =   await axios.post("/api/create-post", {content, images }, {
                 headers: { Authorization: auth.accesstoken }
             }) */
+          /*   console.log(res.data) */
                  dispatch(updatePost(res.data.newPost))
             alert("success edit post")
 
@@ -69,6 +72,22 @@ import { createNotify } from "./notifyAPI"
          
         /*     alert("success create post") */
             dispatch(getPost( {...res.data, page: 2}))
+       
+    } catch (err) {
+      console.log(err)
+    }
+}
+  export const getPostDetail = async (auth,dispatch,id) => {
+    try {
+
+               /*   console.log('qweqwe') */
+                    const res = await axios.get(`/api/get-post/${id}`,{
+                         headers: { Authorization: auth.accesstoken }
+                    })
+                  /*   console.log(res) */
+                    return res.data
+        /*     alert("success create post") */
+        /*     dispatch(getPost( {...res.data, page: 2})) */
        
     } catch (err) {
       console.log(err)
@@ -100,7 +119,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
           
-        /*     alert("success create post") */
+            alert("success like post")
       /*       dispatch(getPost( {...res.data, page: 2})) */
        
     } catch (err) {
@@ -262,20 +281,21 @@ import { createNotify } from "./notifyAPI"
       console.log(err)
     }
 }
-export const getDetailPost = async({detailPost, id, auth,dispatch})  => {
-    if(detailPost.every(post => post._id !== id)){
+export const getDPost = async({detailPost, id, auth,dispatch})  => {
+  console.log('ggpost')
+   if(detailPost.posts.every(post => post._id !== id)){
+
         try {
-           /*  const res = await getDataAPI(`post/${id}`, auth.token) */
-             const res = await axios.get(`/api/get-post/${id}`,{
+           const res = await axios.get(`/api/get-post/${id}`,{
                          headers: { Authorization: auth.accesstoken }
                     })
-          /*   dispatch({ type: POST_TYPES.GET_POST, payload: res.data.post }) */
-            
+                    console.log(res)
+                  
+                    dispatch(getDetailPost(res.data.post))
         } catch (err) {
-            /* dispatch({
-                type: GLOBALTYPES.ALERT,
-                payload: {error: err.response.data.msg}
-            }) */
+          console.log('gg')
         }
     }
+   
+ 
 }

@@ -4,19 +4,19 @@ import { DeleteData, EditData } from "../utils/helper";
 export const detailPostSlice = createSlice({
   name: "detailPost",
   initialState: {
-
-    post: []
+    posts: []
   },
   reducers: {
     loading: (state,{payload}) => {
-      console.log(payload)
-      state.loading = payload;
+ 
+     /*  state.loading = payload; */
     },
     getDetailPost: (state,{payload}) => {
-       state.post=[payload, ...state.post]
+      console.log(payload)
+       state.posts=[...state.posts,payload]
     },
     updateDetailPost: (state,{payload}) => {
-     state.post=EditData(state.post, payload._id,payload)
+     state.posts=EditData(state.posts, payload._id,payload)
     },
   
   },

@@ -1,10 +1,10 @@
+import axios from './axios'
 const API_BASE_URL = "https://api.videosdk.live";
 const VIDEOSDK_TOKEN = process.env.REACT_APP_VIDEOSDK_TOKEN;
 const API_AUTH_URL = process.env.REACT_APP_AUTH_URL;
 
-
 export const getToken = async () => {
-  if (VIDEOSDK_TOKEN && API_AUTH_URL) {
+  /* if (VIDEOSDK_TOKEN && API_AUTH_URL) {
     console.error(
       "Error: Provide only ONE PARAMETER - either Token or Auth API"
     );
@@ -18,7 +18,11 @@ export const getToken = async () => {
     return token;
   } else {
     console.error("Error: ", Error("Please add a token or Auth Server URL"));
-  }
+  } */
+  
+ const res =  await axios.get("/api/get-token");
+ console.log(res)
+return res.data.token
 };
 
 export const createMeeting = async ({ token }) => {
