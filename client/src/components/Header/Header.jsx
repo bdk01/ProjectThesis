@@ -122,7 +122,7 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile})
         <div className="flex-row flex items-center">
               <Select
           labelInValue
-          defaultValue={ localStorage.getItem("language") }
+        /*   defaultValue={localStorage.getItem("language")} */
           className="ml-[6px] text-sm rounded-lg  items-center hidden sm:flex"
           style={{
             width: 61,
@@ -131,8 +131,8 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile})
           }}    
           onChange={handleChange}
         >
-          <Option value="en" ><img src={usa} alt="usa" className="w-[30px] h-[30px]" /></Option>
-          <Option value="vi"><img src={vn} alt="vn" className="w-[30px] h-[30px]" /></Option>
+          <Option value="en" ><Image src="/usa.svg" alt='usa' width={30} height={30} /></Option>
+          <Option value="vi"><Image src="/vn.svg" alt='vn' width={30} height={30} /></Option>
         </Select>
                         {/*  */}
                            <div className="nav-item dropdown" style={{opacity: 1}} >

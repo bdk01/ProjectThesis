@@ -12,29 +12,18 @@ services:
     networks:
       - mern-network
   backend:
-    build: ./server
+    build: 
+      context:./server
+      dockerfile:Dockerfile
     container_name: node-api
     ports:
       - "5000:5000"
-    depends_on:
-    - database
     networks:
       - mern-network
-  database:
-    image: mongo
-    container_name: mongo-db
-    restart: always
-    ports:
-      - "5000:5000"
-    volume:
-      - /home/mongo-backup:/data/db
-    networks:
-      - mern-network
+  
 networks:
   mern-network:
     driver: bridge
 
 
-
-  
 
