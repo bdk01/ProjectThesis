@@ -30,7 +30,7 @@ const LoginForm = styled.div`
   }
   .Login-header {
     opacity: 0.92;
-    height:75vh;
+    height:545px;
     max-width: 840px;
     width: 100%;
     display:flex;

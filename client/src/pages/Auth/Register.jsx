@@ -29,7 +29,7 @@ const RegisForm = styled.div`
 }
 .Regis-header{
    opacity: 0.92;
-    height:95vh;
+    height:600px;
     max-width: 860px;
     width: 100%;
     display:flex;

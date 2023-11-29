@@ -1,30 +1,46 @@
 version: "3"
 services:
   frontend:
-    build: ./client
+    build:
+      context: './client'
+      dockerfile: Dockerfile
     container_name: react_ui
+    env_file: ./client/.env
     ports:
       - "3000:3000"
     stdin_open: true
     tty: true
     depends_on:
-    - backend
+      - backend
     networks:
       - mern-network
   backend:
-    build: 
-      context:./server
-      dockerfile:Dockerfile
+    build:
+      context: './server'
+      dockerfile: Dockerfile
     container_name: node-api
+    env_file: ./server/.env
     ports:
       - "8000:8000"
+    depends_on:
+      - mongo
     networks:
       - mern-network
+  
+  mongo:
+    image: mongo
+    container_name: mongo-db
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./home/mongo-backup:/data/db
+    networks:
+      - mern-network
+
 networks:
   mern-network:
     driver: bridge
 
 
-
-  
 

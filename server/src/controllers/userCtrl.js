@@ -23,6 +23,8 @@ const userCtrl = {
    
                   const pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : 5
         const page = req.query.page ? parseInt(req.query.page) : 0;
+       /*  console.log(req.query.sorting)
+        console.log(req.query.globalFilter) */
         const { keyword, sortBy,fullname,email,role,username} = req.query;
       
         var query = {};

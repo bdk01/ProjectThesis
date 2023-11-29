@@ -22,9 +22,9 @@ const corsOptions = {
   origin: "http://localhost:3000",
   optionSuccessStatus: 200,
 };
+console.log('connecttest')
 
-
-/* app.use(bodyParser.urlencoded({extended: true })); */
+app.use(bodyParser.urlencoded({extended: true }));
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(
@@ -59,11 +59,14 @@ task.start(); */
 
 
 /* await connect() */
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 8000;
+console.log(process.env.MONGODB_URI)
 httpServer.listen(PORT, async() => {
   logger.info(`App is running a1l http://localhost:${PORT}`);
- /*  console.log('run') */
-   await connect();
+
+  /*  await connect(); */
+  mongoose.set("strictQuery", false);
+   mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true }) .then(() => console.log('DB Connected'));
 });
 
 export default app
