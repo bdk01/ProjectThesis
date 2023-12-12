@@ -6,7 +6,8 @@ dotenv.config();
 
 async function connect() {
 /*   const dbUri = config.get<string>("dbUri"); */
-const URL = process.env.MONGODB_URL;
+/* const URL = process.env.MONGODB_URL; */
+const URL = "mongodb://mongo-db/App";
 
   try {
     mongoose.set("strictQuery", false);
