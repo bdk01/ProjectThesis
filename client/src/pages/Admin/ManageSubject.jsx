@@ -1,6 +1,6 @@
 import { Table, Input } from "antd";
 import { useContext, useEffect, useState } from "react";
-import AddNewSubject from "../../components/Admin/ManageSubject/AddNewSubject";
+
 
 import ConfirmModal from "../../components/Modal/ConfirmModal";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "../../axios"
 import { useSelector } from "react-redux";
 import EditSubject from "../../components/Admin/ManageSubject/EditSubject";
+import AddNewSubject from "../../components/Admin/ManageSubject/AddNewSubject";
 
 
 

@@ -70,7 +70,7 @@ const AdminNavItem = [
             <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer' />
         ),
         path: 'review-subject',
-        name: 'Review subject1',
+        name: 'Review subject',
         subIcon: [],
     },
 

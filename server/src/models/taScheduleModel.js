@@ -13,12 +13,14 @@ const taScheduleSchema = mongoose.Schema(
     creator: { type: mongoose.Types.ObjectId, ref: "Users" },
     fill:{type:Boolean,default:false}, 
     link:String,
-    state:{type:String,default:"open"}
+    dateCloseForm:Date,
+    state:{type:String,default:"open"},
+    expireAt: { type: Date, default: undefined }
   },
   {
     timestamps: true,
   }
 );
 
-
+taScheduleSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 0 });
 export default mongoose.model("TaSchedules", taScheduleSchema);

@@ -10,7 +10,7 @@ export default function Conversation() {
  
     setIduser(id)
   },[id])
-  return <div className="  border-[2px] border-gray-400 grid grid-cols-6 sm:grid-cols-5 h-[570px]">
+  return <div className="  border-[2px] border-gray-400 grid grid-cols-6 sm:grid-cols-5 h-[calc(100vh-70px)]">
         <div className="col-span-2 sm:col-span-1 min-h-[100%]  border-gray-400 border-r-[2px]">
           <div className="flex mb-6  flex-col   ">
               <LeftSide/>

@@ -5,8 +5,12 @@ import dayjs from 'dayjs';
 import axios from '../axios';
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { useClipboard } from "@mantine/hooks";
+import { Button } from "@mantine/core";
+import { showNotification } from "../utils/helper";
 
 export default function RegisterTA() {
+     const clipboard = useClipboard({ timeout: 1000 });
        const { auth} = useSelector(state => state)
        const {id} = useParams()
      const [informationTA, setInformationTA] = useState({});
@@ -38,7 +42,7 @@ export default function RegisterTA() {
                     ...informationTA, fullName: information.fullName, gpaSubject: information.gpaSubject,
                     gpaTotal: information.gpaTotal, studentId: information.studentId
 })
-     
+                                                                                                                                                           
    
                const response = await axios.post(`/api/apply-taSchedule/${id}`, {
                     ...informationTA, fullName: information.fullName, gpaSubject: information.gpaSubject,
@@ -47,6 +51,7 @@ export default function RegisterTA() {
           headers: { Authorization: auth.accesstoken },
           })
           console.log(response)
+          showNotification('success',"register form success")
                navigate(`/home`);
           }
           catch(err){
@@ -81,9 +86,17 @@ export default function RegisterTA() {
        <div>
             <div className=" relative">
                  <div className=" relative ">
-                      <div className="flex justify-start flex-col  border-b-2  pl-4 pb-3 pt-3">
-                           <div className="text-xl font-bold mb-1 lg:text-2xl mt-2">
+                      <div className="flex justify-start  border-b-2  pl-4 pb-3 pt-3">
+                           <div className="text-xl font-bold mb-1 lg:text-2xl mt-2 mr-4">
                                 Apply become T.A
+                           </div>
+                           <div className="text-xl font-bold mb-1 lg:text-2xl mt-2">
+                           <Button
+                                   variant="outline" color="red" radius="md" size="md"
+                                   onClick={() => clipboard.copy(`http://localhost:3000/registerTA/${id}`)}
+                              >
+                                   {clipboard.copied ? 'Copied' : 'Copy Link'}
+                              </Button>
                            </div>
                           
                       </div>

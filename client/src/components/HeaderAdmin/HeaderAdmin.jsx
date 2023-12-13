@@ -114,7 +114,7 @@ export default function HeaderAdmin({setOpened ,opened,openedMobile,setOpenedMob
     
                 <div className="col-span-2  flex justify-center items-center  relative">
         <div className="flex-row flex items-center">
-              <Select
+             {/*  <Select
           labelInValue
           defaultValue={{ key: 'en' }}
           className="ml-[6px] text-sm rounded-lg  items-center hidden sm:flex"
@@ -127,7 +127,7 @@ export default function HeaderAdmin({setOpened ,opened,openedMobile,setOpenedMob
         >
           <Option value="en" ><img src={usa} alt="usa" className="w-[30px] h-[30px]" /></Option>
           <Option value="vi"><img src={vn} alt="vn" className="w-[30px] h-[30px]" /></Option>
-        </Select>
+        </Select> */}
                         {/*  */}
                            <div className="nav-item dropdown" style={{opacity: 1}} >
                     <span className="nav-link position-relative" id="navbarDropdown" 

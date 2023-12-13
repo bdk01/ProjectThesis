@@ -59,7 +59,7 @@ export const isReadNotify= async ({auth,msg,dispatch}) => {
                 headers: { Authorization: auth.accesstoken }
             })
          
-
+            console.log(res)
     } catch (err) {
      console.log(err)
     }

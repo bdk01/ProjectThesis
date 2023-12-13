@@ -205,12 +205,12 @@ function ManageTaSchedule() {
           placeholder="Nhập từ khóa"
           onSearch={searchByKeyword}
         />
-        <button
+       {/*  <button
           className="px-5 py-2 border border-neutral-800 text-center hover:bg-slate-300"
           onClick={() => setIsAddVisible(true)}
         >
           + Thêm mới
-        </button>
+        </button> */}
       </div>
       <Table
       className="flex-1 z-0"
@@ -222,12 +222,12 @@ function ManageTaSchedule() {
         onChange={handleTableChange}
         scroll={{ x: 500 }}
       />
-      {isAddVisible && (
+     {/*  {isAddVisible && (
         <AddNewSchedule
           onClose={() => setIsAddVisible(false)}
           refetchData={() => fetchData(params)}
         />
-      )}
+      )} */}
       {isEditVisible && (
         <ApproveTa
           onClose={() => setIsEditVisible(false)}

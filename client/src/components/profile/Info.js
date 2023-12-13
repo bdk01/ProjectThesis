@@ -28,10 +28,7 @@ const Info = ({id, auth, profile, dispatch}) => {
         }
     }, [id, auth, dispatch, profile.users])
     const handleToMessage = async()=>{
-      /*   console.log(auth.user.username)
-        console.log({ senderName:auth.user.username,
-        recipientName:userData[0].username}) */
-       /*  dispatch */
+    
        const res = await axios.post('/api/findOrCreate-Conversation',{
         sender:auth.user._id
         ,recipient:id,

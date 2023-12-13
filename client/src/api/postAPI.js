@@ -2,7 +2,7 @@ import axios from "../axios"
 import { getDetailPost } from "../redux/detailPostSlice"
 
 import { deleteOnePost, getPost, updatePost, } from "../redux/postSlice"
-import { DeleteData, EditData } from "../utils/helper"
+import { DeleteData, EditData, showNotification } from "../utils/helper"
 import { createNotify } from "./notifyAPI"
 
 
@@ -12,7 +12,8 @@ import { createNotify } from "./notifyAPI"
        const res =   await axios.post("/api/create-post", {content, images }, {
                 headers: { Authorization: auth.accesstoken }
             })
-            alert("success create post")
+         
+            showNotification('success',"success create post")
           /*   console.log(res) */
         // Notify
         /* console.log(images) */
@@ -54,8 +55,8 @@ import { createNotify } from "./notifyAPI"
             }) */
           /*   console.log(res.data) */
                  dispatch(updatePost(res.data.newPost))
-            alert("success edit post")
-
+          
+            showNotification('success',"success edit post")
      
 
     } catch (err) {

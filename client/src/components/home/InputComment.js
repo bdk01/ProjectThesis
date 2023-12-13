@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createComment } from '../../api/postAPI'
+import { Button } from 'antd'
 /* import { createComment } from '../../redux/actions/commentAction' */
 /* import Icons from '../Icons' */
 
@@ -58,7 +59,7 @@ const InputComment = ({children, post, onReply, setOnReply}) => {
 
         
 
-            <button type="submit" className="postBtn">
+            <button type="submit" className="bg-blue-300 text-black py-2 px-3 rounded-lg">
                 Post
             </button>
                 </div>
@@ -71,7 +72,7 @@ const InputComment = ({children, post, onReply, setOnReply}) => {
 
         
 
-            <button type="submit" className="postBtn">
+            <button  type="submit" className="bg-blue-300 text-black py-2 px-3 rounded-lg">
                 Post
             </button>
                 </div>

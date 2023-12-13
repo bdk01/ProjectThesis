@@ -1,3 +1,4 @@
+
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { DatePicker, Space, Select, Spin } from 'antd';
 import debounce from 'lodash/debounce';
@@ -5,6 +6,7 @@ import dayjs from 'dayjs';
 import axios from '../../axios';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { showNotification } from "../../utils/helper";
 const { RangePicker } = DatePicker;
 function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
      const [fetching, setFetching] = useState(false);
@@ -42,7 +44,39 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
      );
 }
 // Usage of DebounceSelect
-export default function CreateTaSchedule() {
+const range = (start, end) => {
+    const result = [];
+    for (let i = start; i < end; i++) {
+      result.push(i);
+    }
+    return result;
+  };
+  
+  // eslint-disable-next-line arrow-body-style
+  const disabledDate = (current) => {
+    // Can not select days before today and today
+    return current && current < dayjs().endOf('day');
+  };
+/*   const disabledDateTime = () => ({
+    disabledHours: () => range(0, 24).splice(4, 20),
+    disabledMinutes: () => range(30, 60),
+    disabledSeconds: () => [55, 56],
+  }); */
+  const disabledRangeTime = (_, type) => {
+    if (type === 'start') {
+      return {
+        disabledHours: () => range(0, 60).splice(4, 20),
+        disabledMinutes: () => range(30, 60),
+        disabledSeconds: () => [55, 56],
+      };
+    }
+    return {
+      disabledHours: () => range(0, 60).splice(20, 4),
+      disabledMinutes: () => range(0, 31),
+      disabledSeconds: () => [55, 56],
+    };
+  };
+export default function CreateTaSchedule1() {
      async function fetchUserList(subject) {
           /*  console.log('fetching user', username); */
           return await axios.get(`/api/subject/search?subject=${subject}&&user=${auth.user._id}`)
@@ -60,10 +94,7 @@ export default function CreateTaSchedule() {
      const [information, setInformation] = useState({
           requirement: "",
      });
-     const [date, setDate] = useState({
-          startTime: "",
-          endTime: ""
-     })
+     const [date, setDate] = useState('')
      const [value, setValue] = useState([]);
      const [attendees, setAttendees] = useState([])
      const [attendee, setAttendee] = useState([])
@@ -84,12 +115,15 @@ export default function CreateTaSchedule() {
 
      };
      const onOk = (dateString) => {
-          let start = dayjs(dateString[0].$d).format('YYYY-MM-DDTHH:mm:ssZ')
-          let end = dayjs(dateString[1].$d).format('YYYY-MM-DDTHH:mm:ssZ')
-          setDate({
-               startTime: start,
-               endTime: end
-          })
+          let start = dayjs(dateString).format('YYYY-MM-DDTHH:mm:ssZ')
+         /*  let end = dayjs(dateString[1].$d).format('YYYY-MM-DDTHH:mm:ssZ') */
+         console.log(start)
+      /*    let gg =dayjs(start).unix()
+         console.log(gg) */
+         setDate(start)
+         
+         /*  setDate(start)
+          console.log(dateString) */
      };
      const handleForm = (e) => {
           e.preventDefault();
@@ -113,13 +147,14 @@ export default function CreateTaSchedule() {
 
           e.preventDefault();
           console.log({
-               subject: form.attendees[0], requirement: form.requirement })
+               subject: form.attendees[0], requirement: form.requirement,dateCloseForm:date })
           try {
                const response = await axios.post('/api/create-taSchedule', {
-               subject: form.attendees[0], requirement: form.requirement }, {
+              subject: form.attendees[0], requirement: form.requirement,dateCloseForm:date}, {
                     headers: { Authorization: auth.accesstoken },
                })
                console.log(response)
+               showNotification('success','You create this form success')
                navigate(`/manageTaSchedule`);
           }
           catch (err) {
@@ -164,13 +199,23 @@ export default function CreateTaSchedule() {
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">
-                                             <RangePicker
+                                           {/*   <RangePicker
                                                   size={50}
                                                   showTime={{ format: 'HH:mm' }}
                                                   format="YYYY-MM-DD HH:mm:00"
                                                   onChange={onChangeDate}
                                                   onOk={onOk}
-                                             />
+                                             /> */}
+                                              <DatePicker
+                                            format="YYYY-MM-DD HH:mm:ss"
+                                            disabledDate={disabledDate}
+                                          /*   disabledTime={disabledDateTime} */
+                                            showTime={{
+                                                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
+                                            }}
+                                            onOk={onOk}
+                                            onChange={onChangeDate}
+                                            />
 
                                         </div>
                                    </div>

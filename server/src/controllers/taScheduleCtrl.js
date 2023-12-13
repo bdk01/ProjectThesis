@@ -1,7 +1,7 @@
 
 import Users from '../models/userModel'
 import TaSchedules from '../models/taScheduleModel'
-
+import dayjs from 'dayjs';
 class APIfeatures {
     constructor(query, queryString){
         this.query = query;
@@ -30,19 +30,26 @@ class APIfeatures {
 const taScheduleCtrl = {
     createTaSchedule: async (req, res) => {
         try {
-            const { subject,requirement} = req.body
+            const { subject,requirement,dateCloseForm} = req.body
           
             const newTaSchedules = new TaSchedules({
-                subject,requirement, creator: req.user._id
+                subject,requirement, creator: req.user._id,dateCloseForm, expireAt:dateCloseForm
             })
             await newTaSchedules.save()
      
+            let end =dayjs(dateCloseForm).valueOf()
+            let start = dayjs(newTaSchedules.createdAt).valueOf()
+
          
+            let expire = end-start
+            console.log(expire)
              const NewTaSchedules = await TaSchedules.findByIdAndUpdate(
           newTaSchedules._id,
-          { $set: { link: `/registerTA/${newTaSchedules._id}` } },
+          { $set: { link: `/registerTA/${newTaSchedules._id}`/* ,expireAt:expire */  } },
           { new: true }
         );
+      /*   newTaSchedules.index({expireAt: 1},{expireAfterSeconds: expire}); */
+       /*  "expireAt": { type: Date,  expires: 11 } */
             res.json({
                 msg: 'Created TASchedule!',
                NewTaSchedules
@@ -135,7 +142,7 @@ const taScheduleCtrl = {
      deleteTaSchedule: async (req, res) => {
         try {
         
-     /*  const newTaSchedule = await TaSchedules.find({_id: req.params.id}).populate('subject creatorId') */
+            
        const newTaSchedule = await  TaSchedules.findOneAndDelete({_id: req.params.id})
           res.status(200).json({
               msg: 'Deleted success!',

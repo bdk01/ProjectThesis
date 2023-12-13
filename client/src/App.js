@@ -33,7 +33,7 @@ import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 import { getPosts } from "./api/postAPI";
 import { getNotifies } from "./api/notifyAPI";
-import Profile1 from "./pages/Profile1";
+
 import Profile from "./pages/Profile";
 import RegisterTA from "./pages/RegisterTA";
 import RegisterSubject from "./pages/Teacher/CreateSubject";
@@ -57,6 +57,7 @@ import i18n from "./i18ns/i18n.config";
 import { getSuggestions } from "./api/suggestionsAPI";
 import LayoutAdmin from "./Layout/LayoutAdmin";
 import NewPage from "./pages/NewPage";
+import CreateTaSchedule1 from "./pages/Teacher/CreateTaSchedule1";
 
 
 const App = () => {
@@ -122,20 +123,27 @@ const App = () => {
             path="home"
             /*   lazy={() => import('./pages/Home')} */
             element={
-              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+           
+          <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
                 <Pages.Home />
 
               </Suspense>
+       
+
+       
+
             }
           />
           <Route
             path=""
             /*   lazy={() => import('./pages/Home')} */
             element={
+              <UserRoute>
               <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
                  <Pages.Home />
 
               </Suspense>
+               </UserRoute>
             }
           />
           <Route
@@ -148,6 +156,7 @@ const App = () => {
               </Suspense>
             }
           />
+        
           <Route
             path="profile/:id"
             /*   lazy={() => import('./pages/Home')} */
@@ -211,14 +220,7 @@ const App = () => {
           }
         />
 
-        <Route
-          path="/profile1"
-          element={
-            <Layout>
-              <Profile1 />
-            </Layout>
-          }
-        />
+        
         {/*  <Route
           path="/profile/:id"
           element={
@@ -281,7 +283,7 @@ const App = () => {
           path="/createTaSchedule"
           element={
             <Layout>
-              <CreateTaSchedule />
+              <CreateTaSchedule1 />
             </Layout>
           }
         />
@@ -304,9 +306,13 @@ const App = () => {
         <Route
           path="/manage-user"
           element={
+                   <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
             <LayoutAdmin>
-              <ManageUser />
+                   <ManageUser />
+
+            
             </LayoutAdmin>
+            </Suspense>
           }
         />
         <Route

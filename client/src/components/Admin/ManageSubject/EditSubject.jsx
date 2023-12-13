@@ -171,7 +171,7 @@ function EditSubject({ onClose, data, refetchData }) {
                                    rules={[
                                         {
                                              required: true,
-                                             message: "Vui lòng nhập tên công việc",
+                                             message: "Vui lòng nhập descrption",
                                         },
                                    ]}
                               >
@@ -225,25 +225,6 @@ function EditSubject({ onClose, data, refetchData }) {
 
                          
 
-                  
-                              {/*       <Item label="Trạng thái">
-                                   <Select
-                                        value={dataEdit.state}
-                                        onChange={(value) =>
-                                             setDataEdit({
-                                                  ...dataEdit,
-                                                  state: value,
-                                             })
-                                        }
-                                   >
-                                        <Option value="Đang mở">
-                                             <div className="text-green-600 font-bold">Mở</div>
-                                        </Option>
-                                        <Option value="Đã đóng">
-                                             <span className="text-red-600 font-bold">Đóng</span>
-                                        </Option>
-                                   </Select>
-                              </Item> */}
                               <div className="flex justify-end mt-2 text-sm gap-x-6">
                                    <Button
                                         size="large"

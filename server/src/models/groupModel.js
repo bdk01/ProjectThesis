@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 
-const eventSchema = mongoose.Schema(
+const groupSchema = mongoose.Schema(
   {
     subject: { type: mongoose.Types.ObjectId, ref: "Subjects" },
     startTime: {
@@ -16,8 +16,13 @@ const eventSchema = mongoose.Schema(
     meetingName: String,
     attendees: [{ type: mongoose.Types.ObjectId, ref: "Users" }],
     creatorId: { type: mongoose.Types.ObjectId, ref: "Users" },
+    receiverId: { type: mongoose.Types.ObjectId, ref: "Users" },
     conversation: { type: mongoose.Types.ObjectId, ref: "Conversations" },
     location: String,
+    isCouple: {
+      type: Boolean,
+      default:false
+    },
   },
   {
     timestamps: true,
@@ -25,4 +30,4 @@ const eventSchema = mongoose.Schema(
 );
 
 
-export default mongoose.model("EventSchedules", eventSchema);
+export default mongoose.model("Groups", groupSchema);

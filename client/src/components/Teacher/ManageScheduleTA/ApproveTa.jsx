@@ -85,6 +85,7 @@ function ApproveTa({ onClose, data, refetchData }) {
 
                               >
                                    <Input
+                                   disabled={true}
                                         value={dataEdit.studentId}
 
                                    />
@@ -100,6 +101,7 @@ function ApproveTa({ onClose, data, refetchData }) {
                                    ]}
                               >
                                    <Input
+                                     disabled={true}
                                         value={dataEdit.fullName}
                                    
                                    />
@@ -111,7 +113,7 @@ function ApproveTa({ onClose, data, refetchData }) {
                               >
                                    <Input
                                         value={dataEdit.gpaTotal}
-                                   
+                                        disabled={true}
                                    />
                               </Item>
                               <Item
@@ -121,7 +123,7 @@ function ApproveTa({ onClose, data, refetchData }) {
                               >
                                    <Input
                                         value={dataEdit.gpaSubject}
-                                   
+                                        disabled={true}
                                    />
                               </Item>
                             
@@ -174,7 +176,7 @@ function ApproveTa({ onClose, data, refetchData }) {
                                         }
                                         onClick={onClose}
                                    >
-                                        Hủy
+                                        Thoát
                                    </Button>
                                    <Button
                                         type="primary"

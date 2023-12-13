@@ -132,7 +132,7 @@ export const updateProfileUser = async ({userData, avatar, auth, dispatch}  ) =>
             ...auth,
             user: {...auth.user, ...userData,   avatar: avatar ? avatar : auth.user.avatar,}
         }))
-        alert('sucess')
+        showNotification('success','You have change')
       /*   dispatch({type: GLOBALTYPES.ALERT, payload: {success: res.data.msg}}) */
     } catch (err) {
       console.log(err)

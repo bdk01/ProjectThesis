@@ -108,10 +108,7 @@ const pathname = useLocation()
                             ))
                         }
                          </>
-                /*   : <>
-                     
-               
-              <button ref={pageEnd} style={{opacity: 0}} >Load More</button>  */
+          
                }
             </div>
      </div>;

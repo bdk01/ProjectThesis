@@ -52,11 +52,17 @@ const subjectCtrl = {
     },
     getSubject: async (req, res) => {
         try {
-        console.log(req.query.subject);
+       
+      /*   const subjects = await Subjects.find({
+            subjectName: { $regex: req.query.subject }, teacher:[{ $regex: req.query.user }]
+        }) */
         const subjects = await Subjects.find({
-            subjectName: { $regex: req.query.subject },
+            'teacher': { 
+                $in: req.query.user
+              }, 'subjectName': { $regex: req.query.subject }
         })
-        .limit(10)
+       /*  .limit(10) */
+       
       res.json({ subjects });
      
         } catch (err) {

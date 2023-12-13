@@ -125,8 +125,8 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile})
           defaultValue={localStorage.getItem("language")}
           className="ml-[6px] text-sm rounded-lg  items-center hidden sm:flex"
           style={{
-            width: 61,
-          
+            width: 71,
+            
           
           }}    
           onChange={handleChange}

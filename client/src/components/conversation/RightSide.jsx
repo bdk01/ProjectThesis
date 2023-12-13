@@ -154,7 +154,7 @@ export default function RightSide() {
                             <div key={index}>
                                 {
                                     msg?.sender._id !== auth?.user._id &&
-                                    <div key={index} className="flex justify-start ml-2">
+                                    <div key={index} className="flex justify-start ml-1">
                                             <MsgDisplay sender={msg.sender} msg={msg} />
                                         </div>
                                 }

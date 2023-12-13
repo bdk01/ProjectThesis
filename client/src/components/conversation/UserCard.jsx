@@ -9,12 +9,8 @@ export default function UserCard({user,msg}) {
             <div className="ml-1 md:ml-3 flex justify-start items-start flex-col">
                 <div>{user?.meetingName}</div>
                 <div>
-                        {/*   {
-                                  msg 
-                                  ? user.text
-                                  : user.fullname
-                              } */}
-                              {user.description}
+                    
+                    {user.description}
                 </div>
             </div>
 

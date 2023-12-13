@@ -92,14 +92,14 @@ const CardFooter = ({post}) => {
                 {/*     <img src={Send} alt="Send" onClick={() => setIsShare(!isShare)} /> */}
                 </div>
 
-                {
+           {/*      {
                     saved 
                     ?  <i className="fas fa-bookmark text-info text-2xl"
                     onClick={handleUnSavePost} />
 
                     :  <i className="far fa-bookmark text-2xl"
                     onClick={handleSavePost} />
-                }
+                } */}
                
             </div>
 

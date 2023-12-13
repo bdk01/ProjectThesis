@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "../../axios"
 import { useSelector } from "react-redux";
 import EditUser from "../../components/Admin/ManageUser/EditUser";
+import ProfileTable from "../../components/ProfileTable/ProfileTable";
 
 
 
@@ -213,6 +214,7 @@ function ManageUser() {
                     disable={isDisable}
                     onOk={acceptDelete}
                />
+             {/*   <ProfileTable/> */}
           </div>
      );
 }

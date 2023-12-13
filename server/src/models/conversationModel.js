@@ -8,6 +8,7 @@ const conversationSchema = new mongoose.Schema(
     text: String,
     media: Array,
     call: Object,
+    
   },
   {
     timestamps: true,

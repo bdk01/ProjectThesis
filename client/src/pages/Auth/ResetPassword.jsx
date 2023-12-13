@@ -123,7 +123,7 @@ function ResetPassword() {
           password: password 
       })
      
-      console.log(response)
+   
         success();
       setTimeout(() => { navigate('/login', { replace: true }); }, 1000);
     } catch(error){

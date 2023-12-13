@@ -7,7 +7,7 @@ import moment from 'moment'/*
 import { isReadNotify, NOTIFY_TYPES, deleteAllNotifies } from '../redux/actions/notifyAction' */
 import { deleteAllNotifies, isReadNotify } from '../../api/notifyAPI'
 import { useTranslation } from 'react-i18next'
-
+import cn from "../../utils/class-names"
 const NotifyModal = () => {
     const { t } = useTranslation();
     const { auth, notify } = useSelector(state => state)
@@ -18,9 +18,7 @@ const NotifyModal = () => {
         isReadNotify({msg, auth,dispatch})
     }
 
-    const handleSound = () => {
-     /*    dispatch({type: NOTIFY_TYPES.UPDATE_SOUND, payload: !notify.sound}) */
-    }
+  
 
     const handleDeleteAll = () => {
         const newArr = notify.data.filter(item => item.isRead === false)
@@ -35,7 +33,7 @@ const NotifyModal = () => {
         <div style={{minWidth: '300px'}}>
             <div className="d-flex justify-content-between align-items-center px-3">
                 <h3>{t('Notification')}</h3>
-                {
+            {/*     {
                     notify?.sound 
                     ? <i className="fas fa-bell text-danger" 
                     style={{fontSize: '1.2rem', cursor: 'pointer'}}
@@ -44,7 +42,7 @@ const NotifyModal = () => {
                     : <i className="fas fa-bell-slash text-danger"
                     style={{fontSize: '1.2rem', cursor: 'pointer'}}
                     onClick={handleSound} />
-                }
+                } */}
             </div>
             <hr className="mt-1" />
 
@@ -60,12 +58,14 @@ const NotifyModal = () => {
             <div style={{maxHeight: 'calc(100vh - 200px)', overflow: 'auto'}}>
                 {
                     notify?.data.map((msg, index) => (
-                        <div key={index} className="px-3 mb-2 mt-1" >
+                       
+                       
+                        <div key={index} className={cn(`  px-3 mb-2 mt-1`,msg.isRead ? '' : 'bg-gray-200 ')}  >
                             <Link to={`${msg.url}`} className="d-flex text-dark align-items-center"
                             onClick={() => handleIsRead(msg)}>
                         
                               <div className='flex justify-center items-center'>
-                                <img src={msg.user.avatar} alt="NoNotice" className="w-12 rounded-full" />
+                                <img src={msg.user?.avatar} alt="NoNotice" className="w-12 rounded-full" />
                                 </div>
                                 <div className="mx-1 flex-fill">
                                     <div>
@@ -82,7 +82,7 @@ const NotifyModal = () => {
                                             msg.image.match(/video/i)
                                             ? <video src={msg.image} width="100%" />
                                             : <div>  <div className='flex justify-center items-center'>
-                                <img src={msg.user.avatar} alt="NoNotice" className="w-12 rounded-full" />
+                                <img src={msg.user?.avatar} alt="NoNotice" className="w-12 rounded-full" />
                                 </div> </div> 
                                         }
                                     </div>

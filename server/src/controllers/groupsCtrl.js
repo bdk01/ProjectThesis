@@ -1,12 +1,12 @@
-import EventSchedule from "../models/eventScheduleModel";
+import groups from "../models/groupModel";
 import Conversations from "../models/conversationModel";
-const eventScheduleCtrl = {
+const groupsCtrl = {
 
   createEvent: async (req, res) => {
     try {
      const {  startTime, endTime,description,conversation,location,attendees, meetingName  } = req.body;
     /*  attendees.push(req.user._id) */
-      const newEvet = new EventSchedule({
+      const newEvet = new groups({
         conversation: conversation,
          meetingName,
         startTime,
@@ -18,7 +18,7 @@ const eventScheduleCtrl = {
       });
         await newEvet.save();
       /*   const  */
-       /* const newConversation = await EventSchedule.findById(conversation); */
+       /* const newConversation = await groups.findById(conversation); */
         const newConversation = await Conversations.findByIdAndUpdate(
           conversation,
           { $set: { event: newEvet._id } },
@@ -33,7 +33,7 @@ const eventScheduleCtrl = {
   getEvent: async (req, res) => {
      const { id } = req.params;
     try {
-    const event = await EventSchedule.findById(id);
+    const event = await groups.findById(id);
         res.status(200).json(event);
 
     } catch (err) {
@@ -43,8 +43,8 @@ const eventScheduleCtrl = {
   searchEvent: async (req, res) => {
    /*   const { id } = req.params; */
     try {
-   /*  const event = await EventSchedule.findById(id); */
-    const event = await EventSchedule.find({
+   /*  const event = await groups.findById(id); */
+    const event = await groups.find({
       meetingName: { $regex: req.query.meetingName },
     })
       .limit(10)
@@ -58,7 +58,7 @@ const eventScheduleCtrl = {
   },
   getEventByCreatorIdDate: async (req, res) => {
     try {
-    const event = await EventSchedule.findOne(
+    const event = await groups.findOne(
             {$and: [
                 { StartTime: new Date(date) },
                 { CreatorId: req.userId }
@@ -71,7 +71,7 @@ const eventScheduleCtrl = {
   },
    getEvents : async (req, res) => {
     try {
-     const eventSchedules = await EventSchedule.find({ 
+     const groupss = await groups.find({ 
             $or: [ 
                 { CreatorId: req.userId }, 
                 { Attendees: req.userName + ',' + req.userId }
@@ -79,7 +79,7 @@ const eventScheduleCtrl = {
         })
         .slice('Messages', -1)
         .sort({ UpdatedAt: -1 });
-        res.status(200).json(eventSchedules);
+        res.status(200).json(groupss);
     } catch (err) {
   res.status(404).json({ message: err.message });
     }
@@ -88,7 +88,7 @@ const eventScheduleCtrl = {
      const {id} = req.params
        const changedEvent = req.body;
     try {
-      const updatedEvent = await EventSchedule.findByIdAndUpdate(id, { ...changedEvent, id }, { new: true });
+      const updatedEvent = await groups.findByIdAndUpdate(id, { ...changedEvent, id }, { new: true });
         res.json(updatedEvent);
     } catch (err) {
   res.status(404).json({ message: err.message });
@@ -98,7 +98,7 @@ const eventScheduleCtrl = {
        const { date: date } = req.params;
     const changedEvent = req.body;
     try {
-      const updatedEvent = await EventSchedule.findOneAndUpdate(
+      const updatedEvent = await groups.findOneAndUpdate(
             {$and: [
                 { StartTime: new Date(date) },
                 { CreatorId: req.userId }
@@ -132,12 +132,14 @@ const eventScheduleCtrl = {
          attendees:[sender,recipient]
        });
          await conversation.save();
-            const newEvent = new EventSchedule({
+            const newEvent = new groups({
             conversation:conversation._id,
             meetingName:`${senderName} & ${recipientName}`,
             description:'',
             creatorId: sender,
-            attendees:[sender,recipient]
+            attendees:[sender,recipient],
+            isCouple:true,
+            receiverId:recipient
           });
         await newEvent.save();
            const newConversation = await Conversations.findByIdAndUpdate(
@@ -156,4 +158,4 @@ const eventScheduleCtrl = {
 
 };
 
-export default eventScheduleCtrl;
+export default groupsCtrl;
