@@ -3,6 +3,7 @@ import Users from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../helper/sendemail";
+import Profile from "../models/ProfileModel";
 const userCtrl = {
   searchUser: async (req, res) => {
     try {
@@ -67,7 +68,7 @@ const userCtrl = {
   getUser: async (req, res) => {
    try {
             const user = await Users.findById(req.params.id).select('-password')
-            .populate("followers following", "-password")
+            .populate("followers following profile", "-password")
             if(!user) return res.status(400).json({msg: "User does not exist."})
             
             res.json({user})
@@ -109,7 +110,7 @@ const userCtrl = {
           
 
             await Users.findOneAndUpdate({_id: id}, {
-               email, fullname:fullname, username:username ,role,phone
+               email, fullname:fullname, username:username ,role
             }, {new: true})
 
             res.json({msg: "Update Success!"})
@@ -125,7 +126,7 @@ const userCtrl = {
 
             const newUser = await Users.findOneAndUpdate({_id: req.params.id}, { 
                 $push: {followers: req.user._id}
-            }, {new: true}).populate("followers following", "-password")
+            }, {new: true}).populate("followers following profile", "-password")
 
             await Users.findOneAndUpdate({_id: req.user._id}, {
                 $push: {following: req.params.id}
@@ -142,7 +143,7 @@ const userCtrl = {
 
             const newUser = await Users.findOneAndUpdate({_id: req.params.id}, { 
                 $pull: {followers: req.user._id}
-            }, {new: true}).populate("followers following", "-password")
+            }, {new: true}).populate("followers following profile", "-password")
 
             await Users.findOneAndUpdate({_id: req.user._id}, {
                 $pull: {following: req.params.id}
@@ -192,12 +193,20 @@ const userCtrl = {
         try {
           console.log('gg')
             const { avatar, fullname,username,phone,introduction } = req.body
-           
+          /*   const newprofile = new ProfileModel({
+              phone,introduction
+            }); */
 
+            
+            /* save profile */
+            await Profile.findOneAndUpdate({userId: req.user._id}, {
+              phone,introduction
+          }, { new: true, upsert: true })
+                               
             await Users.findOneAndUpdate({_id: req.user._id}, {
-                avatar, fullname,username,phone,introduction
-            })
-
+                avatar, fullname,username
+            }, { new: true, upsert: true })
+         
             res.json({msg: "Update Success!"})
 
         } catch (err) {

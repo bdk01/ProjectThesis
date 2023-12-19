@@ -6,22 +6,26 @@ import axios from '../axios';
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useClipboard } from "@mantine/hooks";
-import { Button } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import { showNotification } from "../utils/helper";
+import { useGetUserData } from "../hooks/getUserTa";
 
 export default function RegisterTA() {
      const clipboard = useClipboard({ timeout: 1000 });
        const { auth} = useSelector(state => state)
+       
        const {id} = useParams()
      const [informationTA, setInformationTA] = useState({});
+     const [loading, setLoading] = useState(false);
      const [information, setInformation] = useState({
           fullName:"",
           gpaTotal:"",
           gpaSubject:"",
           studentId:"",
      });
+
      const navigate = useNavigate();
- 
+   /*   const {isLoading,data,error,isError} = useGetUserData(id,auth.accesstoken) */
    
      
      const handleForm = (e) => {
@@ -58,7 +62,7 @@ export default function RegisterTA() {
                console.log(err)
           }
      }
-     /* registerTA/:id645db62395809d0d50464787 */
+   
      useEffect(()=>{
                const getINF = async () => {
                     try {
@@ -66,13 +70,15 @@ export default function RegisterTA() {
                          const res = await axios.get(`/api/taSchedule/${id}`, {
                               headers: { Authorization: auth.accesstoken },
                          })
+                        
                          console.log(res.data[0])
                          console.log(res.data[0].creator.fullname)
                          console.log(res.data[0].subject.subjectName)
                          setInformationTA(res.data[0])
-
+                         
                     } catch (err) {
                          console.log(err)
+                         setLoading(true)
                     }
                       
                   
@@ -81,8 +87,16 @@ export default function RegisterTA() {
                getINF()
           }
      }, [id, auth.accesstoken])
+     if(loading) return(
+     <div className="flex justify-center items-center h-[80vh]">
+          <Text size={40} fw={600}>Form is closed or does not exist</Text>
 
-  return <div className="flex flex-col ">
+     </div>)
+  
+  return(
+   
+  
+   <div className="flex flex-col ">
        <div>
             <div className=" relative">
                  <div className=" relative ">
@@ -154,7 +168,7 @@ export default function RegisterTA() {
                                                     type="text"
                                                     name="studentId"
                                                     onChange={handleForm}
-                                                    defaultValue={information.studentId}
+                                                    defaultValue={information?.studentId}
                                                />
                                           </div>
                                      </div>
@@ -170,7 +184,7 @@ export default function RegisterTA() {
                                                     type="text"
                                                     name="gpaTotal"
                                                     onChange={handleForm}
-                                                    defaultValue={information.gpaTotal}
+                                                    defaultValue={information?.gpaTotal}
                                                />
                                           </div>
                                      </div>
@@ -186,7 +200,7 @@ export default function RegisterTA() {
                                                     type="text"
                                                     name="gpaSubject"
                                                     onChange={handleForm}
-                                                    defaultValue={information.gpaSubject}
+                                                    defaultValue={information?.gpaSubject}
                                                />
                                           </div>
                                      </div>
@@ -202,7 +216,7 @@ export default function RegisterTA() {
                                                     type="text"
                                                     name="fullName"
                                                     onChange={handleForm}
-                                                    defaultValue={information.fullName}
+                                                    defaultValue={information?.fullName}
                                                />
                                           </div>
                                      </div>
@@ -224,5 +238,7 @@ export default function RegisterTA() {
                  </div>
             </div>
        </div>
-  </div>;
+  </div>
+
+  )
 }

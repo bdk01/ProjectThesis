@@ -58,6 +58,9 @@ import { getSuggestions } from "./api/suggestionsAPI";
 import LayoutAdmin from "./Layout/LayoutAdmin";
 import NewPage from "./pages/NewPage";
 import CreateTaSchedule1 from "./pages/Teacher/CreateTaSchedule1";
+import AdminLayout from "./Layout/adminLayout/adminLayout";
+import ConversationAdmin from "./pages/MessageAdmin/ConversationAdmin";
+
 
 
 const App = () => {
@@ -307,20 +310,42 @@ const App = () => {
           path="/manage-user"
           element={
                    <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
-            <LayoutAdmin>
+       {/*      <LayoutAdmin>
                    <ManageUser />
 
             
-            </LayoutAdmin>
+            </LayoutAdmin> */}
+            <AdminLayout>
+                   <ManageUser />
+
+            
+            </AdminLayout>
             </Suspense>
           }
         />
         <Route
           path="/review-subject"
           element={
-            <LayoutAdmin>
+            <AdminLayout>
               <ManageSubject />
-            </LayoutAdmin>
+              </AdminLayout>
+          }
+        />
+           <Route
+          path="/admin/conversation"
+          element={
+            <AdminLayout>
+           <ConversationAdmin />
+              </AdminLayout>
+          }
+        />
+
+        <Route
+          path="/admin/conversation/:id"
+          element={
+            <AdminLayout>
+              <ConversationAdmin />
+              </AdminLayout>
           }
         />
         <Route

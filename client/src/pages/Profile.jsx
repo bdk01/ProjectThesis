@@ -22,6 +22,7 @@ const Profile = () => {
           if (profile.ids.every(item => item !== id) && auth.accesstoken) {
        
                getProfileUsers( id, auth,dispatch )
+          
           }
      }, [id, auth.accesstoken, dispatch, profile.ids])
 

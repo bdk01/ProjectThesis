@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from"jsonwebtoken";
 import { sendEmail } from "../helper/sendemail";
 import dotenv from "dotenv";
+import Profile from "../models/ProfileModel";
 
 dotenv.config();
 let buildURLEmail = (token) => {
@@ -33,7 +34,18 @@ const authCtrl = {
       });
       /* save user */
       await newUser.save();
-
+      const newprofile = new Profile({
+        userId:newUser._id
+      });
+      console.log('qwd')
+      
+      /* save profile */
+      await newprofile.save();
+      await Users.findByIdAndUpdate(
+        newUser._id,
+        { $set: { profile: newprofile._id } },
+        { new: true }
+      );
       res.status(200).json({ msg: "Register success" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -49,7 +61,7 @@ const authCtrl = {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ msg: "Incorrect password." });
         const userInf = await Users.findOne({ email }).select('-password')
-            .populate("followers following", "-password")
+            .populate("followers following profile", "-password")
       // If login success , create access token and refresh token
        const accesstoken = createAccessToken({ id: user._id });
      const refresh_token = createRefreshToken({ id: user._id });

@@ -4,9 +4,14 @@ import Posts from'../models/postModel'
 
 const commentCtrl = {
     createComment: async (req, res) => {
+        
         try {
-            console.log('asdas')
+          
             const { postId, content, tag, reply, postUserId } = req.body
+            
+     /*        let result = await processString(content);
+            console.log(result)
+           if(!result ) return res.status(401).json({msg: "This post have exhibit word."}) */
 
             const post = await Posts.findById(postId)
             if(!post) return res.status(400).json({msg: "This post does not exist."})
@@ -95,5 +100,20 @@ const commentCtrl = {
         }
     },
 }
+/* 
+const   processString= async(inputString) => {
+    console.log(inputString)
+    const exhibitArray = ["exhibit", "forbidden", "restricted"];
+  
+    for (let word of exhibitArray) {
+        if (inputString.includes(word)) {
+            return 
+        }
+    }
+
+    // Process the string as intended
+    let processedString = inputString.toUpperCase();  // Example processing
+    return processedString;
+} */
 
 export default commentCtrl

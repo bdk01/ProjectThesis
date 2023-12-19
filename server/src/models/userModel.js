@@ -31,12 +31,7 @@ const UserSchema = new Schema(
       maxlength: 25,
       unique: true,
     },
-    phone: {
-      type: Number,
-    },
-    introduction: {
-      type: String,
-    },
+    profile:{type: mongoose.Types.ObjectId, ref: 'Profile'},
     avatar: {
       type: String,
       default:

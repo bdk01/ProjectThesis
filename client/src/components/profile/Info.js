@@ -55,7 +55,7 @@ const Info = ({id, auth, profile, dispatch}) => {
             
         }
     },[showFollowers, showFollowing, onEdit, dispatch]) */
-    
+    console.log(userData)
 
     return (
         <div className="w-[100%] max-w-[800px] m-auto px-[10px] py-[20px]">
@@ -104,8 +104,8 @@ const Info = ({id, auth, profile, dispatch}) => {
                             <h6 className='mb-[2px]'>Name: {user.fullname} <span className="text-danger">{user.mobile}</span></h6>
                          
                             <h6 className="m-0 mb-[2px]">Email: {user.email}</h6>
-                            <h4 className="m-0 mb-[2px]">{user.introduction}</h4>
-                            <h4 className="m-0 mb-[2px]">Contact: {user.phone}</h4>
+                            <h4 className="m-0 mb-[2px]">{user?.profile?.introduction}</h4>
+                            <h4 className="m-0 mb-[2px]">Contact: {user?.profile?.phone}</h4>
                           
                          {/*    <p>{user.story}</p> */}
                         </div>

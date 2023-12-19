@@ -97,7 +97,7 @@ function Register() {
   //message cua register
   const success = () => {
     message.success({
-      content: 'Đăng ký thành công ',
+      content: 'Register success ',
       className: 'custom-class',
       style: {
         marginTop: '20vh',
@@ -107,7 +107,7 @@ function Register() {
  
   const existed = () => {
     message.error({
-      content: 'Email hoặc số điện thoại đã tồn tại',
+      content: 'Email or phone is already exist ',
       className: 'custom-class',
       style: {
         marginTop: '20vh',
@@ -116,7 +116,7 @@ function Register() {
   };
   const failed400 = () => {
     message.error({
-      content: 'Đăng kí không thành công',
+      content: 'Sign up fail',
       className: 'custom-class',
       style: {
         marginTop: '20vh',
@@ -125,7 +125,7 @@ function Register() {
   };
   const failed401 = () => {
     message.error({
-      content: 'Email đã được đăng ký',
+      content: 'Email is already exist',
       className: 'custom-class',
       style: {
         marginTop: '20vh',
@@ -134,7 +134,7 @@ function Register() {
   };
   const failed500 = () => {
     message.error({
-      content: 'Lỗi hệ thống,vui lòng đăng ký lại',
+      content: 'System have error',
       className: 'custom-class',
       style: {
         marginTop: '30vh',
@@ -214,12 +214,12 @@ function Register() {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập tên tài khoản",
+                    message: "Please input your fullname",
                   },
                 ]}
                 hasFeedback
               >
-                <Input placeholder="Nhập tên tài khoản" />
+                <Input placeholder="Fullname" />
               </Form.Item>
               <Form.Item
                 name="username"
@@ -227,12 +227,12 @@ function Register() {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập tên tài khoản",
+                    message: "Please input your username",
                   },
                 ]}
                 hasFeedback
               >
-                <Input placeholder="Nhập tên tài khoản" />
+                <Input placeholder="Username" />
               </Form.Item>
 
               <Form.Item
@@ -241,7 +241,7 @@ function Register() {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập email ",
+                    message: "Input your email",
                   },
                   {
                     type: "email",
@@ -250,7 +250,7 @@ function Register() {
                 ]}
                 hasFeedback
               >
-                <Input placeholder="Nhập email " />
+                <Input placeholder="Input your email " />
               </Form.Item>
 
               <Form.Item
@@ -259,11 +259,11 @@ function Register() {
                 rules={[
                   {
                     required: true,
-                    message: "Vui lòng nhập mật khẩu",
+                    message: "Please input password",
                   },
                   {
                     min: 6,
-                    message: "Mật khẩu phải dài hơn 6 chữ số",
+                    message: "Password consist 6 characters",
                   },
                   {
                     max: 24,
@@ -272,7 +272,7 @@ function Register() {
                 ]}
                 hasFeedback
               >
-                <Input.Password placeholder="Nhập mật khẩu" />
+                <Input.Password placeholder="Password" />
               </Form.Item>
 
               <Form.Item
@@ -282,20 +282,20 @@ function Register() {
                 rules={[
                   {
                     required: true,
-                    message: "Mật khẩu không khớp",
+                    message: "Password is not equal",
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue("password") === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject("Mật khẩu không khớp");
+                      return Promise.reject("Password is not equal");
                     },
                   }),
                 ]}
                 hasFeedback
               >
-                <Input.Password placeholder="Xác nhận mật khẩu" />
+                <Input.Password placeholder="Comfirm passowrd" />
               </Form.Item>
 
               <Form.Item wrapperCol={{ span: 24 }}>
