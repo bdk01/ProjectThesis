@@ -18,6 +18,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiOutlineViewGrid />
 	},
 	{
+		key: 'Manage-posts',
+		label: 'Manage-posts',
+		path: '/manage-posts',
+		icon: <HiOutlineViewGrid />
+	},
+	{
 		key: 'Review-subject',
 		label: 'Review-subject',
 		path: '/review-subject',

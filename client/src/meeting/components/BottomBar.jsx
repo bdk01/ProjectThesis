@@ -11,15 +11,14 @@ import {
   ChevronDownIcon,
   DotsHorizontalIcon,
 } from "@heroicons/react/outline";
-import recordingBlink from "../../static/animations/recording-blink.json";
-import useIsRecording from "../../hooks/useIsRecording";
+
 import RecordingIcon from "../../icons/Bottombar/RecordingIcon";
 import MicOnIcon from "../../icons/Bottombar/MicOnIcon";
 import MicOffIcon from "../../icons/Bottombar/MicOffIcon";
 import WebcamOnIcon from "../../icons/Bottombar/WebcamOnIcon";
 import WebcamOffIcon from "../../icons/Bottombar/WebcamOffIcon";
 import ScreenShareIcon from "../../icons/Bottombar/ScreenShareIcon";
-import ChatIcon from "../../icons/Bottombar/ChatIcon";
+
 import ParticipantsIcon from "../../icons/Bottombar/ParticipantsIcon";
 import EndIcon from "../../icons/Bottombar/EndIcon";
 import RaiseHandIcon from "../../icons/Bottombar/RaiseHandIcon";
@@ -41,7 +40,7 @@ export function BottomBar({
   setSelectMicDeviceId,
 }) {
   const { sideBarMode, setSideBarMode } = useMeetingAppContext();
-  const RaiseHandBTN = ({ isMobile, isTab }) => {
+ /*  const RaiseHandBTN = ({ isMobile, isTab }) => {
     const { publish } = usePubSub("RAISE_HAND");
     const RaiseHand = () => {
       publish("Raise Hand");
@@ -62,8 +61,8 @@ export function BottomBar({
         Icon={RaiseHandIcon}
       />
     );
-  };
-
+  }; */
+/* 
   const RecordingBTN = () => {
     const { startRecording, stopRecording, recordingState } = useMeeting();
     const defaultOptions = {
@@ -101,10 +100,10 @@ export function BottomBar({
       } else {
         startRecording();
       }
-    };
+    }; */
 
-    return (
-      <OutlinedButton
+ /*    return ( */
+    /*   <OutlinedButton
         Icon={RecordingIcon}
         onClick={_handleClick}
         isFocused={isRecording}
@@ -121,9 +120,10 @@ export function BottomBar({
         }
         lottieOption={isRecording ? defaultOptions : null}
         isRequestProcessing={isRequestProcessing}
-      />
-    );
-  };
+      /> */
+    /*   <div>qwd</div>
+    ); */
+  /* }; */
 
   const MicBTN = () => {
     const mMeeting = useMeeting();
@@ -484,32 +484,6 @@ export function BottomBar({
     );
   };
 
-  const ChatBTN = ({ isMobile, isTab }) => {
-    return isMobile || isTab ? (
-      <MobileIconButton
-        tooltipTitle={"Chat"}
-        buttonText={"Chat"}
-        Icon={ChatIcon}
-        isFocused={sideBarMode === sideBarModes.CHAT}
-        onClick={() => {
-          setSideBarMode((s) =>
-            s === sideBarModes.CHAT ? null : sideBarModes.CHAT
-          );
-        }}
-      />
-    ) : (
-      <OutlinedButton
-        Icon={ChatIcon}
-        onClick={() => {
-          setSideBarMode((s) =>
-            s === sideBarModes.CHAT ? null : sideBarModes.CHAT
-          );
-        }}
-        isFocused={sideBarMode === "CHAT"}
-        tooltip="View Chat"
-      />
-    );
-  };
 
   const ParticipantsBTN = ({ isMobile, isTab }) => {
     const { participants } = useMeeting();
@@ -586,22 +560,22 @@ export function BottomBar({
   const BottomBarButtonTypes = useMemo(
     () => ({
       END_CALL: "END_CALL",
-      CHAT: "CHAT",
+   
       PARTICIPANTS: "PARTICIPANTS",
       SCREEN_SHARE: "SCREEN_SHARE",
       WEBCAM: "WEBCAM",
       MIC: "MIC",
-      RAISE_HAND: "RAISE_HAND",
-      RECORDING: "RECORDING",
+    /*   RAISE_HAND: "RAISE_HAND", */
+    
       MEETING_ID_COPY: "MEETING_ID_COPY",
     }),
     []
   );
 
   const otherFeatures = [
-    { icon: BottomBarButtonTypes.RAISE_HAND },
+    /* { icon: BottomBarButtonTypes.RAISE_HAND }, */
     { icon: BottomBarButtonTypes.SCREEN_SHARE },
-    { icon: BottomBarButtonTypes.CHAT },
+  
     { icon: BottomBarButtonTypes.PARTICIPANTS },
     { icon: BottomBarButtonTypes.MEETING_ID_COPY },
   ];
@@ -614,7 +588,7 @@ export function BottomBar({
       <LeaveBTN />
       <MicBTN />
       <WebCamBTN />
-      <RecordingBTN />
+   {/*    <RecordingBTN /> */}
       <OutlinedButton Icon={DotsHorizontalIcon} onClick={handleClickFAB} />
       <Transition appear show={Boolean(open)} as={Fragment}>
         <Dialog
@@ -658,16 +632,14 @@ export function BottomBar({
                                 : "col-span-4 sm:col-span-3 md:col-span-2"
                             }`}
                           >
-                            {icon === BottomBarButtonTypes.RAISE_HAND ? (
+                            {/* icon === BottomBarButtonTypes.RAISE_HAND ? (
                               <RaiseHandBTN isMobile={isMobile} isTab={isTab} />
-                            ) : icon === BottomBarButtonTypes.SCREEN_SHARE ? (
+                            ) : */ icon === BottomBarButtonTypes.SCREEN_SHARE ? (
                               <ScreenShareBTN
                                 isMobile={isMobile}
                                 isTab={isTab}
                               />
-                            ) : icon === BottomBarButtonTypes.CHAT ? (
-                              <ChatBTN isMobile={isMobile} isTab={isTab} />
-                            ) : icon === BottomBarButtonTypes.PARTICIPANTS ? (
+                            )  : icon === BottomBarButtonTypes.PARTICIPANTS ? (
                               <ParticipantsBTN
                                 isMobile={isMobile}
                                 isTab={isTab}
@@ -696,15 +668,15 @@ export function BottomBar({
       <MeetingIdCopyBTN />
 
       <div className="flex flex-1 items-center justify-center" ref={tollTipEl}>
-        <RecordingBTN />
-        <RaiseHandBTN isMobile={isMobile} isTab={isTab} />
+    
+      {/*   <RaiseHandBTN isMobile={isMobile} isTab={isTab} /> */}
         <MicBTN />
         <WebCamBTN />
         <ScreenShareBTN isMobile={isMobile} isTab={isTab} />
         <LeaveBTN />
       </div>
       <div className="flex items-center justify-center">
-        <ChatBTN isMobile={isMobile} isTab={isTab} />
+ 
         <ParticipantsBTN isMobile={isMobile} isTab={isTab} />
       </div>
     </div>

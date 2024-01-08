@@ -9,6 +9,7 @@ import axios from "../../axios"
 import { useSelector } from "react-redux";
 import EditUser from "../../components/Admin/ManageUser/EditUser";
 import ProfileTable from "../../components/ProfileTable/ProfileTable";
+import AddUser from "../../components/Admin/ManageUser/AddUser";
 
 
 
@@ -72,7 +73,7 @@ function ManageUser() {
           },
          
           {
-               title: "",
+               title: "Action",
                dataIndex: "action",
                render: (a, record) => (
                     <div className="flex flex-row gap-y-1 gap-x-3">
@@ -176,12 +177,12 @@ function ManageUser() {
                          placeholder="Nhập từ khóa"
                          onSearch={searchByKeyword}
                     />
-                    {/* <button
+                    <button
                          className="px-5 py-2 border border-neutral-800 text-center hover:bg-slate-300"
                          onClick={() => setIsAddVisible(true)}
                     >
                          + Thêm mới
-                    </button> */}
+                    </button>
                </div>
                <Table
                     className="flex-1 z-0"
@@ -194,7 +195,7 @@ function ManageUser() {
                     scroll={{ x: 500 }}
                />
                {isAddVisible && (
-                    <AddNewSchedule
+                    <AddUser
                          onClose={() => setIsAddVisible(false)}
                          refetchData={() => fetchData(params)}
                     />

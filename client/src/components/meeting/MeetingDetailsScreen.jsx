@@ -165,9 +165,9 @@ export function MeetingDetailsScreen({
                     const meetingId = await _handleOnCreateMeeting();
                     setMeetingId(meetingId);
                     setIscreateMeetingClicked(true);
-                    if (meetingType === meetingTypes.ILS) {
+                   /*  if (meetingType === meetingTypes.ILS) {
                       setMeetingMode(Constants.modes.CONFERENCE);
-                    }
+                    } */
                   }}
                 >
                   Create a meeting
@@ -176,9 +176,9 @@ export function MeetingDetailsScreen({
                   className="w-full bg-gray-650 text-white px-2 py-3 rounded-xl mt-5"
                   onClick={(e) => {
                     setIsJoinMeetingClicked(true);
-                    if (meetingType === meetingTypes.ILS) {
+                 /*    if (meetingType === meetingTypes.ILS) {
                       setMeetingMode(Constants.modes.VIEWER);
-                    }
+                    } */
                   }}
                 >
                   Join a meeting

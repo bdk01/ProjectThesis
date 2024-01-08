@@ -102,15 +102,15 @@ import {  createNotify } from "./notifyAPI";
    
     }
 }
-export const updateProfileUser = async ({userData, avatar, auth, dispatch}  ) => {
+export const updateProfileUser = async ({userData1, avatar, auth, dispatch}  ) => {
     try {
       /*   let media;
         dispatch({type: GLOBALTYPES.ALERT, payload: {loading: true}})
 
         if(avatar) media = await imageUpload([avatar]) */
-               console.log(avatar)
+              
         const res = await  axios.post(`/api/user/edit-profile`,  {
-            ...userData,
+            ...userData1,
             avatar: avatar ? avatar : auth.user.avatar
         }, {
                 headers: { Authorization: auth.accesstoken }
@@ -130,7 +130,7 @@ export const updateProfileUser = async ({userData, avatar, auth, dispatch}  ) =>
         /* lan` */
            dispatch(GetUserInf({
             ...auth,
-            user: {...auth.user, ...userData,   avatar: avatar ? avatar : auth.user.avatar,}
+            user: {...auth.user, ...userData1,   avatar: avatar ? avatar : auth.user.avatar,}
         }))
         showNotification('success','You have change')
       /*   dispatch({type: GLOBALTYPES.ALERT, payload: {success: res.data.msg}}) */

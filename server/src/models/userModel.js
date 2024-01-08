@@ -35,7 +35,7 @@ const UserSchema = new Schema(
     avatar: {
       type: String,
       default:
-        "https://res.cloudinary.com/khoa252001/image/upload/v1668777257/socialmedia/duck_orrdvy.jpg",
+        "https://res.cloudinary.com/khoa252001/image/upload/v1703206467/socialmedia/user_pwvvhk.png",
     },
     studentId: {
       type: String,

@@ -42,35 +42,42 @@ function ManageSubject() {
      });
      const columns = [
           {
-               title: "SubjectName",
-               dataIndex: "subjectName",
+               title: "Content",
+               dataIndex: "content",
                sorter: true,
           },
 
-          {
+      /*     {
                title: "Description",
                dataIndex: "description",
                sorter: true,
-               /* render: (a) => <div>{a?.split("T")[0]}</div>, */
+          
+          }, */
+       /*    {
+               title: "Owner",
+          
+               dataIndex: "user",
+               render: (user) => user.map(teach => teach.fullname).join(),
+               key: "user"
+          }, */
+         
+          {
+               title: "Owner",
+               dataIndex: ['user', 'username'],
+
           },
           {
-               title: "Teacher",
-             /*   sorter: true, */
-               dataIndex: "teacher",
-               render: (teacher) => teacher.map(teach => teach.fullname).join(),
-               key: "teacher"
-          },
-         
-        /*   {
-               title: "SubjectTa",
-               dataIndex: ['subjectTa', 'subjectName'],
-
-          }, */
-          /* {
-               title: "Profile",
+               title: "LinkPost",
                dataIndex: "_id",
              
-               render: text => <Link to={`/profile/${text}`}>Profile</Link>
+               render: text => <Link to={`/post/${text}`}>Link</Link>
+          },
+          
+         /*  {
+               title: "LinkPost",
+               dataIndex: "like",
+             
+               render: like => <div>{like.length}</div>
           }, */
          
           {
@@ -78,13 +85,13 @@ function ManageSubject() {
                dataIndex: "action",
                render: (a, record) => (
                     <div className="flex flex-row gap-y-1 gap-x-3">
-                         <button
+                        {/*  <button
                               className="flex items-baseline gap-x-1 hover:text-blue-600"
                               onClick={() => handleClickEdit(record)}
                          >
                               <AiFillEdit className="translate-y-[1px]" />
                               Sửa
-                         </button>
+                         </button> */}
                          <button
                               className="flex items-baseline gap-x-1 hover:text-red-600"
                               onClick={() => {
@@ -104,14 +111,15 @@ function ManageSubject() {
           setLoading(true);
           /*  console.log(auth.accesstoken) */
           try {
-               const { data: response } = await axios.get(`/api/getAllSubject`, {
+               console.log(auth)
+               const { data: response } = await axios.get(`/api/get-All-post`, {
                     params
                }, {
                     headers: { Authorization: auth.accesstoken }
                });
                console.log(response)
                /*    console.log(data) */
-               setData(response.subjects);
+               setData(response.posts);
                /*  setData(response.subjects.full); */
                setLoading(false);
                setPagination({
@@ -177,12 +185,12 @@ function ManageSubject() {
                          placeholder="Nhập từ khóa"
                          onSearch={searchByKeyword}
                     />
-                    <button
+                {/*     <button
                          className="px-5 py-2 border border-neutral-800 text-center hover:bg-slate-300"
                          onClick={() => setIsAddVisible(true)}
                     >
                          + Thêm mới
-                    </button>
+                    </button> */}
                </div>
                <Table
                     className="flex-1 z-0"
@@ -194,19 +202,19 @@ function ManageSubject() {
                     onChange={handleTableChange}
                     scroll={{ x: 500 }}
                />
-               {isAddVisible && (
+           {/*     {isAddVisible && (
                     <AddNewSubject
                          onClose={() => setIsAddVisible(false)}
                          refetchData={() => fetchData(params)}
                     />
-               )}
-               {isEditVisible && (
+               )} */}
+         {/*       {isEditVisible && (
                     <EditSubject
                          onClose={() => setIsEditVisible(false)}
                          data={dataForEdit}
                          refetchData={() => fetchData(params)}
                     />
-               )}
+               )} */}
                <ConfirmModal //Modal delete career
                     isVisible={isDeleteVisible}
                     /* text={`xóa form  `} */ /* ${nameCompare} */

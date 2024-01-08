@@ -16,7 +16,7 @@ import i18n from "i18next";
 import {  Select } from "antd";
 import { useTranslation } from "react-i18next";
 
-
+import TA from "../../assets/img/TAIMG.jfif"
 
 export default function Header({setOpened ,opened,openedMobile,setOpenedMobile}) {
   const [search, setSearch] = useState('')
@@ -101,8 +101,8 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile})
 
                   <AiOutlineMenu className="sm:hidden w-[30px] h-[30px] cursor-pointer mr-6 ml-2 "   />
                   </div>
-                  <Link to="/home" className="logo hidden sm:block m-w-[130px]">
-                      <img className="text-white text-2xl " src="https://socialite-template.netlify.app/assets/images/logo.png"
+                  <Link to="/home" className="logo hidden sm:block m-w-[50px]">
+                      <img className="text-white text-2xl h-[50px] w-[60px]" src={TA}
                       onClick={() => window.scrollTo({top: 0})}>
                         
                       </img>
@@ -134,15 +134,11 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile})
           <Option value="en" ><img src={usa} alt='usa' width={30} height={30} /></Option>
           <Option value="vi"><img src={vn} alt='vn' width={30} height={30} /></Option>
         </Select>
-                        {/*  */}
+                     
                            <div className="nav-item dropdown" style={{opacity: 1}} >
                     <span className="nav-link position-relative" id="navbarDropdown" 
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                      {/*   <span className="material-icons" 
-                        style={{color: notify?.data.length > 0 ? 'crimson' : ''}}>
-                            favorite
-                        </span> */}
             {
                 avatar ?
               <AiOutlineBell className={`${notify?.data.length > 0 ? 'text-red-900 fill-red-900 ' : ''

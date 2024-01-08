@@ -12,7 +12,7 @@ import SocketClient from "./SocketClient";
 
 import NotFound from "./pages/NotFound/NotFound";
 import CreateMeeting from "./pages/CreateMeeting";
-import Meeting from "./pages/Meeting";
+
 import Conversation from "./pages/Conversation";
 /* import Home from "./pages/Home"; */
 
@@ -60,6 +60,7 @@ import NewPage from "./pages/NewPage";
 import CreateTaSchedule1 from "./pages/Teacher/CreateTaSchedule1";
 import AdminLayout from "./Layout/adminLayout/adminLayout";
 import ConversationAdmin from "./pages/MessageAdmin/ConversationAdmin";
+import ManagePosts from "./pages/Admin/ManagePosts";
 
 
 
@@ -310,13 +311,22 @@ const App = () => {
           path="/manage-user"
           element={
                    <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
-       {/*      <LayoutAdmin>
+     
+            <AdminLayout>
                    <ManageUser />
 
             
-            </LayoutAdmin> */}
+            </AdminLayout>
+            </Suspense>
+          }
+        />
+        <Route
+          path="/manage-posts"
+          element={
+                   <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+     
             <AdminLayout>
-                   <ManageUser />
+                   <ManagePosts />
 
             
             </AdminLayout>

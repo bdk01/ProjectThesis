@@ -254,6 +254,7 @@ const postCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
+   
     getSavePosts: async (req, res) => {
         try {
             const features = new APIfeatures(Posts.find({
@@ -271,6 +272,46 @@ const postCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
+    getAllPost: async (req, res) => {
+      
+        try {
+            console.log('get')
+            const pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : 4;
+           const page = req.query.page ? parseInt(req.query.page) : 0;
+            const { keyword, content,sortBy} = req.query;
+         
+           var query = {};
+           var keywordCondition = keyword
+           ? {
+               $or: [
+                   { content: { $regex: keyword, $options: "i" } },
+             
+               ],
+               }
+           : {};
+            if (content) {
+           query.content = content;
+           }
+         
+            const    posts = await Posts.find({ $and: [query, keywordCondition] })
+         .limit(pageSize)
+         .skip(pageSize * page)
+         .sort(`${sortBy}`)
+        .populate('user likes') 
+         console.log('get1')
+            var length = await  Posts.find({ $and: [query, keywordCondition] }).count();
+               res.status(200).json({
+                   status: 'success',
+                   length,
+                 posts       
+               })
+   
+           } 
+           catch (err) {
+               return res.status(500).json({msg: err.message})
+           }
+  },
+  
 }
 
 export default postCtrl

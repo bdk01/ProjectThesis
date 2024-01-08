@@ -8,10 +8,14 @@ import axios from '../../axios'
 import { updateProfileUser } from '../../api/profileAPI'
 const EditProfile = ({setOnEdit}) => {
     const initState = {
-        fullname: '', phone: '',username:'',introduction:''
+        fullname: '',username:''
+    }
+    const initState1 = {
+        phone: '',introduction:''
     }
     const [userData, setUserData] = useState(initState)
-    const { fullname, phone, username,introduction } = userData
+    const [profile, setProfile] = useState(initState1)
+    const { fullname,  username } = userData
 
     const [avatar, setAvatar] = useState('')
 
@@ -20,6 +24,7 @@ const EditProfile = ({setOnEdit}) => {
 
     useEffect(() => {
         setUserData(auth.user)
+        setProfile(auth.user.profile)
     }, [auth.user])
 
 
@@ -55,12 +60,19 @@ const EditProfile = ({setOnEdit}) => {
         const { name, value } = e.target
         setUserData({ ...userData, [name]:value })
     }
+    const handleInput1 = e => {
+        const { name, value } = e.target
+        setProfile({ ...profile, [name]:value })
+    }
 
     const handleSubmit = e => {
         e.preventDefault()
         console.log(userData)
-        console.log(avatar)
-        updateProfileUser({userData, avatar, auth,dispatch})
+     /*    console.log(avatar) */
+        console.log(profile)
+        const userData1 = {...userData,profile}
+        console.log(userData1)
+        updateProfileUser({userData1, avatar, auth,dispatch})
         setOnEdit(false)
     }
 
@@ -113,8 +125,8 @@ const EditProfile = ({setOnEdit}) => {
 
                 <div className="form-group">
                     <label htmlFor="phone">Phone</label>
-                    <input type="text" name="phone" value={phone}
-                    className="form-control" onChange={handleInput} />
+                    <input type="text" name="phone" value={profile.phone}
+                    className="form-control" onChange={handleInput1} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
@@ -123,8 +135,8 @@ const EditProfile = ({setOnEdit}) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="username">Introduction</label>
-                    <input type="text" name="introduction" value={introduction}
-                    className="form-control" onChange={handleInput} />
+                    <input type="text" name="introduction" value={profile.introduction}
+                    className="form-control" onChange={handleInput1} />
                 </div>
 
    

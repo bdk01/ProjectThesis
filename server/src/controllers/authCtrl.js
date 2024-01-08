@@ -37,7 +37,7 @@ const authCtrl = {
       const newprofile = new Profile({
         userId:newUser._id
       });
-      console.log('qwd')
+  
       
       /* save profile */
       await newprofile.save();
@@ -130,6 +130,45 @@ const authCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  registerAdmin: async (req, res) => {
+    try {
+      const { fullname, username, email, password,role } = req.body;
+      console.log(role)
+      const user = await Users.findOne({ email });
+      if (user)
+        return res.status(401).json({ msg: "The email already exists" });
+      if (password.length < 6)
+        return res.status(400).json({ msg: "Password is least 6 char" });
+
+      /* Password Encryption */
+
+      const passwordHash = await bcrypt.hash(password, 10);
+      const newUser = new Users({
+        fullname,
+        username,
+        email,
+        password: passwordHash,
+        role:role
+      });
+      /* save user */
+      await newUser.save();
+      const newprofile = new Profile({
+        userId:newUser._id
+      });
+  
+      
+      /* save profile */
+      await newprofile.save();
+      await Users.findByIdAndUpdate(
+        newUser._id,
+        { $set: { profile: newprofile._id } },
+        { new: true }
+      );
+      res.status(200).json({ msg: "Register success" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   refreshToken: async (req, res) => {
     try {
         const rf_token = req.cookies.refreshtoken;
@@ -139,7 +178,7 @@ const authCtrl = {
       jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, async(err, result) => {
         if (err)
           return res.status(400).json({ msg: "Please login or register" });
-         const user = await Users.findById(result.id).select("-password").populate("followers following", "-password")
+         const user = await Users.findById(result.id).select("-password").populate("followers following profile", "-password")
          if (!user)
             return res.status(400).json({ msg: "This does not exist." });
         const accesstoken = createAccessToken({ id: user.id });
@@ -161,7 +200,7 @@ const authCtrl = {
         async (err, result) => {
           if (err) return res.status(400).json({ msg: "Please login now." });
 
-          const user = await Users.findById(result.id).select("-password").populate("followers following", "-password")
+          const user = await Users.findById(result.id).select("-password").populate("followers following profile", "-password")
           if (!user)
             return res.status(400).json({ msg: "This does not exist." });
 

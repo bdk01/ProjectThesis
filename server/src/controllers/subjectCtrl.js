@@ -156,7 +156,7 @@ const subjectCtrl = {
       .skip(pageSize * page)
       .sort(`${sortBy}`)
       .select("-password")
-      .populate("subjectTa")
+      .populate("subjectTa profile")
 
          var length = await Users.find({ $and: [query, keywordCondition,{role:'ta'}] }).count();
             res.status(200).json({

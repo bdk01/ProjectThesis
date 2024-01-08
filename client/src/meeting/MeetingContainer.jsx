@@ -30,8 +30,8 @@ export function MeetingContainer({
   micEnabled,
   webcamEnabled,
 }) {
-  const { useRaisedHandParticipants, raisedHandsParticipants } =
-    useMeetingAppContext();
+  /* const { useRaisedHandParticipants, raisedHandsParticipants } =
+    useMeetingAppContext(); */
   const bottomBarHeight = 60;
 
   const [containerHeight, setContainerHeight] = useState(0);
@@ -79,35 +79,10 @@ export function MeetingContainer({
     }
   }, [containerRef]);
 
-  const { participantRaisedHand } = useRaisedHandParticipants();
+ 
 
   const _handleMeetingLeft = () => {
     setIsMeetingLeft(true);
-  };
-
-  const _handleOnRecordingStateChanged = ({ status }) => {
-    if (
-      status === Constants.recordingEvents.RECORDING_STARTED ||
-      status === Constants.recordingEvents.RECORDING_STOPPED
-    ) {
-      toast(
-        `${
-          status === Constants.recordingEvents.RECORDING_STARTED
-            ? "Meeting recording is started"
-            : "Meeting recording is stopped."
-        }`,
-        {
-          position: "bottom-left",
-          autoClose: 4000,
-          hideProgressBar: true,
-          closeButton: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }
-      );
-    }
   };
 
   function onParticipantJoined(participant) {
@@ -195,7 +170,7 @@ export function MeetingContainer({
     onMeetingJoined,
     onMeetingLeft,
     onError: _handleOnError,
-    onRecordingStateChanged: _handleOnRecordingStateChanged,
+
   });
 
   const isPresenting = mMeeting.presenterId ? true : false;
@@ -204,64 +179,6 @@ export function MeetingContainer({
     mMeetingRef.current = mMeeting;
   }, [mMeeting]);
 
-  usePubSub("RAISE_HAND", {
-    onMessageReceived: (data) => {
-      const localParticipantId = mMeeting?.localParticipant?.id;
-
-      const { senderId, senderName } = data;
-
-      const isLocal = senderId === localParticipantId;
-
-      new Audio(
-        `https://static.videosdk.live/prebuilt/notification.mp3`
-      ).play();
-
-      toast(`${isLocal ? "You" : nameTructed(senderName, 15)} raised hand 🖐🏼`, {
-        position: "bottom-left",
-        autoClose: 4000,
-        hideProgressBar: true,
-        closeButton: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-
-      participantRaisedHand(senderId);
-    },
-  });
-
-  usePubSub("CHAT", {
-    onMessageReceived: (data) => {
-      const localParticipantId = mMeeting?.localParticipant?.id;
-
-      const { senderId, senderName, message } = data;
-
-      const isLocal = senderId === localParticipantId;
-
-      if (!isLocal) {
-        new Audio(
-          `https://static.videosdk.live/prebuilt/notification.mp3`
-        ).play();
-
-        toast(
-          `${trimSnackBarText(
-            `${nameTructed(senderName, 15)} says: ${message}`
-          )}`,
-          {
-            position: "bottom-left",
-            autoClose: 4000,
-            hideProgressBar: true,
-            closeButton: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          }
-        );
-      }
-    },
-  });
 
   return (
     <div

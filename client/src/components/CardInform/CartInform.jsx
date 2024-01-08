@@ -6,10 +6,15 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 export function CardInform({user}) {
- 
+
+
 
 
   const navigate = useNavigate();
+
+  const gotopage = () =>{
+  return  navigate(`/profile/${user._id}`)
+  }
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
@@ -31,7 +36,7 @@ export function CardInform({user}) {
       <Card.Section className='ml-1 '>
      {/*    <Text mt="md" className={classes.label} c="dimmed"> */}
           {
-             user.phone? 
+             user.profile.phone? 
              <div>
               <Text mt="md" className='text-[18px] font-medium'  c="dimmed">
               SDT:{user.phone}
@@ -49,7 +54,7 @@ export function CardInform({user}) {
       <Group mt="xs">
         <button className='bg-blue-400 px-2 py-2 rounded-md' radius="md" style={{ flex: 1 }} variant='filled'   >
     
-          <Link className='no-underline font-thin' to={`/profile/${user._id}`}>Go to details</Link>
+          <Text className='no-underline font-thin' onClick={gotopage} >Go to profile</Text>
         </button>
       
       </Group>

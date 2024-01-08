@@ -106,7 +106,7 @@ export const MeetingAppProvider = ({ children }) => {
         setSideBarMode,
 
         polls,
-        useRaisedHandParticipants,
+       /*  useRaisedHandParticipants, */
       }}
     >
       {children}

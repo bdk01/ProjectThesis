@@ -61,7 +61,7 @@ function SidebarLink({ link }) {
 			to={link.path}
 			className={classNames(pathname === link.path ? 'bg-neutral-700 text-white' : 'text-neutral-400', linkClass)}
 		>
-			<span className="text-xl">{link.icon}</span>
+			<span className="text-2xl  py-[10px] px-2">{link.icon}</span>
 			{link.label}
 		</Link>
 	)
