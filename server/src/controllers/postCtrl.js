@@ -2,6 +2,7 @@ import Posts from '../models/postModel'
 import Comments from'../models/commentModel'
 import Users from '../models/userModel'
 
+import clientRedis from '../config/connectRedis'
 class APIfeatures {
     constructor(query, queryString){
         this.query = query;
@@ -21,7 +22,7 @@ const postCtrl = {
     createPost: async (req, res) => {
         try {
             const { content, images } = req.body
-         
+        
           /*   if(images.length === 0) return res.status(400).json({msg: "Please add your photo."}) */
        
             const newPost = new Posts({
@@ -43,6 +44,53 @@ const postCtrl = {
     },
     getPosts: async (req, res) => {
         try {
+            const { filter } = req.query;
+            console.log(filter)
+          /*   clientRedis.get('posts1', async (err, cachedposts) => {
+                if (err) throw err;
+          
+                if (cachedposts) {
+                  res.json(JSON.parse(cachedposts));
+                } else {
+             
+                  const users = await Users.find({
+                    role: "teacher",
+                  })
+                 
+                  const teacherUser = users.map(user=>user._id)
+                 
+                const newArr = [...req.user.following, req.user._id,...teacherUser]
+               
+               const uniq = [...new Set(newArr)]
+             
+    
+                const features =  new APIfeatures(Posts.find({
+                    user: uniq
+                }), req.query).paginating()
+       
+                const posts = await features.query.sort('-createdAt')
+                .populate("user likes ", "avatar username fullname followers")
+                .populate({
+                    path: "comments",
+                    populate: {
+                        path: "user likes",
+                        select: "-password"
+                    }
+                })
+                const obj = {
+                    msg: 'Success!',
+                    result: posts.length,
+                    posts
+                }
+                console.log(obj)
+                clientRedis.setex('posts1', 3600, obj);
+                res.json({
+                    msg: 'Success!',
+                    result: posts.length,
+                    posts
+                })
+                }
+              }); */
             const users = await Users.find({
                 role: "teacher",
               })
@@ -58,7 +106,7 @@ const postCtrl = {
                 user: uniq
             }), req.query).paginating()
    
-            const posts = await features.query.sort('-createdAt')
+            const posts = await features.query.sort(filter)
             .populate("user likes", "avatar username fullname followers")
             .populate({
                 path: "comments",

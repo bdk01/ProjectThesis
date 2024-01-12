@@ -7,6 +7,7 @@ import Followers from './Followers'
 import Following from './Following'
 import { useNavigate } from 'react-router-dom'
 import { AddUser } from '../../redux/messageSlice'
+import { useTranslation } from 'react-i18next'
 /* import { GLOBALTYPES } from '../../redux/actions/globalTypes' */
 
 const Info = ({id, auth, profile, dispatch}) => {
@@ -15,7 +16,7 @@ const Info = ({id, auth, profile, dispatch}) => {
     const navigate = useNavigate()
     const [showFollowers, setShowFollowers] = useState(false)
     const [showFollowing, setShowFollowing] = useState(false)
-
+    const { t } = useTranslation();
     useEffect(() => {
         if(id === auth.user._id){
         
@@ -77,7 +78,7 @@ const Info = ({id, auth, profile, dispatch}) => {
                                     user._id === auth.user._id
                                     ?  <button className="btn btn-outline-info "
                                     onClick={() => setOnEdit(true)}>
-                                        Edit Profile
+                                        {t('editProfile')}
                                     </button>
                                     
                                     : 
@@ -94,18 +95,18 @@ const Info = ({id, auth, profile, dispatch}) => {
 
                             <div className="flex-[2] cursor-pointer">
                                 <span className="mr-4" onClick={() => setShowFollowers(true)}>
-                                    {user.followers.length} Followers
+                                    {user.followers.length}   {t('followers')}
                                 </span>
                                 <span className="ml-4" onClick={() => setShowFollowing(true)}>
-                                    {user.following.length} Following
+                                    {user.following.length}   {t('followings')}
                                 </span>
                             </div>
 
-                            <h6 className='mb-[2px]'>Name: {user.fullname} <span className="text-danger">{user.mobile}</span></h6>
+                            <h6 className='mb-[2px]'>{t('name')}: {user.fullname} <span className="text-danger">{user.mobile}</span></h6>
                          
                             <h6 className="m-0 mb-[2px]">Email: {user.email}</h6>
                             <h4 className="m-0 mb-[2px]">{user?.profile?.introduction}</h4>
-                            <h4 className="m-0 mb-[2px]">Contact: {user?.profile?.phone}</h4>
+                            <h4 className="m-0 mb-[2px]">{t('phone')}: {user?.profile?.phone}</h4>
                           
                          {/*    <p>{user.story}</p> */}
                         </div>

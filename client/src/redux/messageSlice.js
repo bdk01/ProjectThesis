@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { moveObjectToFirst } from "../utils/helper";
 
 export const messageSlice = createSlice({
   name: "message",
@@ -19,6 +20,7 @@ export const messageSlice = createSlice({
       console.log('adduser')
       console.log(payload)
       state.userChat = payload
+      console.log(state.users)
        if(state.users.every(item => item._id !== payload._id)){
                     state.users=[payload, ...state.users]
        }
@@ -36,6 +38,7 @@ export const messageSlice = createSlice({
 
     },
     AddMessage:(state, { payload }) =>{
+      console.log('addmess')
       console.log(payload);
         state.data.map(item=>{
      
@@ -45,11 +48,31 @@ export const messageSlice = createSlice({
                result: item.result + 1
             } ]
         })
-       state.users = state.users.filter(
-         (user) => user.conversation !== payload.conversation
+      /*   const moveObjectToFirst = (array, objectId) => {
+          const newArray = [...array];
+          const indexToMove = newArray.findIndex(obj => obj.id === objectId);
+        
+          if (indexToMove !== -1) {
+            const objectToMove = newArray.splice(indexToMove, 1)[0];
+            newArray.unshift(objectToMove);
+          }
+        
+          return newArray;
+        }; */
+        state.users=moveObjectToFirst(state.users,payload.conversation)
+     /*    const gg1 = [...state.users]
+        console.log(gg1) */
+
+
+   /*    if(state.users.every(user => user.conversation === payload.conversation)){
+        state.users=[payload, ...state.users]
+      } */
+    /*  const  gg = state.users.filter(
+         (user) =>  user.conversation !== payload.conversation
        );
-         state.users=[{ ...state.userChat  } , ...state.users] 
-    
+  
+         state.users=[{ ...state.userChat  } , ...gg] 
+     */
     },
   },
 });

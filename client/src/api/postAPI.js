@@ -64,14 +64,12 @@ import { createNotify } from "./notifyAPI"
     }
 }
 
-  export const getPosts = async (auth,dispatch) => {
+  export const getPosts = async (auth,dispatch,value) => {
     try {
 
-       const res =   await axios.get("/api/get-posts", {
+       const res =   await axios.get(`/api/get-posts?filter=${value}`, {
                 headers: { Authorization: auth.accesstoken }
             })
-         
-        /*     alert("success create post") */
             dispatch(getPost( {...res.data, page: 2}))
        
     } catch (err) {
@@ -87,7 +85,7 @@ import { createNotify } from "./notifyAPI"
                     })
                   /*   console.log(res) */
                     return res.data
-        /*     alert("success create post") */
+     
         /*     dispatch(getPost( {...res.data, page: 2})) */
        
     } catch (err) {
@@ -120,7 +118,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
           
-            alert("success like post")
+           /*  alert("success like post") */
       /*       dispatch(getPost( {...res.data, page: 2})) */
        
     } catch (err) {
@@ -138,7 +136,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
            
-        /*     alert("success create post") */
+  
            
        
     } catch (err) {
@@ -152,7 +150,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
           
-        /*     alert("success create post") */
+  
             dispatch(getPost( {...res.data, page: 2}))
        
     } catch (err) {
@@ -166,7 +164,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
           
-        /*     alert("success create post") */
+    
             dispatch(getPost( {...res.data, page: 2}))
        
     } catch (err) {

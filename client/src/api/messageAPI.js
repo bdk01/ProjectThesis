@@ -17,7 +17,7 @@ export const getConversations = async ( auth,page ,dispatch) => {
       console.log('xemnewArr')
         console.log(newArr)
       dispatch(GetConversations({ newArr, result: res.data.result }));
- 
+      
     } catch (err) {
      console.log(err)
     }
@@ -71,7 +71,7 @@ export const addMessages = async ( msg,auth,socket,dispatch,attendees) => {
     const res = await axios.post(`/api/message`,msg,{
       headers: { Authorization: auth.accesstoken },
     }); 
-  
+    
     dispatch(AddMessage({...msg,sender:res.data.sender}));
     } catch (err) {
      console.log(err)

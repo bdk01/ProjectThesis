@@ -37,7 +37,13 @@ services:
       - ./home/mongo-backup:/data/db
     networks:
       - mern-network
-
+  redis:
+    image: redis
+    env_file: ./server/.env
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/data:/data
 networks:
   mern-network:
     driver: bridge

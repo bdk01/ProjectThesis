@@ -4,6 +4,7 @@ import Send from '../../../assets/img/send.svg'
 import LikeButton from '../LikeButton'
 import { useSelector, useDispatch } from 'react-redux'
 import { likePost, savePost, unLikePost, unSavePost } from '../../../api/postAPI'
+import { useTranslation } from 'react-i18next'
 
 /* import ShareModal from '../../ShareModal' */
 /* import { BASE_URL } from '../../../utils/config' */
@@ -17,7 +18,7 @@ const CardFooter = ({post}) => {
 
     const { auth, socket,homePosts } = useSelector(state => state)
     const dispatch = useDispatch()
-
+    const { t } = useTranslation();
     const [saved, setSaved] = useState(false)
     const [saveLoad, setSaveLoad] = useState(false)
 
@@ -32,7 +33,7 @@ const CardFooter = ({post}) => {
 
     const handleLike = async () => {
         if(loadLike) return;
-        console.log('like')
+     
         setLoadLike(true)
         await likePost(post, auth,dispatch, socket)
       /*   await dispatch(likePost({post, auth, socket})) */
@@ -105,11 +106,11 @@ const CardFooter = ({post}) => {
 
             <div className="flex justify-between ">
                 <h2  className='px-0 py-[15px] font-bold'  >
-                    {post?.likes?.length} likes
+                    {post?.likes?.length} { t('likes')}
                 </h2>
                 
                 <h2 className='px-0 py-[15px] font-bold'  >
-                    {post?.comments?.length} comments
+                    {post?.comments?.length} { t('comments')}
                 </h2>
             </div>
 

@@ -7,9 +7,9 @@ import Header from '../../components/Header/Header';
 const NotFound= () => {
     return (
         <>
-        <Header />
-        <div className="containernotfound">
-           <img src={notfound} />
+     
+        <div className="flex justify-center items-center">
+           <img src={notfound} className='h-[80%] w-[60%]' />
            
         </div>
         

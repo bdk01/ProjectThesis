@@ -13,7 +13,7 @@ import SocketServer from './socketServer';
 import messageRoute from './routes/messageRoute';
 import logger from './utils/logger';
 import connect from "./config/connectDB";
-
+import rateLimit from 'express-rate-limit'
 
 dotenv.config();
 const app = express();
@@ -23,7 +23,12 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 console.log('connecttest')
-
+/* 
+const limit = rateLimit({
+  windowMs: 1 *60*1000,
+  max:30
+}) */
+/* app.use(limit) */
 app.use(bodyParser.urlencoded({extended: true }));
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -50,11 +55,7 @@ io.on("connection", socket => {
 /* ExpressPeerServer(httpServer, { path: "/" }); */
 /* Routes */
 app.use(appRouter);
-/* app.use(messageRoute) */
-/* var task = cron.schedule('1 * * * * *', () =>  {
-  console.log('will execute every minute until stopped');
-});
-task.start(); */
+
 /* Connect to  mongodb */
 
 

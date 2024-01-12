@@ -64,7 +64,7 @@ const messageCtrl = {
   },
   getConversations: async (req, res) => {
     try {
-  
+    
    const conversations = await Conversations.find({
      attendees: { $in:[req.user._id] },
    }).sort({ updatedAt: -1 }).populate('event');

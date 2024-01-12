@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import { deletePost } from '../../../api/postAPI'
 import { OpenStatusEdit } from '../../../redux/statusSlice'
+import { useTranslation } from 'react-i18next'
 
 /* import { GLOBALTYPES } from '../../../redux/actions/globalTypes'
 import { deletePost } from '../../../redux/actions/postAction'
@@ -19,7 +20,7 @@ const CardHeader = ({post}) => {
        setOpen(!open)
     }
     const navigate = useNavigate()
-
+    const { t } = useTranslation();
     const handleEditPost = () => {
      /*    dispatch({ type: GLOBALTYPES.STATUS, payload: {...post, onEdit: true}}) */
           dispatch(OpenStatusEdit({ post:post,status: true,onEdit:true }))
@@ -67,16 +68,16 @@ const CardHeader = ({post}) => {
                         auth.user._id === post.user._id &&
                         <>
                             <div className="dropdown-item" onClick={handleEditPost}>
-                                <span className="material-icons">create</span> Edit Post
+                                <span className="material-icons">create</span>  { t('editpost')}
                             </div>
                             <div className="dropdown-item" onClick={handleDeletePost} >
-                                <span className="material-icons">delete_outline</span> Remove Post
+                                <span className="material-icons">delete_outline</span>   { t('deletepost')}
                             </div>
                         </>
                     }
 
                     <div className="dropdown-item" onClick={handleCopyLink}>
-                        <span className="material-icons">content_copy</span> Copy Link
+                        <span className="material-icons">content_copy</span>  { t('copy')}
                     </div>
                 </div>
             </div>

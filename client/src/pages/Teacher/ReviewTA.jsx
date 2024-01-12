@@ -6,6 +6,7 @@ import axios from "../../axios"
 import { useSelector } from "react-redux";
 import { CardInform } from "../../components/CardInform/CartInform";
 import { Grid, Paper, Text } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -14,7 +15,7 @@ function ReviewTA() {
      const { auth } = useSelector(state => state)
      const [data, setData] = useState([]);
      const [loading, setLoading] = useState(false);
- 
+     const { t } = useTranslation();
     /*  const fetchData = async (params = {}) => {
           setLoading(true);
         
@@ -62,7 +63,7 @@ function ReviewTA() {
      console.log(data)
      return (
           <div className=" mt-2 overflow-x-auto">
-            <Text fw={700}  className="text-[30px]">Review TA</Text>
+            <Text fw={700}  className="text-[30px]">{t('reviewTa')}</Text>
          <Paper withBorder shadow="md" mt={15} radius="md" className=""  >
                 <Grid columns={8} gutter="xl" className="my-2 mx-3">
                {

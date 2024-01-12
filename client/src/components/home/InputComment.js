@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createComment } from '../../api/postAPI'
 import { Button } from 'antd'
+import { useTranslation } from 'react-i18next'
 /* import { createComment } from '../../redux/actions/commentAction' */
 /* import Icons from '../Icons' */
 
 const InputComment = ({children, post, onReply, setOnReply}) => {
     const [content, setContent] = useState('')
-
+    const { t } = useTranslation();
     const { auth} = useSelector(state => state)
     const dispatch = useDispatch()
-
+  
     const handleSubmit = async(e) => {
                 console.log('submit comment')
         e.preventDefault()
@@ -53,27 +54,27 @@ const InputComment = ({children, post, onReply, setOnReply}) => {
                 children ?
                 <div>
                          {children}
-                    <input type="text" placeholder="Add your comments..."
+                    <input type="text" placeholder={t('comments')}
                     value={content} onChange={e => setContent(e.target.value)} className='w-[75%] lg:w-[75%] mr-2 bg-transparent'
                     />
 
         
 
             <button type="submit" className="bg-blue-300 text-black py-2 px-3 rounded-lg">
-                Post
+                 {t('post')}
             </button>
                 </div>
     :
     <div>
               <div>
-                    <input type="text" placeholder="Add your comments..."
+                    <input type="text" placeholder={t('comments')}
                     value={content} onChange={e => setContent(e.target.value)} className='w-[90%] mr-2'
                    />
 
         
 
             <button  type="submit" className="bg-blue-300 text-black py-2 px-3 rounded-lg">
-                Post
+            {t('post')}
             </button>
                 </div>
     </div>

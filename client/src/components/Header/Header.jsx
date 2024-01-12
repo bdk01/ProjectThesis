@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 
 import TA from "../../assets/img/TAIMG.jfif"
 
-export default function Header({setOpened ,opened,openedMobile,setOpenedMobile}) {
+export default function Header({setOpened ,opened,openedMobile,setOpenedMobile,setLanguage,language}) {
   const [search, setSearch] = useState('')
   const { Option } = Select;
     const [searchUsers, setSearchUsers] = useState([])
@@ -86,7 +86,7 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile})
       console.log(value); // { key: "lucy", label: "Lucy (101)" }
       i18n.changeLanguage(value.key);
       localStorage.setItem("language", value.key);
-  
+      setLanguage(value.key)
     }
   return (
   
@@ -120,20 +120,23 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile})
     
                 <div className="col-span-2  flex justify-center items-center  relative">
         <div className="flex-row flex items-center">
-              <Select
-          labelInValue
-          defaultValue={localStorage.getItem("language")}
-          className="ml-[6px] text-sm rounded-lg  items-center hidden sm:flex"
-          style={{
-            width: 71,
+          <Suspense>
+                <Select
+            labelInValue
+            defaultValue={localStorage.getItem('language')||'en'}
+            className="ml-[6px] text-sm rounded-lg  items-center hidden sm:flex"
+            style={{
+              width: 71,
+              
             
-          
-          }}    
-          onChange={handleChange}
-        >
-          <Option value="en" ><img src={usa} alt='usa' width={30} height={30} /></Option>
-          <Option value="vi"><img src={vn} alt='vn' width={30} height={30} /></Option>
-        </Select>
+            }}    
+            onChange={handleChange}
+          >
+            <Option value="en" ><img src={usa} alt='usa' width={30} height={30} /></Option>
+            <Option value="vi"><img src={vn} alt='vn' width={30} height={30} /></Option>
+          </Select>
+
+          </Suspense>
                      
                            <div className="nav-item dropdown" style={{opacity: 1}} >
                     <span className="nav-link position-relative" id="navbarDropdown" 

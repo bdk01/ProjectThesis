@@ -13,7 +13,7 @@ import { useGetUserData } from "../hooks/getUserTa";
 export default function RegisterTA() {
      const clipboard = useClipboard({ timeout: 1000 });
        const { auth} = useSelector(state => state)
-       
+          
        const {id} = useParams()
      const [informationTA, setInformationTA] = useState({});
      const [loading, setLoading] = useState(false);

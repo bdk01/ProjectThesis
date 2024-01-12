@@ -9,12 +9,13 @@ import LoadIcon from '../assets/img/loading.gif'
 /* import { getProfileUsers } from '../../redux/actions/profileAction' */
 import { useParams } from 'react-router-dom'
 import { getProfileUsers } from '../api/profileAPI'
+import { useTranslation } from 'react-i18next'
 
 
 const Profile = () => {
      const { profile, auth } = useSelector(state => state)
      const dispatch = useDispatch()
-
+     const { t } = useTranslation();
      const { id } = useParams()
      const [saveTab, setSaveTab] = useState(false)
 

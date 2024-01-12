@@ -3,6 +3,7 @@ import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/co
 
 import classes from './card.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 export function CardInform({user}) {
@@ -11,7 +12,7 @@ export function CardInform({user}) {
 
 
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const gotopage = () =>{
   return  navigate(`/profile/${user._id}`)
   }
@@ -29,7 +30,7 @@ export function CardInform({user}) {
         
         </Group>
         <Text className='text-[18px] font-medium' >
-       FullName: {user?.fullname}
+        {t('fullname')}: {user?.fullname}
         </Text>
       </Card.Section>
 

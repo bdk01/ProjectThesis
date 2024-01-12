@@ -29,14 +29,14 @@ const Comments = ({post}) => {
             }
 
             {
-                comments.length - next > 0
+                comments?.length - next > 0
                 ? <div className="p-2 border-top"
                 style={{cursor: 'pointer', color: 'crimson'}}
                 onClick={() => setNext(next + 10)}>
                     See more comments...
                 </div>
 
-                : comments.length > 2 &&
+                : comments?.length > 2 &&
                 <div className="p-2 border-top"
                 style={{cursor: 'pointer', color: 'crimson'}}
                 onClick={() => setNext(2)}>

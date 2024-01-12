@@ -129,13 +129,10 @@ const App = () => {
             element={
            
           <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+         
                 <Pages.Home />
-
               </Suspense>
        
-
-       
-
             }
           />
           <Route
@@ -211,16 +208,25 @@ const App = () => {
         <Route
           path="create-post"
           element={
-            <CreatePost />
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                <CreatePost />
+
+         </Suspense>
+     
+       
           }
         />
         <Route
           path="review-ta"
           element={
-            <Layout>
-
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+          <Layout>
+              
               <ReviewTA />
             </Layout>
+
+     </Suspense>
+           
           }
         />
 
@@ -245,18 +251,27 @@ const App = () => {
         <Route
           path="/conversation/:id"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+             <Layout>
               <Conversation />
             </Layout>
+
+   </Suspense>
+           
           }
         />
 
         <Route
           path="/create-schedule"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                  <Layout>
+
               <CreateMeeting />
-            </Layout>
+              </Layout>
+
+         </Suspense>
+         
           }
         />
         <Route

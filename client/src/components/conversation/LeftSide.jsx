@@ -12,6 +12,7 @@ const pathname = useLocation()
     const [searchUsers, setSearchUsers] = useState([])
     const { id } = useParams()
     const dispatch = useDispatch()
+    const [conv,setConv]=useState([])
     const navigate = useNavigate()
     const pageEnd = useRef()
     const [page, setPage] = useState(0)
@@ -21,8 +22,27 @@ const pathname = useLocation()
           console.log(pathname)
          let page =1
          getConversations(auth,page,dispatch)
-        
-        }
+    /*      const getPost1 = async()=>{
+          const  res = await  getPostDetail(auth,dispatch,id)
+          console.log(res)
+          setPost(res.post)
+     } */
+       /*   const gg = async()=>{
+          try{
+
+            const res = await axios.get(`/api/conversations`, {
+            headers: { Authorization: auth.accesstoken },
+          });
+          console.log(res.data)
+          setConv(res.data.conversations)
+          }
+          catch(err){
+            console.log(err)
+          }
+         }
+         gg()
+        } */
+      }
     },[dispatch, auth,pathname,message.userChat])
    /*    useEffect(() => {
         dispatch()
@@ -49,7 +69,6 @@ const pathname = useLocation()
        /*  if(!id){ */
           dispatch(AddUser({ ...user, text: '', media: [] }))
 
-       /*  } */
 
       /* AddUser */
      return navigate(`/conversation/${user.conversation}`);
@@ -103,10 +122,22 @@ const pathname = useLocation()
                                     <UserCard user={user} msg={true} >
                                   
                                     </UserCard>
-                                 {/*    <div className="bg-green-500 w-[12px] h-[12px] mr-2 rounded-[50%]" /> */}
+                              
                                 </div>
                             ))
                         }
+                          {/*  {
+                            conv.map(user => (
+                              <div key={user._id} className={`hover:bg-slate-300 hover:transition-all cursor-pointer flex flex-row items-center justify-between `}
+                                onClick={() => handleAddUser(user)}>
+                                 
+                                    <UserCard user={user} msg={true} >
+                                  
+                                    </UserCard>
+                             
+                                </div>
+                            ))
+                        } */}
                          </>
           
                }

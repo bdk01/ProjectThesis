@@ -46,11 +46,22 @@ export const EditData = (data, id, post) => {
     return newData;
 }
 
+
 export const DeleteData = (data, id) => {
     const newData = data.filter(item => item._id !== id)
     return newData;
 }
+export  const moveObjectToFirst = (array, objectId) => {
+  const newArray = [...array];
+  const indexToMove = newArray.findIndex(obj => obj.conversation === objectId);
 
+  if (indexToMove !== -1) {
+    const objectToMove = newArray.splice(indexToMove, 1)[0];
+    newArray.unshift(objectToMove);
+  }
+
+  return newArray;
+};
 
 export const showNotification = (type ,description) => {
 

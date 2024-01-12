@@ -1,10 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteComment } from '../../../api/postAPI'
+import { useTranslation } from 'react-i18next';
 
 
 const CommentMenu = ({post, comment, setOnEdit}) => {
-
+    const { t } = useTranslation();
     const { auth, socket } = useSelector(state => state)
     const dispatch = useDispatch()
 
@@ -19,11 +20,11 @@ const CommentMenu = ({post, comment, setOnEdit}) => {
     const MenuItem = () => {
         return(
             <>
-                <div className="dropdown-item" onClick={() => setOnEdit(true)}>
-                    <span className="material-icons">create</span> Edit 
+                <div className="dropdown-item" onClick={() => setOnEdit(true)}> 
+                    <span className="material-icons">create</span>    {t('edit')}
                 </div>
                 <div className="dropdown-item" onClick={handleRemove}>
-                    <span className="material-icons">delete_outline</span> Remove
+                    <span className="material-icons">delete_outline</span>  {t('delete')}
                 </div>
             </>
         )
