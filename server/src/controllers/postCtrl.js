@@ -11,7 +11,7 @@ class APIfeatures {
 
     paginating(){
         const page = this.queryString.page * 1 || 1
-        const limit = this.queryString.limit * 1 || 2
+        const limit = this.queryString.limit * 1 || 4
         const skip = (page - 1) * limit
         this.query = this.query.skip(skip).limit(limit)
         return this;
@@ -45,8 +45,8 @@ const postCtrl = {
     getPosts: async (req, res) => {
         try {
             const { filter } = req.query;
-            console.log(filter)
-          /*   clientRedis.get('posts1', async (err, cachedposts) => {
+       /*     
+            clientRedis.get(`posts/${filter}`, async (err, cachedposts) => {
                 if (err) throw err;
           
                 if (cachedposts) {
@@ -68,10 +68,11 @@ const postCtrl = {
                     user: uniq
                 }), req.query).paginating()
        
-                const posts = await features.query.sort('-createdAt')
-                .populate("user likes ", "avatar username fullname followers")
+                const posts = await features.query.sort(filter)
+                .populate("user likes","avatar username fullname followers")
                 .populate({
                     path: "comments",
+                     options: { strictPopulate: false },
                     populate: {
                         path: "user likes",
                         select: "-password"
@@ -82,8 +83,8 @@ const postCtrl = {
                     result: posts.length,
                     posts
                 }
-                console.log(obj)
-                clientRedis.setex('posts1', 3600, obj);
+              
+                clientRedis.setex(`posts/${filter}`, 3600, JSON.stringify(obj));
                 res.json({
                     msg: 'Success!',
                     result: posts.length,
@@ -128,8 +129,10 @@ const postCtrl = {
     },
     updatePost: async (req, res) => {
         try {
+            clientRedis.del(`posts/-createdAt`)
+            clientRedis.del(`posts/createdAt`)
             const { content, images } = req.body
-
+                
             const post = await Posts.findOneAndUpdate({_id: req.params.id}, {
                 content, images
             }).populate("user likes", "avatar username fullname")

@@ -97,6 +97,7 @@ function EditSubject({ onClose, data, refetchData }) {
                /*   console.log() */
                const approve = {
                     subjectName: dataEdit.subjectName,
+                    subjectCode: dataEdit.subjectCode,
                     description: dataEdit.description,
                     teacher:teacher,    
                     id:dataEdit._id
@@ -161,6 +162,26 @@ function EditSubject({ onClose, data, refetchData }) {
                                              setDataEdit({
                                                   ...dataEdit,
                                                   subjectName: e.target.value,
+                                             })
+                                        }
+                                   />
+                              </Item>
+                              <Item
+                                   label="subjectCode"
+                                   name="subjectCode"
+                                   rules={[
+                                        {
+                                             required: true,
+                                             message: "Vui lòng nhập descrption",
+                                        },
+                                   ]}
+                              >
+                                   <Input
+                                        value={dataEdit.subjectCode}
+                                        onChange={(e) =>
+                                             setDataEdit({
+                                                  ...dataEdit,
+                                                  subjectCode: e.target.value,
                                              })
                                         }
                                    />

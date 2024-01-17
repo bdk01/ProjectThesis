@@ -51,15 +51,12 @@ io.on("connection", socket => {
   console.log(socket.id +' connected2')
   SocketServer(socket);
 });
-// Create peer server
-/* ExpressPeerServer(httpServer, { path: "/" }); */
+
 /* Routes */
 app.use(appRouter);
 
 /* Connect to  mongodb */
 
-
-/* await connect() */
 const PORT = process.env.PORT || 8000;
 console.log(process.env.MONGODB_URI)
 httpServer.listen(PORT, async() => {

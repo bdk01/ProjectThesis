@@ -182,7 +182,7 @@ export function MeetingContainer({
 
   return (
     <div
-      // style={{ height: windowHeight }}
+   
       ref={containerRef}
       className="h-screen flex flex-col bg-gray-800"
     >

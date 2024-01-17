@@ -17,7 +17,7 @@ export function CardInform({user}) {
   return  navigate(`/profile/${user._id}`)
   }
   return (
-    <Card withBorder radius="md" p="md" className={classes.card}>
+    <Card withBorder radius="md" p="md" className='min-h-[400px]'>
       <Card.Section>
         <Image src={user?.avatar} alt="#" height={200} />
       </Card.Section>
@@ -34,16 +34,20 @@ export function CardInform({user}) {
         </Text>
       </Card.Section>
 
-      <Card.Section className='ml-1 '>
+      <Card.Section className='ml-1  '>
      {/*    <Text mt="md" className={classes.label} c="dimmed"> */}
           {
              user.profile.phone? 
              <div>
-              <Text mt="md" className='text-[18px] font-medium'  c="dimmed">
-              SDT:{user.phone}
+              <Text mt="sm" className='text-[18px] font-medium'  c="dimmed">
+              SDT:{user?.profile?.phone}
                 </Text>  
              </div> 
-             :<></>
+             :<> <div>
+             <Text mt="sm" className='text-[18px] font-medium'  c="dimmed">
+             SDT:Empty
+               </Text>  
+            </div>  </>
 
           }
       {/*   </Text> */}
@@ -55,7 +59,7 @@ export function CardInform({user}) {
       <Group mt="xs">
         <button className='bg-blue-400 px-2 py-2 rounded-md' radius="md" style={{ flex: 1 }} variant='filled'   >
     
-          <Text className='no-underline font-thin' onClick={gotopage} >Go to profile</Text>
+          <Text className='no-underline font-semibold text-lg' onClick={gotopage} >Go to profile</Text>
         </button>
       
       </Group>

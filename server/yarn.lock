@@ -4581,11 +4581,6 @@ json5@^2.2.2:
   resolved "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
-jsonpath-plus@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.npmjs.org/jsonpath-plus/-/jsonpath-plus-7.2.0.tgz"
-  integrity sha512-zBfiUPM5nD0YZSBT/o/fbCUlCcepMIdP0CJZxM1+KgA4f2T206f6VAg9e7mX35+KlMaIc5qXW34f3BnwJ3w+RA==
-
 jsonwebtoken@^9.0.0:
   version "9.0.0"
   resolved "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.0.tgz"
@@ -4595,11 +4590,6 @@ jsonwebtoken@^9.0.0:
     lodash "^4.17.21"
     ms "^2.1.1"
     semver "^7.3.8"
-
-just-clone@^6.1.1:
-  version "6.2.0"
-  resolved "https://registry.npmjs.org/just-clone/-/just-clone-6.2.0.tgz"
-  integrity sha512-1IynUYEc/HAwxhi3WDpIpxJbZpMCvvrrmZVqvj9EhpvbH8lls7HhdhiByjL7DkAaWlLIzpC0Xc/VPvy/UxLNjA==
 
 jwa@^1.4.1:
   version "1.4.1"
@@ -5656,16 +5646,6 @@ redis-errors@^1.0.0, redis-errors@^1.2.0:
   resolved "https://registry.npmjs.org/redis-errors/-/redis-errors-1.2.0.tgz"
   integrity sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w==
 
-redis-om@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.npmjs.org/redis-om/-/redis-om-0.4.3.tgz"
-  integrity sha512-OQ2ydJYm8j5YMWj3K2ieQdUcfu2gP1nW2XsdaFLbHkaSlYqj1Kfu8X+T44vPuesY3cKdVj6tv9bHEmI9oqwHgA==
-  dependencies:
-    jsonpath-plus "^7.2.0"
-    just-clone "^6.1.1"
-    redis "^4.6.4"
-    ulid "^2.3.0"
-
 redis-parser@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/redis-parser/-/redis-parser-3.0.0.tgz"
@@ -5673,7 +5653,7 @@ redis-parser@^3.0.0:
   dependencies:
     redis-errors "^1.0.0"
 
-redis@^4.6.12, redis@^4.6.4:
+redis@^4.6.12:
   version "4.6.12"
   resolved "https://registry.npmjs.org/redis/-/redis-4.6.12.tgz"
   integrity sha512-41Xuuko6P4uH4VPe5nE3BqXHB7a9lkFL0J29AlxKaIfD6eWO8VO/5PDF9ad2oS+mswMsfFxaM5DlE3tnXT+P8Q==
@@ -6386,11 +6366,6 @@ typed-array-length@^1.0.4:
     call-bind "^1.0.2"
     for-each "^0.3.3"
     is-typed-array "^1.1.9"
-
-ulid@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/ulid/-/ulid-2.3.0.tgz"
-  integrity sha512-keqHubrlpvT6G2wH0OEfSW4mquYRcbe/J8NMmveoQOjUqmo+hXtO+ORCpWhdbZ7k72UtY61BL7haGxW6enBnjw==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"

@@ -18,7 +18,7 @@ function ManageSubject() {
      const [loading, setLoading] = useState(false);
      const [pagination, setPagination] = useState({
           current: 1,
-          pageSize: 5,
+          pageSize: 6,
           total: null,
      });
      const [isAddVisible, setIsAddVisible] = useState(false);
@@ -45,6 +45,11 @@ function ManageSubject() {
                title: "SubjectName",
                dataIndex: "subjectName",
                sorter: true,
+          },
+          {
+               title: "SubjectCode",
+               dataIndex: "subjectCode",
+              
           },
 
           {

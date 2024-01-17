@@ -62,7 +62,7 @@ const Info = ({id, auth, profile, dispatch}) => {
         <div className="w-[100%] max-w-[800px] m-auto px-[10px] py-[20px]">
             {
                 userData.map(user => (
-                    <div className="flex flex-wrap justify-around" key={user._id}>
+                    <div className="flex flex-wrap justify-around" key={user?._id}>
                     {/*     <Avatar src={user.avatar} size="supper-avatar" /> */}
                          <div className=" flex justify-end w-[110px] h-[110px] mr-1 ">
                             <img
@@ -102,9 +102,13 @@ const Info = ({id, auth, profile, dispatch}) => {
                                 </span>
                             </div>
 
-                            <h6 className='mb-[2px]'>{t('name')}: {user.fullname} <span className="text-danger">{user.mobile}</span></h6>
+                            <h6 className='mb-[2px]'>{t('name')}: {user?.fullname} <span className="text-danger">{user?.mobile}</span></h6>
                          
-                            <h6 className="m-0 mb-[2px]">Email: {user.email}</h6>
+                            <h6 className="m-0 mb-[2px]">Email: {user?.email}</h6>
+                            {
+                                user.studentId? <h6 className="m-0 mb-[2px]">StudentId: {user?.studentId}</h6> :<></>
+                            }
+                           
                             <h4 className="m-0 mb-[2px]">{user?.profile?.introduction}</h4>
                             <h4 className="m-0 mb-[2px]">{t('phone')}: {user?.profile?.phone}</h4>
                           
@@ -118,14 +122,14 @@ const Info = ({id, auth, profile, dispatch}) => {
                         {
                             showFollowers &&
                             <Followers 
-                            users={user.followers} 
+                            users={user?.followers} 
                             setShowFollowers={setShowFollowers} 
                             />
                         }
                         {
                             showFollowing &&
                             <Following 
-                            users={user.following} 
+                            users={user?.following} 
                             setShowFollowing={setShowFollowing} 
                             />
                         }

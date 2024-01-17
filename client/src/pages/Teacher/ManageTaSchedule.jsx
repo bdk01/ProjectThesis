@@ -79,23 +79,23 @@ function ManageTaSchedule() {
       dataIndex: "state",
       filters: [
         {
-          text: "Đang mở",
-          value: "open",
+          text: "Pending",
+          value: "pending",
         },
         {
-          text: "Đã đóng",
-          value: "close",
+          text: "Approve",
+          value: "Approve",
         },
       ],
       render: (state) => (
         <>
-          {state === "open" ? (
+          {state === "pending" ? (
             <div className="text-green-600 font-bold bg-green-200 text-center rounded-lg py-1">
-              Đang mở
+             Pending
             </div>
           ) : (
             <div className="text-red-600 font-bold bg-red-300 text-center rounded-lg py-1">
-              Đã đóng
+              Approve
             </div>
           )}
         </>
@@ -130,7 +130,7 @@ function ManageTaSchedule() {
   ];
   const fetchData = async (params = {}) => {
     setLoading(true);
-/*  console.log(auth.accesstoken) */
+ console.log(auth.accesstoken)
     try {
       const { data: response } = await axios.get(`/api/taSchedules`, {
         params

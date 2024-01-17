@@ -2,7 +2,7 @@ version: "3"
 services:
   frontend:
     build:
-      context: './client'
+      context: ./client
       dockerfile: Dockerfile
     container_name: react_ui
     env_file: ./client/.env
@@ -16,7 +16,7 @@ services:
       - mern-network
   backend:
     build:
-      context: './server'
+      context: ./server
       dockerfile: Dockerfile
     container_name: node-api
     env_file: ./server/.env
@@ -24,6 +24,7 @@ services:
       - "8000:8000"
     depends_on:
       - mongo
+      - redis
     networks:
       - mern-network
   
@@ -38,15 +39,20 @@ services:
     networks:
       - mern-network
   redis:
-    image: redis
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped
     env_file: ./server/.env
     ports:
       - 6379:6379
     volumes:
       - ./redis/data:/data
+    networks:
+      - mern-network
 networks:
   mern-network:
     driver: bridge
+
 
 
 

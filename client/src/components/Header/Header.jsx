@@ -42,17 +42,17 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile,s
   },[user])
   useEffect(()=>{
     if(!user){
-      setTimeout(()=>{
+    /*   setTimeout(()=>{ */
 
         setIsLogin(false)
-      },2000)
+     /*  },2000) */
     }
     else if(user){
-      setTimeout(()=>{
+      /* setTimeout(()=>{ */
 
       
         setIsLogin(true)
-      },2000)
+     /*  },2000) */
     }
   },[user])
     // Function
@@ -162,13 +162,13 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile,s
                 </div> 
           
                   {
-                   isLogin && avatar ?
-                   <Delayed>
+                   user  ?
+                 
 
                     <div className=" flex justify-end w-[40px] h-[40px]  ">
                         <img src={avatar} className=" w-[100%] h-[100%] rounded-[50%]" onClick={handleClick}/>
                     </div>
-                   </Delayed>
+                 
                   
                     : 
                     <Delayed>

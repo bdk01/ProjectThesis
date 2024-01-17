@@ -30,10 +30,10 @@ class APIfeatures {
 const taScheduleCtrl = {
     createTaSchedule: async (req, res) => {
         try {
-            const { subject,requirement,dateCloseForm} = req.body
-          
+            const { subject,requirement,dateCloseForm,description} = req.body
+            console.log(description)
             const newTaSchedules = new TaSchedules({
-                subject,requirement, creator: req.user._id,dateCloseForm, expireAt:dateCloseForm
+                subject,requirement,description, creator: req.user._id,dateCloseForm, expireAt:dateCloseForm
             })
             await newTaSchedules.save()
      
@@ -62,7 +62,7 @@ const taScheduleCtrl = {
      applyTaSchedule: async (req, res) => {
         try {
             console.log('apply')
-            const { fullName,studentId,gpaTotal,gpaSubject,creator,link,requirement,subject} = req.body
+            const { fullName,studentId,gpaTotal,gpaSubject,creator,link,requirement,subject,description} = req.body
           /*  const TaSchedule =    await TaSchedules.findOneAndUpdate(
                 { _id: req.params.id },
                 {
@@ -71,7 +71,7 @@ const taScheduleCtrl = {
             { new: true }
             ); */
                  const newTaSchedules = new TaSchedules({
-                link,subject,requirement, creator,fullName,studentId,gpaTotal,gpaSubject,candidate:req.user._id,fill:true
+                link,subject,requirement, creator,fullName,studentId,gpaTotal,gpaSubject,candidate:req.user._id,fill:true,description
             })
             await newTaSchedules.save()
              res.json({

@@ -14,7 +14,8 @@ const taScheduleSchema = mongoose.Schema(
     fill:{type:Boolean,default:false}, 
     link:String,
     dateCloseForm:Date,
-    state:{type:String,default:"open"},
+    state:{type:String,default:"pending"},
+    description:String,
     expireAt: { type: Date, default: undefined }
   },
   {

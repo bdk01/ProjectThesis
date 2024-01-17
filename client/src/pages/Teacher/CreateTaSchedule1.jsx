@@ -93,6 +93,7 @@ export default function CreateTaSchedule1() {
      const { auth } = useSelector(state => state)
      const [information, setInformation] = useState({
           requirement: "",
+          description:""
      });
      const [date, setDate] = useState('')
      const [value, setValue] = useState([]);
@@ -150,7 +151,7 @@ export default function CreateTaSchedule1() {
                subject: form.attendees[0], requirement: form.requirement,dateCloseForm:date })
           try {
                const response = await axios.post('/api/create-taSchedule', {
-              subject: form.attendees[0], requirement: form.requirement,dateCloseForm:date}, {
+              subject: form.attendees[0], requirement: form.requirement,description:form.description,dateCloseForm:date}, {
                     headers: { Authorization: auth.accesstoken },
                })
                console.log(response)
@@ -165,8 +166,8 @@ export default function CreateTaSchedule1() {
           <div>
                <div className=" relative">
                     <div className=" relative ">
-                         <div className="flex justify-start flex-col  border-b-2  pl-4 pb-3 pt-3">
-                              <div className="text-xl font-bold mb-1 lg:text-2xl mt-2">
+                         <div className="flex justify-start flex-col  border-b-2  pl-4 pb-3 pt-3 ">
+                              <div className="text-3xl font-bold mb-1 lg:text-2xl mt-2 ">
                                    Create form for applying t.a
                               </div>
 
@@ -191,11 +192,27 @@ export default function CreateTaSchedule1() {
                                              />
                                         </div>
                                    </div>
+                                   <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
+                                        <div className="flex items-center   justify-start w-[140px]">
+                                             <label className=" mr-3  font-semibold  lg:text-lg text-base">
+                                                  Description:
+                                             </label>
+                                        </div>
+                                        <div className="flex  w-[70%]">
+                                             <input
+                                                  className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                  type="text"
+                                                  name="description"
+                                                  onChange={handleForm}
+                                                  defaultValue={information.description}
+                                             />
+                                        </div>
+                                   </div>
                                 
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                  Date:
+                                                  Deadline:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">

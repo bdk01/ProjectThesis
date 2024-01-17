@@ -17,7 +17,7 @@ function ManageTa() {
      const [loading, setLoading] = useState(false);
      const [pagination, setPagination] = useState({
           current: 1,
-          pageSize: 2,
+          pageSize: 4,
           total: null,
      });
      const [isAddVisible, setIsAddVisible] = useState(false);
@@ -99,11 +99,9 @@ function ManageTa() {
      ];
      const fetchData = async (params = {}) => {
           setLoading(true);
-          /*  console.log(auth.accesstoken) */
+           
           try {
-               const { data: response } = await axios.get(`/api/getAllTa`, {
-                    params
-               }, {
+               const { data: response } = await axios.get(`/api/getTeacherTa/${auth.user._id}`, {params}, {
                     headers: { Authorization: auth.accesstoken }
                });
                console.log(response)

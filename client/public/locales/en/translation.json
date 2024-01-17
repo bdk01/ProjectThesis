@@ -42,7 +42,17 @@
     "MeetingName":"MeetingName",
     "Description":"Description",
     "ManageTARegister":"Manage TA Register",
-    "ManageTA":"Manage teaching assistant"
+    "ManageTA":"Manage teaching assistant",
+    "Apply":"Apply",
+    "Applying for become T.A":"Applying for become T.A",
+    "Expire":"Deadline",
+    "SubjectName":"SubjectName",
+    "Requirement":"Requirement",
+    "StudentId":"StudentId",
+    "GpaTotal":"GpaTotal",
+    "GpaSubject":"GpaSubject",
+    "FullName":"FullName",
+    "Teacher":"Teacher"
 
 
 }

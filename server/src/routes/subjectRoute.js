@@ -4,6 +4,7 @@ import { auth } from "../middleware/auth";
 const subjectRoute = express.Router();
 
 subjectRoute.post("/create-subject",auth, subjectCtrl.createSubject);
+subjectRoute.get("/getTeacherTa/:id", subjectCtrl.getTeacherTa);
 subjectRoute.get("/subject/search", subjectCtrl.getSubject);
 subjectRoute.get("/getAllTa", subjectCtrl.getAllTa);
 subjectRoute.get("/getAllSubject", subjectCtrl.getAllSubject);

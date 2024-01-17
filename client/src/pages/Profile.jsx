@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 const Profile = () => {
      const { profile, auth } = useSelector(state => state)
      const dispatch = useDispatch()
-     const { t } = useTranslation();
+   
      const { id } = useParams()
      const [saveTab, setSaveTab] = useState(false)
 
@@ -23,7 +23,7 @@ const Profile = () => {
           if (profile.ids.every(item => item !== id) && auth.accesstoken) {
        
                getProfileUsers( id, auth,dispatch )
-          
+               
           }
      }, [id, auth.accesstoken, dispatch, profile.ids])
 

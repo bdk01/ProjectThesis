@@ -19,7 +19,7 @@ function ManageUser() {
      const [loading, setLoading] = useState(false);
      const [pagination, setPagination] = useState({
           current: 1,
-          pageSize: 4,
+          pageSize: 6,
           total: null,
      });
      const [isAddVisible, setIsAddVisible] = useState(false);
@@ -190,6 +190,7 @@ function ManageUser() {
                     columns={columns}
                     dataSource={data}
                     pagination={pagination}
+                    
                     loading={loading}
                     onChange={handleTableChange}
                     scroll={{ x: 500 }}

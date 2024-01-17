@@ -38,7 +38,6 @@ import Profile from "./pages/Profile";
 import RegisterTA from "./pages/RegisterTA";
 import RegisterSubject from "./pages/Teacher/CreateSubject";
 import CreateSubject from "./pages/Teacher/CreateSubject";
-import CreateTaSchedule from "./pages/Teacher/CreateTaSchedule";
 
 import ManageTaSchedule from "./pages/Teacher/ManageTaSchedule";
 import ManageTa from "./pages/Teacher/ManageTa";
@@ -61,6 +60,7 @@ import CreateTaSchedule1 from "./pages/Teacher/CreateTaSchedule1";
 import AdminLayout from "./Layout/adminLayout/adminLayout";
 import ConversationAdmin from "./pages/MessageAdmin/ConversationAdmin";
 import ManagePosts from "./pages/Admin/ManagePosts";
+import Loading from "./components/Loading/Loading";
 
 
 
@@ -140,7 +140,7 @@ const App = () => {
             /*   lazy={() => import('./pages/Home')} */
             element={
               <UserRoute>
-              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+              <Suspense fallback={<Loading/>}>
                  <Pages.Home />
 
               </Suspense>
@@ -151,7 +151,7 @@ const App = () => {
             path="profile"
             /*   lazy={() => import('./pages/Home')} */
             element={
-              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+              <Suspense fallback={<Loading/>}>
                 <Pages.Profile />
 
               </Suspense>
@@ -242,16 +242,19 @@ const App = () => {
         <Route
           path="/conversation"
           element={
+            <Suspense fallback={<Loading/>}>
             <Layout>
               <Conversation />
             </Layout>
+            </Suspense>
           }
         />
 
         <Route
           path="/conversation/:id"
           element={
-            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+            <Suspense fallback={<Loading/>}>
+           
              <Layout>
               <Conversation />
             </Layout>
@@ -285,41 +288,61 @@ const App = () => {
         <Route
           path="/registerTA/:id"
           element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
             <Layout>
               <RegisterTA />
             </Layout>
+
+   </Suspense>
+          
           }
         />
         <Route
           path="/createSubject"
           element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
             <Layout>
               <CreateSubject />
             </Layout>
+
+   </Suspense>
+           
           }
         />
         <Route
           path="/createTaSchedule"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+           <Layout>
               <CreateTaSchedule1 />
             </Layout>
+
+   </Suspense>
+           
           }
         />
         <Route
           path="/manageTaSchedule"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+           <Layout>
               <ManageTaSchedule />
             </Layout>
+ 
+    </Suspense>
+         
           }
         />
         <Route
           path="/manageTa"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+             <Layout>
               <ManageTa />
             </Layout>
+  
+     </Suspense>
+         
           }
         />
         <Route
