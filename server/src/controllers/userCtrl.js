@@ -3,7 +3,7 @@ import Users from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../helper/sendemail";
-import Profile from "../models/ProfileModel";
+import Profile from "../models/profileModel";
 import clientRedis from "../config/connectRedis";
 const userCtrl = {
   searchUser: async (req, res) => {
@@ -69,30 +69,30 @@ const userCtrl = {
   getUser: async (req, res) => {
     try {
 
-        const user = await Users.findById(req.params.id).select('-password')
+      const user = await Users.findById(req.params.id).select('-password')
         .populate("followers following profile", "-password")
-        if(!user) return res.status(400).json({msg: "User does not exist."})
-        
-        res.json({user})
-     
-       /*  console.log(req.params.id)
-      clientRedis.get(`user/${req.params.id}`, async (err, cacheduser) => {
-        if (err) throw err;
+      if (!user) return res.status(400).json({ msg: "User does not exist." })
 
-        if (cacheduser) {
-          res.json(JSON.parse(cacheduser));
-        } else {
+      res.json({ user })
 
-          const user = await Users.findById(req.params.id).select('-password')
-            .populate("followers following profile", "-password")
-          if (!user) return res.status(400).json({ msg: "User does not exist." })
+      /*  console.log(req.params.id)
+     clientRedis.get(`user/${req.params.id}`, async (err, cacheduser) => {
+       if (err) throw err;
 
-          
-          clientRedis.setex(`user/${req.params.id}`, 3600, JSON.stringify({user}));
-          res.json({ user })
-        
-        }
-      }); */
+       if (cacheduser) {
+         res.json(JSON.parse(cacheduser));
+       } else {
+
+         const user = await Users.findById(req.params.id).select('-password')
+           .populate("followers following profile", "-password")
+         if (!user) return res.status(400).json({ msg: "User does not exist." })
+
+         
+         clientRedis.setex(`user/${req.params.id}`, 3600, JSON.stringify({user}));
+         res.json({ user })
+       
+       }
+     }); */
     } catch (err) {
       return res.status(500).json({ msg: err.message })
     }
@@ -133,7 +133,7 @@ const userCtrl = {
       await Users.findOneAndUpdate({ _id: id }, {
         email, fullname: fullname, username: username, role
       }, { new: true })
-          clientRedis.del(`user/${id}`);
+      clientRedis.del(`user/${id}`);
       res.json({ msg: "Update Success!" })
 
     } catch (err) {
@@ -213,18 +213,18 @@ const userCtrl = {
   editProfileUser: async (req, res) => {
     try {
       console.log('gg')
-      const { avatar, fullname, username, phone,profile, introduction,studentId } = req.body
+      const { avatar, fullname, username, phone, profile, introduction, studentId } = req.body
       /*   const newprofile = new ProfileModel({
           phone,introduction
         }); */
 
-        console.log(profile)
+      console.log(profile)
       /* save profile */
 
-    const newprofile=  await Profile.findOneAndUpdate({ userId: req.user._id }, profile, { new: true, upsert: true })
+      const newprofile = await Profile.findOneAndUpdate({ userId: req.user._id }, profile, { new: true, upsert: true })
 
       await Users.findOneAndUpdate({ _id: req.user._id }, {
-        avatar, fullname, username ,profile:newprofile._id,studentId
+        avatar, fullname, username, profile: newprofile._id, studentId
       }, { new: true, upsert: true })
       clientRedis.del(`user/${req.user._id}`);
       res.json({ msg: "Update Success!" })

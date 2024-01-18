@@ -1,41 +1,19 @@
-import dotenv from "dotenv";
-import logger from "../utils/logger";
+import "dotenv/config";
 import mongoose from "mongoose";
-dotenv.config();
+import { sleep } from "../utils";
+import logger from "../utils/logger";
 
-
-async function connect() {
-/*   const dbUri = config.get<string>("dbUri"); */
-/* const URL = process.env.MONGODB_URL; */
-
+const connect = async () => {
   try {
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
     mongoose.set("strictQuery", false);
-   /*  await mongoose.connect(URL); */
-     mongoose.connect(
-      URL,
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      }
-    );
-   /*  logger.info("DB connected"); */
-   console.log('db connect')
+    await mongoose.connect(mongoUri);
+    logger.info('Connect to Mongo client successfully.');
   } catch (error) {
-    /* logger.error("Could not connect to db"); */
-    process.exit(1);
+    logger.error('Fail to connect to mongo client because of: %s', error.stack);
+    await sleep(3000);
+    return await connect();
   }
-/* mongoose.set("strictQuery", false);
-mongoose.connect(
-  URL,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  },
-  (err) => {
-    if (err) throw err;
-    log.err("Could not connect to db");
-  }
-); */
 }
 
 export default connect;

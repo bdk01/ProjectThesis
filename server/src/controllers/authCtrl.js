@@ -1,10 +1,10 @@
 import Users from "../models/userModel";
 
 import bcrypt from "bcrypt";
-import jwt from"jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { sendEmail } from "../helper/sendemail";
 import dotenv from "dotenv";
-import Profile from "../models/ProfileModel";
+import Profile from "../models/profileModel";
 
 dotenv.config();
 let buildURLEmail = (token) => {
@@ -35,10 +35,10 @@ const authCtrl = {
       /* save user */
       await newUser.save();
       const newprofile = new Profile({
-        userId:newUser._id
+        userId: newUser._id
       });
-  
-      
+
+
       /* save profile */
       await newprofile.save();
       await Users.findByIdAndUpdate(
@@ -60,19 +60,19 @@ const authCtrl = {
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) return res.status(400).json({ msg: "Incorrect password." });
-        const userInf = await Users.findOne({ email }).select('-password')
-            .populate("followers following profile", "-password")
+      const userInf = await Users.findOne({ email }).select('-password')
+        .populate("followers following profile", "-password")
       // If login success , create access token and refresh token
-       const accesstoken = createAccessToken({ id: user._id });
-     const refresh_token = createRefreshToken({ id: user._id });
+      const accesstoken = createAccessToken({ id: user._id });
+      const refresh_token = createRefreshToken({ id: user._id });
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/auth/refresh_token",
         maxAge: 30 * 7 * 24 * 60 * 60 * 1000, // 30days
       });
-    
 
-      res.status(200).json({ accesstoken, user:userInf });
+
+      res.status(200).json({ accesstoken, user: userInf });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -87,16 +87,16 @@ const authCtrl = {
   },
   forgotPassword: async (req, res) => {
     try {
-       const {email} = req.body
-        const user = await Users.findOne({ email }).select("-password");
-        if (!user) return res.status(400).json({ msg: "User does not exist." });
-         const token = jwt.sign(
-           { user:user },
-           process.env.ACCESS_TOKEN_SECRET,
-           { expiresIn: "30m" }
-         );
-       await sendEmail({ redirectLink: buildURLEmail(token),user:user });
-        
+      const { email } = req.body
+      const user = await Users.findOne({ email }).select("-password");
+      if (!user) return res.status(400).json({ msg: "User does not exist." });
+      const token = jwt.sign(
+        { user: user },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "30m" }
+      );
+      await sendEmail({ redirectLink: buildURLEmail(token), user: user });
+
       return res.json({ msg: "check email" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -104,9 +104,9 @@ const authCtrl = {
   },
   resetPassword: async (req, res) => {
     try {
-     const token = req.params.token;
+      const token = req.params.token;
 
-     const password = req.body.password;
+      const password = req.body.password;
       jwt.verify(
         token,
         process.env.ACCESS_TOKEN_SECRET,
@@ -115,15 +115,15 @@ const authCtrl = {
             return res.status(400).json({ msg: "wq" });
           const user = await Users.findById(result.user._id).select("-password");
           if (!user) return res.status(400).json({ msg: "This does not exist." });
-            const passwordHash = await bcrypt.hash(password, 10);
-           await Users.updateOne(
-             {
-               _id: user._id,
-             },
-             { password: passwordHash },
-             { new: true, upsert: true }
-           );
-           return res.status(200).json({ msg: "update success" });
+          const passwordHash = await bcrypt.hash(password, 10);
+          await Users.updateOne(
+            {
+              _id: user._id,
+            },
+            { password: passwordHash },
+            { new: true, upsert: true }
+          );
+          return res.status(200).json({ msg: "update success" });
         }
       );
     } catch (err) {
@@ -132,7 +132,7 @@ const authCtrl = {
   },
   registerAdmin: async (req, res) => {
     try {
-      const { fullname, username, email, password,role } = req.body;
+      const { fullname, username, email, password, role } = req.body;
       console.log(role)
       const user = await Users.findOne({ email });
       if (user)
@@ -148,15 +148,15 @@ const authCtrl = {
         username,
         email,
         password: passwordHash,
-        role:role
+        role: role
       });
       /* save user */
       await newUser.save();
       const newprofile = new Profile({
-        userId:newUser._id
+        userId: newUser._id
       });
-  
-      
+
+
       /* save profile */
       await newprofile.save();
       await Users.findByIdAndUpdate(
@@ -171,16 +171,16 @@ const authCtrl = {
   },
   refreshToken: async (req, res) => {
     try {
-        const rf_token = req.cookies.refreshtoken;
+      const rf_token = req.cookies.refreshtoken;
       if (!rf_token)
         return res.status(400).json({ msg: "Please Login or Register" });
-      
-      jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, async(err, result) => {
+
+      jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, async (err, result) => {
         if (err)
           return res.status(400).json({ msg: "Please login or register" });
-         const user = await Users.findById(result.id).select("-password").populate("followers following profile", "-password")
-         if (!user)
-            return res.status(400).json({ msg: "This does not exist." });
+        const user = await Users.findById(result.id).select("-password").populate("followers following profile", "-password")
+        if (!user)
+          return res.status(400).json({ msg: "This does not exist." });
         const accesstoken = createAccessToken({ id: user.id });
 
         res.json({ user, accesstoken });
@@ -204,11 +204,11 @@ const authCtrl = {
           if (!user)
             return res.status(400).json({ msg: "This does not exist." });
 
-          const access_token  = jwt.sign(
-        { id: user._id },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "7d" }
-      );
+          const access_token = jwt.sign(
+            { id: user._id },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: "7d" }
+          );
 
           res.json({
             access_token,
