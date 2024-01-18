@@ -7,7 +7,7 @@ dotenv.config();
 async function connect() {
 /*   const dbUri = config.get<string>("dbUri"); */
 /* const URL = process.env.MONGODB_URL; */
-const URL = "mongodb://127.0.0.1:27017/App";
+
   try {
     mongoose.set("strictQuery", false);
    /*  await mongoose.connect(URL); */

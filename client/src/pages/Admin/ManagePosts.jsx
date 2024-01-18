@@ -1,5 +1,5 @@
 import { Table, Input } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 
 import ConfirmModal from "../../components/Modal/ConfirmModal";
@@ -9,6 +9,7 @@ import axios from "../../axios"
 import { useSelector } from "react-redux";
 import EditSubject from "../../components/Admin/ManageSubject/EditSubject";
 import AddNewSubject from "../../components/Admin/ManageSubject/AddNewSubject";
+import { Excel } from "antd-table-saveas-excel";
 
 
 
@@ -107,6 +108,10 @@ function ManageSubject() {
                ),
           },
      ];
+     const newColumnExport = useMemo(() => {
+          const arr = columns?.filter((col) => col.dataIndex !== 'action')
+          return arr
+        }, [columns])
      const fetchData = async (params = {}) => {
           setLoading(true);
           /*  console.log(auth.accesstoken) */
@@ -175,6 +180,17 @@ function ManageSubject() {
                keyword: value,
           });
      };
+     const handleExportExcel = () => {
+       
+          const excel = new Excel();
+          excel
+            .addSheet("test")
+            .addColumns(newColumnExport)
+            .addDataSource(data, {
+              str2Percent: true
+            })
+            .saveAs("User.xlsx");
+        };
      return (
           <div className=" mt-2 overflow-x-auto">
                <div className="mx-3 flex justify-between mb-4">
