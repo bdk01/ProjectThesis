@@ -56,7 +56,7 @@ export default function RegisterTA() {
           headers: { Authorization: auth.accesstoken },
           })
           console.log(response)
-          showNotification('success',"register form success")
+          showNotification('success',"Register form success")
                navigate(`/home`);
           }
           catch(err){

@@ -90,11 +90,11 @@ function ManageTaSchedule() {
       render: (state) => (
         <>
           {state === "pending" ? (
-            <div className="text-green-600 font-bold bg-green-200 text-center rounded-lg py-1">
+            <div className="text-blue-600 font-bold bg-blue-200 text-center rounded-lg py-1">
              Pending
             </div>
           ) : (
-            <div className="text-red-600 font-bold bg-red-300 text-center rounded-lg py-1">
+            <div className="text-green-600 font-bold bg-green-200 text-center rounded-lg py-1">
               Approve
             </div>
           )}

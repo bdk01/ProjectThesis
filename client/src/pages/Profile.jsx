@@ -17,7 +17,7 @@ const Profile = () => {
      const dispatch = useDispatch()
    
      const { id } = useParams()
-     const [saveTab, setSaveTab] = useState(false)
+    /*  const [saveTab, setSaveTab] = useState(false) */
 
      useEffect(() => {
           if (profile.ids.every(item => item !== id) && auth.accesstoken) {
@@ -35,8 +35,8 @@ const Profile = () => {
                {
                     auth.user._id === id &&
                     <div className="w-[100%] flex justify-center border-t-[1px] border-b-[1px]">
-                              <button className={saveTab ? 'active outline-none border-none bg-white uppercase font-extrabold text-lg px-[20px] py-[5px] opacity-[0.8] my-[25px] ' : 'outline-none border-none bg-white uppercase font-extrabold text-lg px-[20px] py-[5px] opacity-[0.5] my-[25px] '} onClick={() => setSaveTab(false)}>Posts</button>
-                            {/*   <button className={saveTab ? 'active outline-none border-none bg-white uppercase font-extrabold text-lg px-[20px] py-[5px] opacity-[0.8] my-[25px] ' : 'outline-none border-none bg-white uppercase font-extrabold text-lg px-[20px] py-[5px] opacity-[0.5] my-[25px] '} onClick={() => setSaveTab(true)}>Saved</button> */}
+                              <button className={ 'outline-none border-none bg-white uppercase font-extrabold text-lg px-[20px] py-[5px] opacity-[0.5] my-[25px] '}>Posts</button>
+                         
                     </div>
                }
 
@@ -44,11 +44,9 @@ const Profile = () => {
                     profile.loading
                          ? <img className="d-block mx-auto" src={LoadIcon} alt="loading" />
                          : <>
-                              {
-                                   saveTab
-                                        ? <Saved auth={auth} dispatch={dispatch} />
-                                        : <Posts auth={auth} profile={profile} dispatch={dispatch} id={id} />
-                              }
+                           
+                            <Posts auth={auth} profile={profile} dispatch={dispatch} id={id} />
+                          
                          </>
                }
 

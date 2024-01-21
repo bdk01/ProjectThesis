@@ -29,9 +29,9 @@ export default function MsgDisplay({user, msg, data,sender}) {
                         { user ?  <div className="flex items-center justify-end">
                               <div className="bg-blue-700 max-w-[90%] min-w-[70%] mr-1 text-left text-white text-base font-normal pl-2 py-2 rounded-l-lg rounded-tr-lg " >
                                     {msg.text}
-                        </div> <img src={user?.avatar} className="w-[35px] h-[35px] rounded-[50%]" alt="" />
+                        </div> <img src={user?.avatar} className="w-[35px] h-[35px] rounded-[50%]" alt="#"  loading="lazy"/>
                         </div>  
-                  :    <div className="flex items-center justify-start"> <img src={sender?.avatar} className="w-[35px] h-[35px] rounded-[50%] mr-1" alt="" />
+                  :    <div className="flex items-center justify-start"> <img src={sender?.avatar} className="w-[35px] h-[35px] rounded-[50%] mr-1" alt="#"  loading="lazy"/>
                   <div className="bg-blue-700 max-w-[90%] min-w-[70%] pr-2 text-left text-white text-base font-normal pl-2 py-2 rounded-l-lg rounded-tr-lg " >
                         {msg.text}
             </div>

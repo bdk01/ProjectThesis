@@ -10,6 +10,10 @@ const postSchema = mongoose.Schema(
       type: Array,
       required: true,
     },
+    reports: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

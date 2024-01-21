@@ -15,7 +15,7 @@ import usa from "../../assets/img/usa.svg"
 import i18n from "i18next";
 import {  Select } from "antd";
 import { useTranslation } from "react-i18next";
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import TA from "../../assets/img/TAIMG.jfif"
 
 export default function Header({setOpened ,opened,openedMobile,setOpenedMobile,setLanguage,language}) {
@@ -91,7 +91,7 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile,s
   return (
   
 
-        <div className=" bg-white z-[20] grid grid-cols-9 p-2 w-[100%]  border-b-[1px] border-black ">
+        <div className=" bg-white z-[20] grid grid-cols-9 p-1 w-[100%]  border-b-[1px] border-black ">
                 <div className="col-span-2 flex justify-start items-center">
                   <div    type="button" onClick={() => setOpened(!opened)} >
 
@@ -102,11 +102,21 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile,s
                   <AiOutlineMenu className="sm:hidden w-[30px] h-[30px] cursor-pointer mr-6 ml-2 "   />
                   </div>
                   <Link to="/home" className="logo hidden sm:block m-w-[50px]">
-                      <img className="text-white text-2xl h-[50px] w-[60px]" src={TA}
-                      onClick={() => window.scrollTo({top: 0})}>
+                     {/*  <img className="text-white text-2xl h-[50px] w-[60px]" src={TA} loading="lazy" alt="#" >
+                    
                         
-                      </img>
+                      </img> */}
+                      <LazyLoadImage
+                       placeholderSrc={TA}
+                   
+                       key="#"
+                      onClick={() => window.scrollTo({top: 0})}
+                  alt='home'
+                  height={30}
+                  src={TA} 
+                  width={40} />
                   </Link>
+
 
                 </div>
                 <div className="col-span-5" >
@@ -132,8 +142,26 @@ export default function Header({setOpened ,opened,openedMobile,setOpenedMobile,s
             }}    
             onChange={handleChange}
           >
-            <Option value="en" ><img src={usa} alt='usa' width={30} height={30} /></Option>
-            <Option value="vi"><img src={vn} alt='vn' width={30} height={30} /></Option>
+            <Option value="en" >{/* <img loading="lazy" src={usa} alt='usa' width={30} height={30} /> */}
+            <LazyLoadImage
+             placeholderSrc={usa}
+             /* effect="blur" */
+             key="usa"
+      alt='usa'
+      height={30}
+      src={usa} 
+      width={30} />
+            </Option>
+            <Option value="vi">{/* <img loading="lazy" src={vn} alt='vn' width={30} height={30} /> */}
+            <LazyLoadImage
+             placeholderSrc={vn}
+            /*  effect="blur" */
+             key="vn"
+      alt='vn'
+      height={30}
+      src={vn} 
+      width={30} />
+            </Option>
           </Select>
 
           </Suspense>

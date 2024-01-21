@@ -1,8 +1,7 @@
-import { IconHeart } from '@tabler/icons-react';
-import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/core';
 
-import classes from './card.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Card, Image, Text, Group } from '@mantine/core';
+
+import {  useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 

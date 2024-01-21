@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Status from "../components/home/Status";
-import RightHome from "../components/home/RightHome";
+/* import RightHome from "../components/home/RightHome"; */
 import { Select } from '@mantine/core';
 import axios from '../axios'
 import { getPosts } from "../api/postAPI";
@@ -24,7 +24,7 @@ export default function Home() {
         setLoad(true)
         /*   const res = await getDataAPI(`posts?limit=${homePosts.page * 9}`, auth.token) */
         console.log('handle')
-        const res = await axios.get(`/api/get-posts?limit=${homePosts.page * 2}`, {
+        const res = await axios.get(`/api/get-posts?limit=${homePosts.page * 2}&filter=${value}`, {
             headers: { Authorization: auth.accesstoken }
         })
         console.log(res)
@@ -45,7 +45,7 @@ export default function Home() {
     return <div className="mx-3">
 
         <div className="lg:flex justify-center lg:space-x-10 lg:space-y-0 space-y-5">
-            <div className="space-y-5 flex-shrink-0 lg:w-7/12">
+            <div className="space-y-5 flex-shrink-0 lg:px-14 sm:px-2 md:px-8 lg:w-7/12">
                 <div className="flex justify-between items-center mt-4">
                     <h1 className="lg:text-3xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mb-3"> {t('New Feed')} </h1>
                     <Select

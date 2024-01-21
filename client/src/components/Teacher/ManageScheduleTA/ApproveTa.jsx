@@ -27,6 +27,7 @@ function ApproveTa({ onClose, data, refetchData }) {
                      taSchedule:dataEdit._id
                 })
                const approve = {
+                    studentId:dataEdit.studentId,
                     subject: dataEdit.subject._id,
                     student: dataEdit.candidate._id,
                     taSchedule: dataEdit._id

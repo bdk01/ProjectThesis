@@ -190,11 +190,11 @@ function ManageSubject() {
         };
      return (
           <div className=" mt-2 overflow-x-auto">
-               <div className="text-3xl text-center mb-2 md:hidden font-bold uppercase">Manage Users</div>
+               <div className="text-3xl text-center mb-2 md:hidden font-bold uppercase">Manage Subjects</div>
                <div className="mx-3 flex md:flex-wrap justify-between mb-4">
                  
 
-                    <span className="text-3xl font-bold uppercase hidden md:block">Manage Users</span>
+                    <span className="text-3xl font-bold uppercase hidden md:block">Manage Subjects</span>
 
                     <Input.Search
                          className="w-1/3 lg:w-[400px]"

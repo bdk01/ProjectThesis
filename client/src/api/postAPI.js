@@ -106,7 +106,22 @@ import { createNotify } from "./notifyAPI"
       console.log(err)
     }
 }
+export const reportPost = async (post,auth,dispatch,socket) => {
+ /*  const newPost = {...post, likes: [...post.likes, auth.user]}
+  dispatch(updatePost(newPost)) */
+  try { 
 
+     const res =   await axios.post(`/api/post/${post._id}/reportPost`,{}, {
+              headers: { Authorization: auth.accesstoken }
+          })
+          console.log(res)
+          showNotification('success',"You have report success")
+      
+     
+  } catch (err) {
+ 
+  }
+}
   export const likePost = async (post,auth,dispatch,socket) => {
 
     const newPost = {...post, likes: [...post.likes, auth.user]}

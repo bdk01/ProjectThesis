@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
-import { deletePost } from '../../../api/postAPI'
+import { deletePost, reportPost } from '../../../api/postAPI'
 import { OpenStatusEdit } from '../../../redux/statusSlice'
 import { useTranslation } from 'react-i18next'
-
+import { MdOutlineReport } from "react-icons/md";
 /* import { GLOBALTYPES } from '../../../redux/actions/globalTypes'
 import { deletePost } from '../../../redux/actions/postAction'
 import { BASE_URL } from '../../../utils/config' */
@@ -29,6 +29,14 @@ const CardHeader = ({post}) => {
     const handleDeletePost = () => {
         if(window.confirm("Are you sure want to delete this post?")){
             deletePost(post, auth, socket,dispatch)
+          /*   dispatch(deletePost({post, auth, socket})) */
+         
+            return navigate("/home", { replace: true });
+        }
+    }
+    const handleReportPost = () => {
+        if(window.confirm("Are you sure want to report this post?")){
+            reportPost(post, auth, socket,dispatch)
           /*   dispatch(deletePost({post, auth, socket})) */
          
             return navigate("/home", { replace: true });
@@ -73,9 +81,15 @@ const CardHeader = ({post}) => {
                             <div className="dropdown-item" onClick={handleDeletePost} >
                                 <span className="material-icons">delete_outline</span>   { t('deletepost')}
                             </div>
+                           {/*  <div className="dropdown-item flex items-center my-1" onClick={handleDeletePost} >
+                            <MdOutlineReport size={24} className='mr-1' />   { t('reportpost')}
+                            </div> */}
                         </>
                     }
 
+                    <div className="dropdown-item flex items-center my-1" onClick={handleReportPost } >
+                            <MdOutlineReport size={24} className='mr-1' />   { t('reportpost')}
+                            </div>
                     <div className="dropdown-item" onClick={handleCopyLink}>
                         <span className="material-icons">content_copy</span>  { t('copy')}
                     </div>

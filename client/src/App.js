@@ -61,12 +61,13 @@ import AdminLayout from "./Layout/adminLayout/adminLayout";
 import ConversationAdmin from "./pages/MessageAdmin/ConversationAdmin";
 import ManagePosts from "./pages/Admin/ManagePosts";
 import Loading from "./components/Loading/Loading";
+import Statitics from "./pages/Admin/Statitics";
 
 
 
 const App = () => {
 
-  const [token, setToken] = useState("");
+/*   const [token, setToken] = useState("");
   const [meetingId, setMeetingId] = useState("");
   const [participantName, setParticipantName] = useState("");
   const [micOn, setMicOn] = useState(false);
@@ -80,7 +81,7 @@ const App = () => {
   const [selectMicDeviceId, setSelectMicDeviceId] = useState(selectedMic.id);
   const [isMeetingStarted, setMeetingStarted] = useState(false);
   const [isMeetingLeft, setIsMeetingLeft] = useState(false);
-  const [meetingType, setMeetingType] = useState(meetingTypes.MEETING);
+  const [meetingType, setMeetingType] = useState(meetingTypes.MEETING); */
   const dispatch = useDispatch();
 
   const { auth, socket } = useSelector((state) => state);
@@ -93,7 +94,7 @@ const App = () => {
     return () => socket.close();
   }, [dispatch]);
 
-  const isMobile = window.matchMedia(
+ /*  const isMobile = window.matchMedia(
     "only screen and (max-width: 768px)"
   ).matches;
 
@@ -103,7 +104,7 @@ const App = () => {
         return "Are you sure you want to exit?";
       };
     }
-  }, [isMobile]);
+  }, [isMobile]); */
   useEffect(() => {
     if (auth.accesstoken) {
       /*     dispatch(getPosts(auth.token))
@@ -379,6 +380,14 @@ const App = () => {
               </AdminLayout>
           }
         />
+        <Route
+          path="/admin/statitics"
+          element={
+            <AdminLayout>
+              <Statitics />
+              </AdminLayout>
+          }
+        />
            <Route
           path="/admin/conversation"
           element={
@@ -396,7 +405,7 @@ const App = () => {
               </AdminLayout>
           }
         />
-        <Route
+       {/*  <Route
           path="/meeting"
           element={
             <>
@@ -473,7 +482,7 @@ const App = () => {
               )}
             </>
           }
-        />
+        /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 

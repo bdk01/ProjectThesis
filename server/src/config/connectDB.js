@@ -5,7 +5,7 @@ import logger from "../utils/logger";
 
 const connect = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+    const mongoUri = process.env.MONGODB_URL || 'mongodb://localhost:27017';
     mongoose.set("strictQuery", false);
     await mongoose.connect(mongoUri);
     logger.info('Connect to Mongo client successfully.');

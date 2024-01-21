@@ -57,7 +57,7 @@ export const LeftNavItem = [
     },
    
     
-    {
+/*     {
       index: 3,
       icon: (
         <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer'/>
@@ -69,7 +69,7 @@ export const LeftNavItem = [
       name: 'Meeting',
       subIcon: [],
     },
-    
+     */
     
     {
       index: 4,
@@ -135,7 +135,7 @@ export const LeftNavItemVi = [
     },
    
     
-    {
+   /*  {
       index: 3,
       icon: (
         <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer'/>
@@ -146,7 +146,7 @@ export const LeftNavItemVi = [
       path: 'meeting',
       name: 'Gặp gỡ',
       subIcon: [],
-    },
+    }, */
     
     
     {
@@ -340,10 +340,10 @@ export const LeftNavItemVi = [
         </svg>
       ),
       path: 'create-schedule',
-      name: 'Create-meeting',
+      name: 'Create-group',
       subIcon: [],
     },
-    {
+   /*  {
       index: 4,
       icon: (
         <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer' />
@@ -354,7 +354,7 @@ export const LeftNavItemVi = [
       path: 'meeting',
       name: 'Meeting',
       subIcon: [],
-    },
+    }, */
     {
       index: 5,
       icon: (
@@ -477,7 +477,7 @@ export const LeftNavItemVi = [
       name: 'Tạo group',
       subIcon: [],
     },
-    {
+  /*   {
       index: 4,
       icon: (
         <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer' />
@@ -488,7 +488,7 @@ export const LeftNavItemVi = [
       path: 'meeting',
       name: 'Gặp gỡ',
       subIcon: [],
-    },
+    }, */
     {
       index: 5,
       icon: (
@@ -607,10 +607,10 @@ export const LeftNavItemVi = [
         </svg>
       ),
       path: 'create-schedule',
-      name: 'Create-meeting',
+      name: 'Create-group',
       subIcon: [],
     },
-    {
+   /*  {
       index: 4,
       icon: (
         <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer' />
@@ -621,7 +621,7 @@ export const LeftNavItemVi = [
       path: 'meeting',
       name: 'Meeting',
       subIcon: [],
-    },
+    }, */
   
     {
       index: 5,
@@ -717,7 +717,7 @@ export const LeftNavItemVi = [
       name: 'Tạo nhóm',
       subIcon: [],
     },
-    {
+  /*   {
       index: 4,
       icon: (
         <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer' />
@@ -728,7 +728,7 @@ export const LeftNavItemVi = [
       path: 'meeting',
       name: 'Gặp gỡ',
       subIcon: [],
-    },
+    }, */
   
     {
       index: 5,

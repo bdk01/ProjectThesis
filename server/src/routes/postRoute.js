@@ -8,8 +8,10 @@ postRoute.post("/create-post",auth, postCtrl.createPost);
 
 postRoute.post("/update-post/:id",auth, postCtrl.updatePost);
 postRoute.post("/post/:id/like",auth, postCtrl.likePost);
+postRoute.post("/post/:id/reportPost",auth, postCtrl.reportPost);
 postRoute.post("/post/:id/unlike",auth, postCtrl.unLikePost);
 postRoute.get("/get-posts",auth, postCtrl.getPosts);
+postRoute.get("/getMonthlyPost", postCtrl.getMonthlyPost);
 postRoute.get("/user_posts/:id",auth, postCtrl.getUserPosts);
 postRoute.get("/get-post/:id",auth, postCtrl.getPost);
 postRoute.delete("/post/:id",auth, postCtrl.deletePost);

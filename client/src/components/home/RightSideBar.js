@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-
+import { IoIosRefresh } from "react-icons/io";
 import UserCard from './UserCard'
 import FollowBtn from '../buttons/FollowBtn'
 import LoadIcon from '../../assets/img/loading.gif'
 import { getSuggestions } from '../../api/suggestionsAPI'
 import { useTranslation } from 'react-i18next'
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const RightSideBar = () => {
     const { auth, suggestions } = useSelector(state => state)
@@ -21,13 +21,26 @@ const RightSideBar = () => {
                 </Suspense>
                 {
                     !suggestions.loading &&
-                    <i className="fas fa-redo" style={{cursor: 'pointer'}}
-                    onClick={ () => getSuggestions({auth,dispatch}) } />
+                   /*  <i className="fas fa-redo" style={{cursor: 'pointer'}}
+                    onClick={ () => getSuggestions({auth,dispatch}) } /> */
+              
+                    <IoIosRefresh size={20}  onClick={ () => getSuggestions({auth,dispatch})} />
                 }
             </div>
+          {/*   <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4" /> */}
             {
                 suggestions.loading
-                ? <img src={LoadIcon} alt="loading" className="d-block mx-auto my-4" />
+               ? <LazyLoadImage
+               placeholderSrc={LoadIcon}
+              /*  effect="blur" */
+               key="#"
+                alt={LoadIcon}
+                height={40}
+                src={LoadIcon}
+                width={40}
+                className="d-block  mx-auto my-4" 
+                />
+                
                 : <div className="suggestions">
                     {
                         suggestions.users.map(user => (

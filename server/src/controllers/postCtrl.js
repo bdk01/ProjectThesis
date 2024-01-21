@@ -11,7 +11,7 @@ class APIfeatures {
 
     paginating(){
         const page = this.queryString.page * 1 || 1
-        const limit = this.queryString.limit * 1 || 4
+        const limit = this.queryString.limit * 1 || 2
         const skip = (page - 1) * limit
         this.query = this.query.skip(skip).limit(limit)
         return this;
@@ -127,6 +127,55 @@ const postCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
+    getMonthlyPost: async (req, res) => {
+        try {
+          const currentYear = new Date().getFullYear();
+          const monthlyPostRegistrations = await Posts.aggregate([
+            {
+              $group: {
+                _id: {
+                  month: { $month: '$createdAt' },
+                  year: { $year: '$createdAt' },
+                },
+                count: { $sum: 1 },
+              },
+            },
+            {
+              $addFields: {
+                monthName: {
+                  $concat: [
+                    { $switch: { branches: [
+                      { case: { $eq: ['$_id.month', 1] }, then: 'January' },
+                      { case: { $eq: ['$_id.month', 2] }, then: 'February' },
+                      { case: { $eq: ['$_id.month', 3] }, then: 'March' },
+                      { case: { $eq: ['$_id.month', 4] }, then: 'April' },
+                      { case: { $eq: ['$_id.month', 5] }, then: 'May' },
+                      { case: { $eq: ['$_id.month', 6] }, then: 'June' },
+                      { case: { $eq: ['$_id.month', 7] }, then: 'July' },
+                      { case: { $eq: ['$_id.month', 8] }, then: 'August' },
+                      { case: { $eq: ['$_id.month', 9] }, then: 'September' },
+                      { case: { $eq: ['$_id.month', 10] }, then: 'October' },
+                      { case: { $eq: ['$_id.month', 11] }, then: 'November' },
+                      { case: { $eq: ['$_id.month', 12] }, then: 'December' },
+                    ], default: 'Invalid Month' } },
+                    ', ',
+                    { $toString: '$_id.year' },
+                  ],
+                },
+              },
+            },
+            {
+              $sort: { '_id.year': 1, '_id.month': 1 },
+            },
+          ]);
+      
+    
+          res.json({ monthlyPostRegistrations })
+    
+        } catch (err) {
+          return res.status(500).json({ msg: err.message })
+        }
+      },
     updatePost: async (req, res) => {
         try {
             clientRedis.del(`posts/-createdAt`)
@@ -151,6 +200,32 @@ const postCtrl = {
                     content, images
                 }
             })
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    reportPost: async (req, res) => {
+        try {
+          /*   const post = await Posts.find({_id: req.params.id, likes: req.user._id})
+            if(post.length > 0) return res.status(400).json({msg: "You liked this post."})
+
+            const like = await Posts.findOneAndUpdate({_id: req.params.id}, {
+                $push: {likes: req.user._id}
+            }, {new: true})
+
+            if(!like) return res.status(400).json({msg: 'This post does not exist.'}) */
+            const updatedPost = await Posts.findOneAndUpdate(
+                {_id: req.params.id},
+                { $inc: { reports: 1 } },
+                { new: true }
+              );
+          
+              if (!updatedPost) {
+                console.error('Post not found');
+                return;
+              }
+            res.json({msg: 'Report success!'})
+
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

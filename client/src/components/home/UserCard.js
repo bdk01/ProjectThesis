@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 const UserCard = ({children, user, border, handleClose, setShowFollowers, setShowFollowing, msg}) => {
 
     const { theme } = useSelector(state => state)
@@ -48,11 +48,20 @@ const UserCard = ({children, user, border, handleClose, setShowFollowers, setSho
                 className="d-flex align-items-center">
                     
                    {/*  <Avatar src={user.avatar} size="big-avatar" /> */}
-                  <div className=" flex justify-end w-[44px] h-[44px] mr-2 ">
-                    <img
+                  {/*   <img
                         src={user.avatar}
                         className=" w-[100%] h-[100%] rounded-[50%]"
-                        /*   onClick={handleClick} */
+                      
+                    /> */}
+                  <div className=" flex justify-end w-[44px] h-[44px] mr-2 ">
+                      <LazyLoadImage
+                    
+                    alt='#'
+                    height={40}
+                    width={40}
+                    src={user.avatar}
+                  
+                    className=" w-[100%] h-[100%] rounded-[50%]"
                     />
                     </div>
                     <div className="ml-1" style={{transform: 'translateY(-2px)'}}>

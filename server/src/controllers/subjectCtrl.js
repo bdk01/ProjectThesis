@@ -58,16 +58,16 @@ const subjectCtrl = {
     },
     approvalTA: async (req, res) => {
         try {
-         const {  subject,student, taSchedule } = req.body
+         const {  subject,student, taSchedule,studentId } = req.body
          /* stundet doi role TA */
          /* taSchedule doi status */
          /* subject push id student */
-
+    
           await TaSchedules.findOneAndUpdate({_id: taSchedule}, {
                state:'approve'
             }, {new: true})
           await Users.findOneAndUpdate({_id: student}, {
-               role:UserRole.TA,subjectTa:subject
+               role:UserRole.TA,subjectTa:subject,studentId:studentId
             }, {new: true})
                await Subjects.findOneAndUpdate({_id: subject}, {
                 $push: {teachingAssistant: student}

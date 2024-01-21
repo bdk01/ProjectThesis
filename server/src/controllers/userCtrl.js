@@ -140,6 +140,56 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message })
     }
   },
+  
+  getMonthlyUser: async (req, res) => {
+    try {
+      const currentYear = new Date().getFullYear();
+      const monthlyRegistrations = await Users.aggregate([
+        {
+          $group: {
+            _id: {
+              month: { $month: '$createdAt' },
+              year: { $year: '$createdAt' },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $addFields: {
+            monthName: {
+              $concat: [
+                { $switch: { branches: [
+                  { case: { $eq: ['$_id.month', 1] }, then: 'January' },
+                  { case: { $eq: ['$_id.month', 2] }, then: 'February' },
+                  { case: { $eq: ['$_id.month', 3] }, then: 'March' },
+                  { case: { $eq: ['$_id.month', 4] }, then: 'April' },
+                  { case: { $eq: ['$_id.month', 5] }, then: 'May' },
+                  { case: { $eq: ['$_id.month', 6] }, then: 'June' },
+                  { case: { $eq: ['$_id.month', 7] }, then: 'July' },
+                  { case: { $eq: ['$_id.month', 8] }, then: 'August' },
+                  { case: { $eq: ['$_id.month', 9] }, then: 'September' },
+                  { case: { $eq: ['$_id.month', 10] }, then: 'October' },
+                  { case: { $eq: ['$_id.month', 11] }, then: 'November' },
+                  { case: { $eq: ['$_id.month', 12] }, then: 'December' },
+                ], default: 'Invalid Month' } },
+                ', ',
+                { $toString: '$_id.year' },
+              ],
+            },
+          },
+        },
+        {
+          $sort: { '_id.year': 1, '_id.month': 1 },
+        },
+      ]);
+  
+
+      res.json({ monthlyRegistrations })
+
+    } catch (err) {
+      return res.status(500).json({ msg: err.message })
+    }
+  },
   follow: async (req, res) => {
     try {
       const user = await Users.find({ _id: req.params.id, followers: req.user._id })
