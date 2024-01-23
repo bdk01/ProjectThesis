@@ -12,8 +12,9 @@ const userCtrl = {
       const users = await Users.find({
         username: { $regex: req.query.username },
       })
-        .limit(5)
-        .select("fullname username avatar");
+        .limit(8)
+        .select("fullname username avatar")
+      
 
       res.json({ users });
     } catch (err) {
@@ -54,6 +55,7 @@ const userCtrl = {
         .skip(pageSize * page)
         .sort(`${sortBy}`)
         .select('-password')
+        .populate('profile')
       var length = await Users.find({ $and: [query, keywordCondition] }).count();
       res.status(200).json({
         status: 'success',
@@ -69,13 +71,13 @@ const userCtrl = {
   getUser: async (req, res) => {
     try {
 
-      const user = await Users.findById(req.params.id).select('-password')
+  /*     const user = await Users.findById(req.params.id).select('-password')
         .populate("followers following profile", "-password")
       if (!user) return res.status(400).json({ msg: "User does not exist." })
 
-      res.json({ user })
+      res.json({ user }) */
 
-      /*  console.log(req.params.id)
+       console.log(req.params.id)
      clientRedis.get(`user/${req.params.id}`, async (err, cacheduser) => {
        if (err) throw err;
 
@@ -92,7 +94,7 @@ const userCtrl = {
          res.json({ user })
        
        }
-     }); */
+     });
     } catch (err) {
       return res.status(500).json({ msg: err.message })
     }
@@ -252,10 +254,10 @@ const userCtrl = {
     try {
 
       await Users.findOneAndDelete({ _id: req.params.id })
+      clientRedis.del(`user/${req.params.id}`);
       res.status(200).json({
         msg: 'Deleted success!',
-      }
-      )
+      }  )
     } catch (err) {
       return res.status(500).json({ msg: err.message })
     }
@@ -268,10 +270,12 @@ const userCtrl = {
           phone,introduction
         }); */
 
-      console.log(profile)
+      console.log(studentId)
       /* save profile */
+       
 
-      const newprofile = await Profile.findOneAndUpdate({ userId: req.user._id }, profile, { new: true, upsert: true })
+          const newprofile = await Profile.findOneAndUpdate({ userId: req.user._id }, profile, { new: true, upsert: true })
+      
 
       await Users.findOneAndUpdate({ _id: req.user._id }, {
         avatar, fullname, username, profile: newprofile._id, studentId

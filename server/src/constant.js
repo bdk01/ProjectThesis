@@ -6,11 +6,8 @@ export const UserRole = {
   
 }
 export const State= {
-    WAITING: 'waiting',
+    PENDING: 'pending',
     APPROVE: 'approve',
-    REFUSED: 'refused',
-  /*   probablyProceed: 'probably proceed',
-    processing: 'processing',
-    completed: 'completed',
-    cancel: 'cancel' */
+    REJECT: 'reject',
+
 }

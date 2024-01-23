@@ -21,7 +21,7 @@ export const getToken = async () => {
   } */
   
  const res =  await axios.get("/api/get-token");
- console.log(res)
+
 return res.data.token
 };
 

@@ -50,7 +50,7 @@ import {  createNotify } from "./notifyAPI";
          const res =  await axios.post(`/api/user/${user._id}/follow`,{},  {
                 headers: { Authorization: auth.accesstoken }
             })
-            console.log(res)
+        
            
         
              socket.emit('follow', res.data.newUser)
@@ -96,7 +96,7 @@ import {  createNotify } from "./notifyAPI";
        const res =   axios.post(`/api/user/${user._id}/unfollow`,{},  {
                 headers: { Authorization: auth.accesstoken }
             })
-            console.log('success')
+         
 
     } catch (err) {
    
@@ -115,7 +115,7 @@ export const updateProfileUser = async ({userData1, avatar, auth, dispatch}  ) =
         }, {
                 headers: { Authorization: auth.accesstoken }
             })
-            console.log(res)
+          
       /*   dispatch({
             type: GLOBALTYPES.AUTH,
             payload: {

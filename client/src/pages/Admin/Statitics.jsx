@@ -33,7 +33,7 @@ function Statitics() {
    }, [])
 
   return (
-    <div className='w-[60vw] h-[50vh]'>
+    <div className='lg:w-[50vw] md:w-[60vw] w-[70vw] h-[50vh]'>
        <div className='font-bold text-3xl mb-4'>User statistics</div>
        <ResponsiveContainer >
         <BarChart data={userData} width={400} height={300} >

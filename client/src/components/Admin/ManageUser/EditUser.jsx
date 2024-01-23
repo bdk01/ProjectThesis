@@ -12,7 +12,7 @@ function EditUser({ onClose, data, refetchData }) {
      const [dataEdit, setDataEdit] = useState({ ...data });
      const [loading, setLoading] = useState(false);
      const [isDisable, setIsDisable] = useState(false);
-     
+  
      const { auth } = useSelector(state => state)
   
      const acceptEditCareer = async () => {
@@ -20,15 +20,15 @@ function EditUser({ onClose, data, refetchData }) {
           // setIsDisable(true);
           try {
                console.log('gg')
-               console.log(dataEdit)
+              /*  console.log(dataEdit.profile.phone) */
 
-               console.log()
+             
                const approve = {
                     email: dataEdit.email,
                     username: dataEdit.username,
                     fullname: dataEdit.fullname,
                     role: dataEdit.role,
-                    phone: dataEdit.phone,
+                   /*  phone: dataEdit.phone, */
                     id:data._id
                }
                console.log(approve)
@@ -130,13 +130,13 @@ function EditUser({ onClose, data, refetchData }) {
                                         }
                                    />
                               </Item>
-                              <Item
+                           {/*    <Item
                                    label="Phone"
                                    name="phone"
 
                               >
                                    <Input
-                                        value={dataEdit.phone}
+                                        value={dataEdit.profile.phone}
                                         onChange={(e) =>
                                              setDataEdit({
                                                   ...dataEdit,
@@ -144,7 +144,7 @@ function EditUser({ onClose, data, refetchData }) {
                                              })
                                         }
                                    />
-                              </Item>
+                              </Item> */}
 
                                <Item label="Role">
                                    <Select

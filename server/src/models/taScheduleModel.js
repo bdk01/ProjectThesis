@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { State } from '../constant';
 
 
 const taScheduleSchema = mongoose.Schema(
@@ -14,7 +15,11 @@ const taScheduleSchema = mongoose.Schema(
     fill:{type:Boolean,default:false}, 
     link:String,
     dateCloseForm:Date,
-    state:{type:String,default:"pending"},
+    state:{
+      type: String,
+      enum: Object.values(State),
+      default: State.PENDING
+},
     description:String,
     expireAt: { type: Date, default: undefined }
   },

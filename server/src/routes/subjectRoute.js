@@ -11,6 +11,7 @@ subjectRoute.get("/getAllSubject", subjectCtrl.getAllSubject);
 subjectRoute.post("/update-subject", subjectCtrl.updateSubject);
 subjectRoute.delete('/delete-subject/:id', auth, subjectCtrl.deleteSubject)
 subjectRoute.patch("/approve-ta",auth, subjectCtrl.approvalTA);
+subjectRoute.patch("/reject-ta",auth, subjectCtrl.rejectTA);
 
 
 

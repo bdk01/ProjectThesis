@@ -35,7 +35,7 @@ export default function Home() {
 
     useEffect(() => {
         if (auth.user.role === 'admin') {
-            navigate(`/manage-user`);
+            navigate(`/admin/statitics`);
         }
         if (auth.accesstoken || status.status) {
             getPosts(auth, dispatch, value)

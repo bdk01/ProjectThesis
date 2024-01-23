@@ -196,7 +196,7 @@ export const reportPost = async (post,auth,dispatch,socket) => {
        const res =   await axios.post("/api/create-comment",data,{
                 headers: { Authorization: auth.accesstoken }
             })
-           /*  console.log(res) */
+         
              const newData = {...res.data.newComment, user: auth.user}
              const newPost = {...post, comments: [...post.comments, newData]}
                dispatch(updatePost(newPost))
@@ -236,7 +236,7 @@ export const reportPost = async (post,auth,dispatch,socket) => {
        const res =   await axios.patch(`/api/comment/${comment._id}/unlike`,{}, {
                 headers: { Authorization: auth.accesstoken }
             })
-           /*  console.log(res) */
+         
    
        
     } catch (err) {
@@ -264,14 +264,14 @@ export const reportPost = async (post,auth,dispatch,socket) => {
     }
 }
   export const deleteComment= async ({post, auth, comment, socket,dispatch}) => {
-   /*  console.log('qweq') */
+  
     const deleteArr = [...post.comments.filter(cm => cm.reply === comment._id), comment]
-      /* console.log(deleteArr) */
+    
     const newPost = {
         ...post,
         comments: post.comments.filter(cm => !deleteArr.find(da => cm._id === da._id))
     }
-    console.log(newPost)
+   
     dispatch(updatePost(newPost))
     try {
        deleteArr.forEach(async(item) => {
@@ -296,14 +296,14 @@ export const reportPost = async (post,auth,dispatch,socket) => {
     }
 }
 export const getDPost = async({detailPost, id, auth,dispatch})  => {
-  console.log('ggpost')
+ 
    if(detailPost.posts.every(post => post._id !== id)){
 
         try {
            const res = await axios.get(`/api/get-post/${id}`,{
                          headers: { Authorization: auth.accesstoken }
                     })
-                    console.log(res)
+                  
                   
                     dispatch(getDetailPost(res.data.post))
         } catch (err) {

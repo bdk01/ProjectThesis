@@ -178,8 +178,8 @@ const postCtrl = {
       },
     updatePost: async (req, res) => {
         try {
-            clientRedis.del(`posts/-createdAt`)
-            clientRedis.del(`posts/createdAt`)
+          /*   clientRedis.del(`posts/-createdAt`)
+            clientRedis.del(`posts/createdAt`) */
             const { content, images } = req.body
                 
             const post = await Posts.findOneAndUpdate({_id: req.params.id}, {

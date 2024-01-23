@@ -41,7 +41,7 @@ function ManageTaSchedule() {
   });
   const columns = [
     {
-      title: "MSSV",
+      title: "Student ID",
       dataIndex: "studentId",
       sorter: true,
     },
@@ -75,7 +75,7 @@ function ManageTaSchedule() {
     },
     ,
     {
-      title: "Trạng thái",
+      title: "State",
       dataIndex: "state",
       filters: [
         {
@@ -86,18 +86,36 @@ function ManageTaSchedule() {
           text: "Approve",
           value: "Approve",
         },
+        {
+          text: "Reject",
+          value: "Reject",
+        },
       ],
       render: (state) => (
         <>
-          {state === "pending" ? (
+          {state === "pending" && (
             <div className="text-blue-600 font-bold bg-blue-200 text-center rounded-lg py-1">
              Pending
             </div>
-          ) : (
-            <div className="text-green-600 font-bold bg-green-200 text-center rounded-lg py-1">
-              Approve
-            </div>
-          )}
+          ) }
+          {
+            state === "approve" &&
+             (
+              <div className="text-green-600 font-bold bg-green-200 text-center rounded-lg py-1">
+                Approve
+              </div>
+            )
+
+          }
+          {
+            state === "reject" &&
+             (
+              <div className="text-white-600 font-bold bg-red-300 text-center rounded-lg py-1">
+               Reject
+              </div>
+            )
+
+          }
         </>
       ),
     },
@@ -111,7 +129,7 @@ function ManageTaSchedule() {
             onClick={() => handleClickEdit(record)}
           >
             <AiFillEdit className="translate-y-[1px]" />
-            Duyệt
+            Review
           </button>
           <button
             className="flex items-baseline gap-x-1 hover:text-red-600"
@@ -122,7 +140,7 @@ function ManageTaSchedule() {
             }}
           >
             <AiOutlineDelete className="translate-y-[1px]" />
-            Xóa
+            Delete
           </button>
         </div>
       ),
@@ -132,7 +150,10 @@ function ManageTaSchedule() {
     setLoading(true);
  console.log(auth.accesstoken)
     try {
-      const { data: response } = await axios.get(`/api/taSchedules`, {
+    /*  `, {params}, {
+        headers: { Authorization: auth.accesstoken }
+   } */
+      const { data: response } = await axios.get(`/api/taSchedules/${auth.user._id}`, {
         params
       }, {
         headers: { Authorization: auth.accesstoken }

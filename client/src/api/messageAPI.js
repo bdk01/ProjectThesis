@@ -13,9 +13,7 @@ export const getConversations = async ( auth,page ,dispatch) => {
       res.data.conversations.forEach((item) => {
         newArr.push(...item.event)
       });
-      console.log(res.data)
-      console.log('xemnewArr')
-        console.log(newArr)
+  
       dispatch(GetConversations({ newArr, result: res.data.result }));
       
     } catch (err) {
@@ -24,7 +22,7 @@ export const getConversations = async ( auth,page ,dispatch) => {
   };
 export const getMessages = async ( {auth,id,page=1,dispatch}) => {
     try {
-    /*   console.log(page) */
+  
       const res = await axios.get(`/api/message/${id}?limit=${page * 9}`, {
         headers: { Authorization: auth.accesstoken },
       });
