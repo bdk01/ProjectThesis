@@ -42,6 +42,7 @@
     "Attendees":"Attendees",
     "MeetingName":"MeetingName",
     "Description":"Description",
+    "Date":"Date",
     "ManageTARegister":"Manage TA Register",
     "ManageTA":"Manage teaching assistant",
     "Apply":"Apply",
@@ -53,7 +54,12 @@
     "GpaTotal":"GpaTotal",
     "GpaSubject":"GpaSubject",
     "FullName":"FullName",
-    "Teacher":"Teacher"
+    "Teacher":"Teacher",
+    "Gotoprofile":"Go to profile",
+    "Create form for applying t.a":"Create form for applying t.a",
+    "Dead line":"Deadline",
+    "No Post":"No Post"
+    
 
 
 }

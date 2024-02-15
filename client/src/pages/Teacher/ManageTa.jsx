@@ -8,10 +8,12 @@ import { Link } from "react-router-dom";
 import axios from "../../axios"
 import { useSelector } from "react-redux";
 import EditTa from "../../components/Teacher/ManageTA/EditTA";
+import { useTranslation } from "react-i18next";
 
 
 
 function ManageTa() {
+     const { t } = useTranslation();
      const { auth } = useSelector(state => state)
      const [data, setData] = useState([]);
      const [loading, setLoading] = useState(false);
@@ -165,7 +167,7 @@ function ManageTa() {
      return (
           <div className=" mt-2 overflow-x-auto">
                <div className="mx-3 flex justify-between mb-4">
-                    <span className="text-3xl font-bold uppercase">Manage TA</span>
+                    <span className="text-3xl font-bold uppercase"> {t('ManageTA')}</span>
 
                     <Input.Search
                          className="w-1/3 lg:w-[400px]"

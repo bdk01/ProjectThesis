@@ -8,11 +8,13 @@ import { Link } from "react-router-dom";
 import axios from "../../axios"
 import { useSelector } from "react-redux";
 import ApproveTa from "../../components/Teacher/ManageScheduleTA/ApproveTa";
+import { useTranslation } from "react-i18next";
 /* import { MainContext } from "../../context/MainContext"; */
 
 
 function ManageTaSchedule() {
   const { auth } = useSelector(state => state)
+  const { t } = useTranslation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
@@ -219,7 +221,7 @@ function ManageTaSchedule() {
   return (
     <div className=" mt-2 overflow-x-auto">
       <div className="mx-3 flex justify-between mb-4">
-        <span className="text-3xl font-bold uppercase">Manage TA Schedules</span>
+        <span className="text-3xl font-bold uppercase"> {t('ManageTARegister')}</span>
 
         <Input.Search
           className="w-1/3 lg:w-[400px]"

@@ -199,7 +199,8 @@ export default function CreateMeeting() {
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                  Date:
+                                               
+                                                  {t('Date')}:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">

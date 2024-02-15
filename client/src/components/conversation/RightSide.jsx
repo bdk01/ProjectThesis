@@ -6,6 +6,7 @@ import MsgDisplay from "./MsgDisplay";
 import { addMessages, getMessages, getMoreMessages } from "../../api/messageAPI";
 import { v4 as uuidv4 } from 'uuid';
 import { getRoom } from "../../redux/peerSlice";
+import { Text } from "@mantine/core";
 export default function RightSide() {
     const { auth, message} = useSelector(state => state)
     const { socket } = useSelector(state => state.socket)
@@ -45,6 +46,13 @@ export default function RightSide() {
                 },50)
         }
   }
+  useEffect(()=>{
+    if(refDisplay.current&&!setIsLoadMore){
+        setTimeout(() => {
+              refDisplay.current.scrollIntoView({behavior: 'smooth', block: 'end'})
+          },50)
+        }
+  },[message])
     useEffect(() => {
         if(auth.accesstoken){
             const getMessagesData = async () => {
@@ -140,8 +148,8 @@ export default function RightSide() {
             <div className=" min-h-[100%] flex justify-end flex-col " ref={refDisplay}>
         {/* grid grid-rows-6  row-span-5 row-span-1 */}
         
-                    <button style={{ marginTop: '-21px',backgroundColor:"transparent"  }} className="invisible" ref={pageEnd}>
-                        Load more
+                    <button style={{backgroundColor:"transparent"  }} className=" bg-transparent visible via-transparent" ref={pageEnd}>
+                      <Text className="hidden">  Load more</Text>
                     </button>
             
                 <div className=" h-[100%] flex flex-col  justify-end">

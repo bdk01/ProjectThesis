@@ -5,17 +5,17 @@ import UserCard from './UserCard';
 import { useDispatch, useSelector } from "react-redux";
 import { getConversations } from '../../api/messageAPI';
 import { AddUser } from '../../redux/messageSlice';
+import { useTranslation } from "react-i18next";
 export default function LeftSide() {
     const [search, setSearch] = useState('')
 const pathname = useLocation()
       const { auth,message } = useSelector(state => state)
     const [searchUsers, setSearchUsers] = useState([])
-    const { id } = useParams()
+    const { t } = useTranslation();
     const dispatch = useDispatch()
-    const [conv,setConv]=useState([])
+  
     const navigate = useNavigate()
-    const pageEnd = useRef()
-    const [page, setPage] = useState(0)
+   
       useEffect(() => {
         if(auth.accesstoken){
           
@@ -92,7 +92,7 @@ const pathname = useLocation()
   return <div>
           <form className="w-[100%]" onSubmit={handleSearch} >
                 <input type="text" value={search} className="w-[100%]  border-gray-400  border-b-[2px] outline-none px-3 py-3"
-                placeholder="Enter to Search..."
+                placeholder={t('Enter to search')}
                 onChange={e => setSearch(e.target.value)} />
 
                 <button type="submit" style={{display: 'none'}}>Search</button>

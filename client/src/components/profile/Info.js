@@ -85,7 +85,7 @@ const Info = ({id, auth, profile, dispatch}) => {
                                     <div>
                                     <FollowBtn user={user} className=""/>
                                 <button className="btn btn-outline-info ml-3" onClick={handleToMessage} >
-                                        Message
+                                          {t('message')}
                                     </button>
 
                                     </div>

@@ -57,8 +57,8 @@ export function CardInform({user}) {
 
       <Group mt="xs">
         <button className='bg-blue-400 px-2 py-2 rounded-md' radius="md" style={{ flex: 1 }} variant='filled'   >
-    
-          <Text className='no-underline font-semibold text-lg' onClick={gotopage} >Go to profile</Text>
+  
+          <Text className='no-underline font-semibold text-lg' onClick={gotopage} >{t('Gotoprofile')}</Text>
         </button>
       
       </Group>

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { createNotify, getNotifies } from "./api/notifyAPI"
 import { follow } from "./api/profileAPI"
@@ -11,7 +11,7 @@ export default function SocketClient() {
   const { auth,  notify } = useSelector(state => state)
   const { socket } = useSelector(state => state.socket)
   const dispatch = useDispatch()
-
+  const refDisplay = useRef()
   /* const audioRef = useRef() */
 
   // joinUser
@@ -109,6 +109,7 @@ export default function SocketClient() {
      dispatch(AddMessage({...msg,sender:authuser.user}));
      let page =1
      getConversations(auth,page,dispatch)
+   
     /*  dispatch(AddUser({...msg.user,  text: msg.text, media: msg.media})) */
      /* let page =1
      getConversations(auth,page,dispatch) */
