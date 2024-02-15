@@ -9,11 +9,12 @@ import { useClipboard } from "@mantine/hooks";
 import { Button, Text } from "@mantine/core";
 import { showNotification } from "../utils/helper";
 import { useGetUserData } from "../hooks/getUserTa";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterTA() {
      const clipboard = useClipboard({ timeout: 1000 });
        const { auth} = useSelector(state => state)
-       
+       const { t } = useTranslation();
        const {id} = useParams()
      const [informationTA, setInformationTA] = useState({});
      const [loading, setLoading] = useState(false);
@@ -55,7 +56,7 @@ export default function RegisterTA() {
           headers: { Authorization: auth.accesstoken },
           })
           console.log(response)
-          showNotification('success',"register form success")
+          showNotification('success',"Register form success")
                navigate(`/home`);
           }
           catch(err){
@@ -99,10 +100,10 @@ export default function RegisterTA() {
    <div className="flex flex-col ">
        <div>
             <div className=" relative">
-                 <div className=" relative ">
-                      <div className="flex justify-start  border-b-2  pl-4 pb-3 pt-3">
-                           <div className="text-xl font-bold mb-1 lg:text-2xl mt-2 mr-4">
-                                Apply become T.A
+                 <div className=" relative mx-20">
+                      <div className="flex justify-center  border-b-2  pl-4 pb-3 pt-3">
+                           <div className="text-xl font-bold mb-1 lg:text-4xl mt-2 mr-4">
+                                Applying for become T.A
                            </div>
                            <div className="text-xl font-bold mb-1 lg:text-2xl mt-2">
                            <Button
@@ -115,12 +116,25 @@ export default function RegisterTA() {
                           
                       </div>
                       <form className="  my-4  " onSubmit={handleSubmit}>
-                           <div className="  justify-items-start mx-3 ">
+                           <div className="  justify-items-start mx-6 ">
 
                                      <div className="flex mb-6 sm:py-1 flex-row   w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                   Teacher:
+                                                     { t('Expire')}
+                                               </label>
+                                          </div>
+                                          <div className="flex  w-[70%]">
+                                            
+                                              <div className=" mr-2  font-semibold lg:text-lg text-base">
+                                                {dayjs(informationTA?.expireAt).format('DD-MM-YYYY HH:mm:ss')}
+                                               </div>
+                                          </div>
+                                     </div>
+                                     <div className="flex mb-6 sm:py-1 flex-row   w-[100%]">
+                                          <div className="flex items-center   justify-start w-[140px]">
+                                               <label className=" mr-3  font-semibold lg:text-lg text-base">
+                                                    { t('Teacher')}
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
@@ -133,7 +147,7 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row   w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                   SubjectName:
+                                                   { t('SubjectName')}
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
@@ -146,7 +160,20 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row   w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                   Requirement:
+                                                 { t('Description')}
+                                               </label>
+                                          </div>
+                                          <div className="flex  w-[70%]">
+                                            
+                                              <div className=" mr-2  font-semibold lg:text-lg text-base">
+                                               {informationTA?.description}
+                                               </div>
+                                          </div>
+                                     </div>
+                                     <div className="flex mb-6 sm:py-1 flex-row   w-[100%]">
+                                          <div className="flex items-center   justify-start w-[140px]">
+                                               <label className=" mr-3  font-semibold lg:text-lg text-base">
+                                                  { t('Requirement')}
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
@@ -159,12 +186,12 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row   w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                    StudentId:
+                                                    { t('StudentId')}
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="border-solid border-gray-400 border-[1px] sm:px-2 rounded-md py-[6px] px-1  text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="studentId"
                                                     onChange={handleForm}
@@ -175,12 +202,12 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                 <label className=" mr-3  font-semibold  lg:text-lg text-base">
-                                                    GpaTotal:
+                                                     { t('GpaTotal')}
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-400 text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="gpaTotal"
                                                     onChange={handleForm}
@@ -191,12 +218,12 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                 <label className=" mr-3  font-semibold  lg:text-lg text-base">
-                                                    GpaSubject:
+                                                    { t('GpaSubject')}
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-400 text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="gpaSubject"
                                                     onChange={handleForm}
@@ -207,12 +234,12 @@ export default function RegisterTA() {
                                      <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                           <div className="flex items-center   justify-start w-[140px]">
                                                <label className=" mr-3 font-semibold lg:text-lg text-base">
-                                                    FullName:
+                                                      { t('FullName')}
                                                </label>
                                           </div>
                                           <div className="flex  w-[70%]">
                                                <input
-                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                    className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-400 text-base  w-[100%]  line-clamp-1"
                                                     type="text"
                                                     name="fullName"
                                                     onChange={handleForm}
@@ -230,7 +257,7 @@ export default function RegisterTA() {
                                 </div>
                                 <div className="flex ">
                                      <button  className="py-2 px-4 mt-2 mb-4 round-md font-medium bg-red-600  hover:translate-y-[-1px] transition-all text-white rounded-sm" type="submit">
-                                          Đăng Ký
+                                       { t('Apply')}
                                      </button>
                                 </div>
                            </div>

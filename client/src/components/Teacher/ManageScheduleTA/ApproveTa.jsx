@@ -19,14 +19,9 @@ function ApproveTa({ onClose, data, refetchData }) {
           setLoading(true);
           // setIsDisable(true);
           try {
-               console.log(dataEdit)
-             
-                console.log({
-                     subject: dataEdit.subject._id,
-                     student: dataEdit.candidate._id,
-                     taSchedule:dataEdit._id
-                })
+        
                const approve = {
+                    studentId:dataEdit.studentId,
                     subject: dataEdit.subject._id,
                     student: dataEdit.candidate._id,
                     taSchedule: dataEdit._id
@@ -36,6 +31,37 @@ function ApproveTa({ onClose, data, refetchData }) {
                });
 
                console.log(res)
+               setLoading(false);
+               // setIsDisable(false);
+               refetchData();
+               onClose();
+          } catch (error) {
+               console.log(error);
+          }
+     };
+     const acceptReject = async () => {
+          setLoading(true);
+          // setIsDisable(true);
+          try {
+            /*    console.log(dataEdit)
+             
+                console.log({
+                     subject: dataEdit.subject._id,
+                     student: dataEdit.candidate._id,
+                     taSchedule:dataEdit._id
+                }) */
+                console.log('reject')
+               const approve = {
+                    studentId:dataEdit.studentId,
+                    subject: dataEdit.subject._id,
+                    student: dataEdit.candidate._id,
+                    taSchedule: dataEdit._id
+               }
+               const res = await axios.patch(`api/reject-ta`, approve, {
+                    headers: { Authorization: auth.accesstoken }
+               });
+                    console.log(res)
+           
                setLoading(false);
                // setIsDisable(false);
                refetchData();
@@ -179,10 +205,21 @@ function ApproveTa({ onClose, data, refetchData }) {
                                         Thoát
                                    </Button>
                                    <Button
+                                       /*  type="primary" */
+                                        size="large"
+                                        loading={loading}
+                                       
+                                        onClick={acceptReject}
+                                        className="rounded-lg bg-red-500 hover:bg-red-600 text-white "
+                                   >
+                                       Reject
+                                   </Button>
+                                   <Button
                                         type="primary"
                                         size="large"
                                         loading={loading}
-                                        htmlType="submit"
+                                      
+                                        onClick={acceptEditCareer}
                                         className="rounded-lg bg-blue-400"
                                    >
                                         Approve

@@ -1,11 +1,6 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import { Constants, MeetingProvider } from "@videosdk.live/react-sdk";
-import { LeaveScreen } from "./components/screens/LeaveScreen";
-import { JoiningScreen } from "./components/screens/JoiningScreen";
-import { meetingTypes } from "./utils/common";
-import { MeetingContainer } from "./meeting/MeetingContainer";
-/* import { ILSContainer } from "./interactive-live-streaming/ILSContainer"; */
-import { MeetingAppProvider } from "./MeetingAppContextDef";
+
+
 import { getSocket } from "./redux/socketSlice";
 import io from "socket.io-client";
 import SocketClient from "./SocketClient";
@@ -14,9 +9,8 @@ import NotFound from "./pages/NotFound/NotFound";
 import CreateMeeting from "./pages/CreateMeeting";
 
 import Conversation from "./pages/Conversation";
-/* import Home from "./pages/Home"; */
 
-import Register from "./pages/Auth/Register";
+
 import {
   BrowserRouter,
   BrowserRouter as Router,
@@ -38,7 +32,6 @@ import Profile from "./pages/Profile";
 import RegisterTA from "./pages/RegisterTA";
 import RegisterSubject from "./pages/Teacher/CreateSubject";
 import CreateSubject from "./pages/Teacher/CreateSubject";
-import CreateTaSchedule from "./pages/Teacher/CreateTaSchedule";
 
 import ManageTaSchedule from "./pages/Teacher/ManageTaSchedule";
 import ManageTa from "./pages/Teacher/ManageTa";
@@ -61,26 +54,14 @@ import CreateTaSchedule1 from "./pages/Teacher/CreateTaSchedule1";
 import AdminLayout from "./Layout/adminLayout/adminLayout";
 import ConversationAdmin from "./pages/MessageAdmin/ConversationAdmin";
 import ManagePosts from "./pages/Admin/ManagePosts";
+import Loading from "./components/Loading/Loading";
+import Statitics from "./pages/Admin/Statitics";
 
 
 
 const App = () => {
 
-  const [token, setToken] = useState("");
-  const [meetingId, setMeetingId] = useState("");
-  const [participantName, setParticipantName] = useState("");
-  const [micOn, setMicOn] = useState(false);
-  const [webcamOn, setWebcamOn] = useState(true);
-  const [selectedMic, setSelectedMic] = useState({ id: null });
-  const [selectedWebcam, setSelectedWebcam] = useState({ id: null });
-  const [selectWebcamDeviceId, setSelectWebcamDeviceId] = useState(
-    selectedWebcam.id
-  );
-  const [meetingMode, setMeetingMode] = useState(Constants.modes.CONFERENCE);
-  const [selectMicDeviceId, setSelectMicDeviceId] = useState(selectedMic.id);
-  const [isMeetingStarted, setMeetingStarted] = useState(false);
-  const [isMeetingLeft, setIsMeetingLeft] = useState(false);
-  const [meetingType, setMeetingType] = useState(meetingTypes.MEETING);
+
   const dispatch = useDispatch();
 
   const { auth, socket } = useSelector((state) => state);
@@ -93,7 +74,7 @@ const App = () => {
     return () => socket.close();
   }, [dispatch]);
 
-  const isMobile = window.matchMedia(
+ /*  const isMobile = window.matchMedia(
     "only screen and (max-width: 768px)"
   ).matches;
 
@@ -103,7 +84,7 @@ const App = () => {
         return "Are you sure you want to exit?";
       };
     }
-  }, [isMobile]);
+  }, [isMobile]); */
   useEffect(() => {
     if (auth.accesstoken) {
       /*     dispatch(getPosts(auth.token))
@@ -129,13 +110,10 @@ const App = () => {
             element={
            
           <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+         
                 <Pages.Home />
-
               </Suspense>
        
-
-       
-
             }
           />
           <Route
@@ -143,7 +121,7 @@ const App = () => {
             /*   lazy={() => import('./pages/Home')} */
             element={
               <UserRoute>
-              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+              <Suspense fallback={<Loading/>}>
                  <Pages.Home />
 
               </Suspense>
@@ -154,7 +132,7 @@ const App = () => {
             path="profile"
             /*   lazy={() => import('./pages/Home')} */
             element={
-              <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+              <Suspense fallback={<Loading/>}>
                 <Pages.Profile />
 
               </Suspense>
@@ -211,16 +189,25 @@ const App = () => {
         <Route
           path="create-post"
           element={
-            <CreatePost />
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                <CreatePost />
+
+         </Suspense>
+     
+       
           }
         />
         <Route
           path="review-ta"
           element={
-            <Layout>
-
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+          <Layout>
+              
               <ReviewTA />
             </Layout>
+
+     </Suspense>
+           
           }
         />
 
@@ -236,27 +223,39 @@ const App = () => {
         <Route
           path="/conversation"
           element={
+            <Suspense fallback={<Loading/>}>
             <Layout>
               <Conversation />
             </Layout>
+            </Suspense>
           }
         />
 
         <Route
           path="/conversation/:id"
           element={
-            <Layout>
+            <Suspense fallback={<Loading/>}>
+           
+             <Layout>
               <Conversation />
             </Layout>
+
+   </Suspense>
+           
           }
         />
 
         <Route
           path="/create-schedule"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                  <Layout>
+
               <CreateMeeting />
-            </Layout>
+              </Layout>
+
+         </Suspense>
+         
           }
         />
         <Route
@@ -270,41 +269,61 @@ const App = () => {
         <Route
           path="/registerTA/:id"
           element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
             <Layout>
               <RegisterTA />
             </Layout>
+
+   </Suspense>
+          
           }
         />
         <Route
           path="/createSubject"
           element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
             <Layout>
               <CreateSubject />
             </Layout>
+
+   </Suspense>
+           
           }
         />
         <Route
           path="/createTaSchedule"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+           <Layout>
               <CreateTaSchedule1 />
             </Layout>
+
+   </Suspense>
+           
           }
         />
         <Route
           path="/manageTaSchedule"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+           <Layout>
               <ManageTaSchedule />
             </Layout>
+ 
+    </Suspense>
+         
           }
         />
         <Route
           path="/manageTa"
           element={
-            <Layout>
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+             <Layout>
               <ManageTa />
             </Layout>
+  
+     </Suspense>
+         
           }
         />
         <Route
@@ -341,6 +360,14 @@ const App = () => {
               </AdminLayout>
           }
         />
+        <Route
+          path="/admin/statitics"
+          element={
+            <AdminLayout>
+              <Statitics />
+              </AdminLayout>
+          }
+        />
            <Route
           path="/admin/conversation"
           element={
@@ -358,84 +385,7 @@ const App = () => {
               </AdminLayout>
           }
         />
-        <Route
-          path="/meeting"
-          element={
-            <>
-              {isMeetingStarted ? (
-                <MeetingAppProvider
-                  selectedMic={selectedMic}
-                  selectedWebcam={selectedWebcam}
-                  initialMicOn={micOn}
-                  initialWebcamOn={webcamOn}
-                >
-                  <MeetingProvider
-                    config={{
-                      meetingId,
-                      micEnabled: micOn,
-                      webcamEnabled: webcamOn,
-                      name: participantName ? participantName : "TestUser",
-                      mode: meetingMode,
-                      multiStream:
-                        meetingType === meetingTypes.MEETING ? true : false,
-                    }}
-                    token={token}
-                    reinitialiseMeetingOnConfigChange={true}
-                    joinWithoutUserInteraction={true}
-                  >
-                    {meetingType === meetingTypes.MEETING ? (
-                      <MeetingContainer
-                        onMeetingLeave={() => {
-                          setToken("");
-                          setMeetingId("");
-                          setParticipantName("");
-                          setWebcamOn(false);
-                          setMicOn(false);
-                          setMeetingStarted(false);
-                        }}
-                        setIsMeetingLeft={setIsMeetingLeft}
-                        selectedMic={selectedMic}
-                        selectedWebcam={selectedWebcam}
-                        selectWebcamDeviceId={selectWebcamDeviceId}
-                        setSelectWebcamDeviceId={setSelectWebcamDeviceId}
-                        selectMicDeviceId={selectMicDeviceId}
-                        setSelectMicDeviceId={setSelectMicDeviceId}
-                        micEnabled={micOn}
-                        webcamEnabled={webcamOn}
-                      />
-                    ) : (
-                      <div></div>
-                    )}
-                  </MeetingProvider>
-                </MeetingAppProvider>
-              ) : isMeetingLeft ? (
-                <LeaveScreen setIsMeetingLeft={setIsMeetingLeft} />
-              ) : (
-                <JoiningScreen
-                  participantName={participantName}
-                  setParticipantName={setParticipantName}
-                  setMeetingId={setMeetingId}
-                  setToken={setToken}
-                  setMicOn={setMicOn}
-                  micEnabled={micOn}
-                  webcamEnabled={webcamOn}
-                  setSelectedMic={setSelectedMic}
-                  setSelectedWebcam={setSelectedWebcam}
-                  setWebcamOn={setWebcamOn}
-                  onClickStartMeeting={() => {
-                    setMeetingStarted(true);
-                  }}
-                  startMeeting={isMeetingStarted}
-                  setIsMeetingLeft={setIsMeetingLeft}
-                  meetingMode={meetingMode}
-                  setMeetingMode={setMeetingMode}
-                  meetingType={meetingType}
-                  setMeetingType={setMeetingType}
-                />
-              )}
-            </>
-          }
-        />
+     
         <Route path="*" element={<NotFound />} />
       </Routes>
 

@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Component } from 'react';
 import { Route } from 'react-router-dom';
+import Loading from '../components/Loading/Loading';
 
 
 const retryLoadComponent = (fn, retriesLeft = 5, interval = 1000) =>
@@ -49,7 +50,7 @@ export const Pages = {
   export const PublicRoute = ({  component: Component, ...rest }) => (
    
 
-    <React.Suspense fallback={<p>Loading...</p>}>
+    <React.Suspense fallback={<Loading/>}>
   
     </React.Suspense>
    

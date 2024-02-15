@@ -9,11 +9,12 @@ import CommentMenu from './CommentMenu'
 /* import { updateComment, likeComment, unLikeComment } from '../../../redux/actions/commentAction' */
 import InputComment from '../InputComment'
 import { likeComment, unLikeComment, updateComment } from '../../../api/postAPI'
+import { useTranslation } from 'react-i18next'
 
 const CommentCard = ({children, comment, post, commentId}) => {
     const { auth, theme } = useSelector(state => state)
     const dispatch = useDispatch()
-
+    const { t } = useTranslation();
     const [content, setContent] = useState('')
     const [readMore, setReadMore] = useState(false)
 
@@ -109,7 +110,7 @@ const CommentCard = ({children, comment, post, commentId}) => {
                             {
                                 content.length > 100 &&
                                 <span className="readMore" onClick={() => setReadMore(!readMore)}>
-                                    {readMore ? 'Hide content' : 'Read more'}
+                                    {readMore ? t('hide') : t('readmore')}
                                 </span>
                             }
                         </div>
@@ -136,7 +137,7 @@ const CommentCard = ({children, comment, post, commentId}) => {
                         </small>
 
                         <small className="font-weight-bold mr-3">
-                            {comment.likes.length} likes
+                            {comment.likes.length}   { t('likes')}
                         </small>
 
                         {
@@ -144,17 +145,17 @@ const CommentCard = ({children, comment, post, commentId}) => {
                             ? <>
                                 <small className="font-weight-bold mr-3"
                                 onClick={handleUpdate}>
-                                    update
+                                    { t('update')}
                                 </small>
                                 <small className="font-weight-bold mr-3" /* value={content} */
                                 onClick={handleCancel}>
-                                    cancel
+                                       { t('cancel')}
                                 </small>
                             </>
 
                             : <small className="font-weight-bold mr-3"
                             onClick={handleReply}>
-                                {onReply ? 'cancel' :'reply'}
+                                {onReply ? t('cancel') :    t('reply')}
                             </small>
                         }
                         

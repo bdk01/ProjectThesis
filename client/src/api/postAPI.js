@@ -64,14 +64,12 @@ import { createNotify } from "./notifyAPI"
     }
 }
 
-  export const getPosts = async (auth,dispatch) => {
+  export const getPosts = async (auth,dispatch,value) => {
     try {
 
-       const res =   await axios.get("/api/get-posts", {
+       const res =   await axios.get(`/api/get-posts?filter=${value}`, {
                 headers: { Authorization: auth.accesstoken }
             })
-         
-        /*     alert("success create post") */
             dispatch(getPost( {...res.data, page: 2}))
        
     } catch (err) {
@@ -87,7 +85,7 @@ import { createNotify } from "./notifyAPI"
                     })
                   /*   console.log(res) */
                     return res.data
-        /*     alert("success create post") */
+     
         /*     dispatch(getPost( {...res.data, page: 2})) */
        
     } catch (err) {
@@ -108,7 +106,22 @@ import { createNotify } from "./notifyAPI"
       console.log(err)
     }
 }
+export const reportPost = async (post,auth,dispatch,socket) => {
+ /*  const newPost = {...post, likes: [...post.likes, auth.user]}
+  dispatch(updatePost(newPost)) */
+  try { 
 
+     const res =   await axios.post(`/api/post/${post._id}/reportPost`,{}, {
+              headers: { Authorization: auth.accesstoken }
+          })
+          console.log(res)
+          showNotification('success',"You have report success")
+      
+     
+  } catch (err) {
+ 
+  }
+}
   export const likePost = async (post,auth,dispatch,socket) => {
 
     const newPost = {...post, likes: [...post.likes, auth.user]}
@@ -120,7 +133,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
           
-            alert("success like post")
+           /*  alert("success like post") */
       /*       dispatch(getPost( {...res.data, page: 2})) */
        
     } catch (err) {
@@ -138,7 +151,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
            
-        /*     alert("success create post") */
+  
            
        
     } catch (err) {
@@ -152,7 +165,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
           
-        /*     alert("success create post") */
+  
             dispatch(getPost( {...res.data, page: 2}))
        
     } catch (err) {
@@ -166,7 +179,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
           
-        /*     alert("success create post") */
+    
             dispatch(getPost( {...res.data, page: 2}))
        
     } catch (err) {
@@ -183,7 +196,7 @@ import { createNotify } from "./notifyAPI"
        const res =   await axios.post("/api/create-comment",data,{
                 headers: { Authorization: auth.accesstoken }
             })
-           /*  console.log(res) */
+         
              const newData = {...res.data.newComment, user: auth.user}
              const newPost = {...post, comments: [...post.comments, newData]}
                dispatch(updatePost(newPost))
@@ -223,7 +236,7 @@ import { createNotify } from "./notifyAPI"
        const res =   await axios.patch(`/api/comment/${comment._id}/unlike`,{}, {
                 headers: { Authorization: auth.accesstoken }
             })
-           /*  console.log(res) */
+         
    
        
     } catch (err) {
@@ -251,14 +264,14 @@ import { createNotify } from "./notifyAPI"
     }
 }
   export const deleteComment= async ({post, auth, comment, socket,dispatch}) => {
-   /*  console.log('qweq') */
+  
     const deleteArr = [...post.comments.filter(cm => cm.reply === comment._id), comment]
-      /* console.log(deleteArr) */
+    
     const newPost = {
         ...post,
         comments: post.comments.filter(cm => !deleteArr.find(da => cm._id === da._id))
     }
-    console.log(newPost)
+   
     dispatch(updatePost(newPost))
     try {
        deleteArr.forEach(async(item) => {
@@ -283,14 +296,14 @@ import { createNotify } from "./notifyAPI"
     }
 }
 export const getDPost = async({detailPost, id, auth,dispatch})  => {
-  console.log('ggpost')
+ 
    if(detailPost.posts.every(post => post._id !== id)){
 
         try {
            const res = await axios.get(`/api/get-post/${id}`,{
                          headers: { Authorization: auth.accesstoken }
                     })
-                    console.log(res)
+                  
                   
                     dispatch(getDetailPost(res.data.post))
         } catch (err) {

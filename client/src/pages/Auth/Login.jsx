@@ -132,12 +132,18 @@ function Login() {
           password: password 
       })
       console.log(response)
+      
       success();  
       LoginandNavigateUser(dispatch, response.data)
     /*   const { data } = response.data; */
       setTimeout(() => {
-            /* history.push("/") */
-         navigate('/home', { replace: true });
+         if(response.data.user.role==="admin"){
+          navigate('/admin/statitics', { replace: true });
+         }
+         else{
+           navigate('/home', { replace: true });
+
+         }
            }, 1000);
      console.log(response)
       

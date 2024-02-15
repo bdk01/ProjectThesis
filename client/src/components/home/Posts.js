@@ -30,18 +30,16 @@ const Posts = () => {
     return (
         <div className="posts">
             {
-                homePosts?.posts.map(post => (
+                homePosts.posts.length>0 &&
+                homePosts.posts.map(post => (
                     <PostCard key={post._id} post={post} />
                 ))
             }
 
-           {/*  {
-                load && <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
-            } */}
+          
 
             
-          {/*   <LoadMoreBtn result={homePosts.result} page={homePosts.page}
-            load={load} handleLoadMore={handleLoadMore} /> */}
+       
         </div>
     )
 }

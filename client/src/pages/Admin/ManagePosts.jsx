@@ -1,5 +1,5 @@
 import { Table, Input } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 
 import ConfirmModal from "../../components/Modal/ConfirmModal";
@@ -9,6 +9,7 @@ import axios from "../../axios"
 import { useSelector } from "react-redux";
 import EditSubject from "../../components/Admin/ManageSubject/EditSubject";
 import AddNewSubject from "../../components/Admin/ManageSubject/AddNewSubject";
+import { Excel } from "antd-table-saveas-excel";
 
 
 
@@ -18,7 +19,7 @@ function ManageSubject() {
      const [loading, setLoading] = useState(false);
      const [pagination, setPagination] = useState({
           current: 1,
-          pageSize: 5,
+          pageSize: 6,
           total: null,
      });
      const [isAddVisible, setIsAddVisible] = useState(false);
@@ -47,12 +48,12 @@ function ManageSubject() {
                sorter: true,
           },
 
-      /*     {
-               title: "Description",
-               dataIndex: "description",
+          {
+               title: "Report",
+               dataIndex: "reports",
                sorter: true,
-          
-          }, */
+              /*  render: report => <div>{report}</div> */
+          },
        /*    {
                title: "Owner",
           
@@ -107,9 +108,13 @@ function ManageSubject() {
                ),
           },
      ];
+     const newColumnExport = useMemo(() => {
+          const arr = columns?.filter((col) => col.dataIndex !== 'action'&&col.dataIndex !== '_id' )
+          return arr
+        }, [columns])
      const fetchData = async (params = {}) => {
           setLoading(true);
-          /*  console.log(auth.accesstoken) */
+     
           try {
                console.log(auth)
                const { data: response } = await axios.get(`/api/get-All-post`, {
@@ -118,9 +123,9 @@ function ManageSubject() {
                     headers: { Authorization: auth.accesstoken }
                });
                console.log(response)
-               /*    console.log(data) */
+              
                setData(response.posts);
-               /*  setData(response.subjects.full); */
+            
                setLoading(false);
                setPagination({
                     pageSize: params.pageSize,
@@ -175,10 +180,21 @@ function ManageSubject() {
                keyword: value,
           });
      };
+     const handleExportExcel = () => {
+       
+          const excel = new Excel();
+          excel
+            .addSheet("test")
+            .addColumns(newColumnExport)
+            .addDataSource(data, {
+              str2Percent: true
+            })
+            .saveAs("Post.xlsx");
+        };
      return (
           <div className=" mt-2 overflow-x-auto">
                <div className="mx-3 flex justify-between mb-4">
-                    <span className="text-3xl font-bold uppercase">Manage Subject</span>
+                    <span className="text-3xl font-bold uppercase">Manage Posts</span>
 
                     <Input.Search
                          className="w-1/3 lg:w-[400px]"
@@ -191,6 +207,12 @@ function ManageSubject() {
                     >
                          + Thêm mới
                     </button> */}
+                          <button
+                         className="px-4 py-2 border border-neutral-800 text-center bg-green-500"
+                         onClick={handleExportExcel}
+                         >
+                         + Export
+                    </button>
                </div>
                <Table
                     className="flex-1 z-0"

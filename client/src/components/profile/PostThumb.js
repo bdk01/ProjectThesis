@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 const PostThumb = ({posts, result}) => {
     const { theme } = useSelector(state => state)
-
-    if(result === 0) return <h2 className="text-center text-danger">No Post</h2>
+    const { t } = useTranslation();
+    if(result === 0) return <h2 className="text-center text-danger">{t('No Post')} </h2>
 
     return (
         <div className="w-[100%] grid justify-center overflow-hidden my-[15px] grid-flow-col auto-cols-[minmax(0,_3fr)] gap-4">

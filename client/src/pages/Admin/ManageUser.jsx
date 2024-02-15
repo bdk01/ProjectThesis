@@ -1,5 +1,5 @@
 import { Table, Input } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import AddNewSchedule from "../../components/Teacher/ManageScheduleTA/AddNewSchedule";
 /* import EditCareer from "../../components/Teacher/ManageScheduleTA/EditSchedule"; */
 import ConfirmModal from "../../components/Modal/ConfirmModal";
@@ -10,8 +10,8 @@ import { useSelector } from "react-redux";
 import EditUser from "../../components/Admin/ManageUser/EditUser";
 import ProfileTable from "../../components/ProfileTable/ProfileTable";
 import AddUser from "../../components/Admin/ManageUser/AddUser";
-
-
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Excel } from "antd-table-saveas-excel";
 
 function ManageUser() {
      const { auth } = useSelector(state => state)
@@ -19,7 +19,7 @@ function ManageUser() {
      const [loading, setLoading] = useState(false);
      const [pagination, setPagination] = useState({
           current: 1,
-          pageSize: 4,
+          pageSize: 6,
           total: null,
      });
      const [isAddVisible, setIsAddVisible] = useState(false);
@@ -99,6 +99,11 @@ function ManageUser() {
                ),
           },
      ];
+     const newColumnExport = useMemo(() => {
+          const arr = columns?.filter((col) => col.dataIndex !== 'action'&& col.dataIndex !== '_id')
+          return arr
+        }, [columns])
+        
      const fetchData = async (params = {}) => {
           setLoading(true);
           /*  console.log(auth.accesstoken) */
@@ -167,29 +172,62 @@ function ManageUser() {
                keyword: value,
           });
      };
+     const handleExportExcel = () => {
+       
+          const excel = new Excel();
+          excel
+            .addSheet("test")
+            .addColumns(newColumnExport)
+            .addDataSource(data, {
+              str2Percent: true
+            })
+            .saveAs("User.xlsx");
+        };
      return (
           <div className=" mt-2 overflow-x-auto">
-               <div className="mx-3 flex justify-between mb-4">
-                    <span className="text-3xl font-bold uppercase">Manage Users</span>
+                  <div className="text-3xl text-center mb-2 md:hidden font-bold uppercase">Manage Users</div>
+               <div className="mx-3 flex md:flex-wrap justify-between mb-4">
+                 
+
+                    <span className="text-3xl font-bold uppercase hidden md:block">Manage Users</span>
 
                     <Input.Search
-                         className="w-1/3 lg:w-[400px]"
+                         className="w-1/3 md:w-[400px]"
                          placeholder="Nhập từ khóa"
                          onSearch={searchByKeyword}
                     />
+                    
                     <button
-                         className="px-5 py-2 border border-neutral-800 text-center hover:bg-slate-300"
+                         className="px-4 py-2 border border-neutral-800 text-center hover:bg-slate-300"
                          onClick={() => setIsAddVisible(true)}
                     >
                          + Thêm mới
                     </button>
+                  
+
+                    <button
+                         className="px-4 py-2 border border-neutral-800 text-center bg-green-500"
+                         onClick={handleExportExcel}
+                         >
+                         + Export
+                    </button>
+                      
+                  {/*   <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button border-1px border-black"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Download "/> */}
                </div>
                <Table
+                    id="table-to-xls"
                     className="flex-1 z-0"
                     rowKey={(record) => record._id}
                     columns={columns}
                     dataSource={data}
                     pagination={pagination}
+                    
                     loading={loading}
                     onChange={handleTableChange}
                     scroll={{ x: 500 }}

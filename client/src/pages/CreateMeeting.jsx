@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { DatePicker, Space, Select, Spin } from 'antd';
 import debounce from 'lodash/debounce';
 import dayjs from 'dayjs';
 import axios from '../axios';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const { RangePicker } = DatePicker;
 function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
      const [fetching, setFetching] = useState(false);
@@ -56,6 +57,7 @@ async function fetchUserList(username) {
           );
 }
 export default function CreateMeeting() {
+     const { t } = useTranslation();
      const navigate = useNavigate()
      const { auth } = useSelector(state => state)
      const [information, setInformation] = useState({
@@ -135,19 +137,21 @@ export default function CreateMeeting() {
           <div>
                <div className=" relative">
                     <div className=" relative ">
-                         <div className="flex justify-start flex-col  border-b-2  pl-4 pb-3 pt-3">
-                              <div className="text-xl font-bold mb-1 lg:text-2xl mt-2">
-                                   Create Meeting Chat
+                         <div className="flex justify-center items-center flex-col  border-b-2  pl-4 pb-3 pt-3">
+                         <Suspense fallback={<h2>Loading...</h2>}>
+                              <div className="text-xl font-bold mb-1 lg:text-4xl mt-2">
+                              {t('creategroup')}
                               </div>
+                              </Suspense >
 
                          </div>
-                         <form className="  my-4  " onSubmit={handleSubmit}>
+                         <form className="  my-4 sm:mx-6 lg:mx-28" onSubmit={handleSubmit}>
                               <div className="  justify-items-start mx-3 ">
 
                                    <div className="flex mb-6 sm:py-1 flex-row   w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                  MeetingName:
+                                                    {t('MeetingName')}:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">
@@ -163,7 +167,7 @@ export default function CreateMeeting() {
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold  lg:text-lg text-base">
-                                                  Description:
+                                                       {t('Description')}:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">
@@ -195,7 +199,8 @@ export default function CreateMeeting() {
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                  Date:
+                                               
+                                                  {t('Date')}:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">
@@ -205,6 +210,7 @@ export default function CreateMeeting() {
                                                   format="YYYY-MM-DD HH:mm:00"
                                                   onChange={onChangeDate}
                                                   onOk={onOk}
+                                                  className="border-[1px] border-black border-solid"
                                              />
 
                                         </div>
@@ -212,13 +218,13 @@ export default function CreateMeeting() {
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                  Attendees:
+                                               {t('Attendees')}:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">
 
                                              <DebounceSelect
-
+            className="border-[1px] border-black border-solid"
                                                   mode="multiple"
                                                   value={value}
                                                   placeholder="Select users"
@@ -242,8 +248,8 @@ export default function CreateMeeting() {
                                         <label className="text-gray-500 mr-3  "></label>
                                    </div>
                                    <div className="flex ">
-                                        <button onClick={() => setExist(false)} className="py-2 px-4 mt-2 mb-4 round-md font-medium bg-red-600  hover:translate-y-[-1px] transition-all text-white rounded-sm" type="submit">
-                                             Cập nhật
+                                        <button onClick={() => setExist(false)} className="py-3 px-5 mt-2 mb-4 round-md font-medium bg-red-600  hover:translate-y-[-1px] transition-all text-white rounded-sm" type="submit">
+                                              {t('update')}
                                         </button>
                                    </div>
                               </div>

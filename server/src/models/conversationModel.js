@@ -4,7 +4,7 @@ const conversationSchema = new mongoose.Schema(
   {
     attendees: [{ type: mongoose.Types.ObjectId, ref: "Users" }],
     messages: [{ type: mongoose.Types.ObjectId, ref: "Messages" }],
-    event: [{ type: mongoose.Types.ObjectId, ref: "EventSchedules" }],
+    event: [{ type: mongoose.Types.ObjectId, ref: "Groups" }],
     text: String,
     media: Array,
     call: Object,

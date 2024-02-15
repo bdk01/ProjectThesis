@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { Logout } from '../../api/authAPI'
 import { IconSocial, IconSocialOff } from '@tabler/icons-react'
 import { SiGnusocial } from 'react-icons/si'
-
+import TA from "../../assets/img/TAIMG.jfif"
 const linkClass =
 	'flex items-center gap-2 font-light px-3 py-2 hover:bg-neutral-700 hover:no-underline active:bg-neutral-600 rounded-sm text-base'
 
@@ -24,8 +24,8 @@ export default function Sidebar() {
     }
 	return (
 		<div className="bg-neutral-900 w-60 p-3 flex flex-col">
-			<div className="flex items-center gap-2 px-1 py-3">
-			<img className="text-white text-2xl " src="https://socialite-template.netlify.app/assets/images/logo.png"
+			<div className="flex items-center justify-center gap-2 px-1 ">
+			<img className="text-white text-2xl h-[80px] w-[120px]" src={TA}
                       onClick={() => window.scrollTo({top: 0})}>
                         
                       </img>

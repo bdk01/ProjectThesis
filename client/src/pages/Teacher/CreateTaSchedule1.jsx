@@ -7,6 +7,7 @@ import axios from '../../axios';
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showNotification } from "../../utils/helper";
+import { useTranslation } from "react-i18next";
 const { RangePicker } = DatePicker;
 function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
      const [fetching, setFetching] = useState(false);
@@ -89,10 +90,12 @@ export default function CreateTaSchedule1() {
      
                );
      }
+     const { t } = useTranslation();
      const navigate = useNavigate();
      const { auth } = useSelector(state => state)
      const [information, setInformation] = useState({
           requirement: "",
+          description:""
      });
      const [date, setDate] = useState('')
      const [value, setValue] = useState([]);
@@ -150,7 +153,7 @@ export default function CreateTaSchedule1() {
                subject: form.attendees[0], requirement: form.requirement,dateCloseForm:date })
           try {
                const response = await axios.post('/api/create-taSchedule', {
-              subject: form.attendees[0], requirement: form.requirement,dateCloseForm:date}, {
+              subject: form.attendees[0], requirement: form.requirement,description:form.description,dateCloseForm:date}, {
                     headers: { Authorization: auth.accesstoken },
                })
                console.log(response)
@@ -165,9 +168,9 @@ export default function CreateTaSchedule1() {
           <div>
                <div className=" relative">
                     <div className=" relative ">
-                         <div className="flex justify-start flex-col  border-b-2  pl-4 pb-3 pt-3">
-                              <div className="text-xl font-bold mb-1 lg:text-2xl mt-2">
-                                   Create form for applying t.a
+                         <div className="flex justify-start flex-col  border-b-2  pl-4 pb-3 pt-3 ">
+                              <div className="text-4xl font-bold mb-1 lg:text-4xl mt-2 ">
+                                      {t('Create form for applying t.a')}
                               </div>
 
                          </div>
@@ -178,7 +181,7 @@ export default function CreateTaSchedule1() {
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold  lg:text-lg text-base">
-                                                  Requirement:
+                                                    {t('Requirement')}:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">
@@ -191,11 +194,27 @@ export default function CreateTaSchedule1() {
                                              />
                                         </div>
                                    </div>
+                                   <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
+                                        <div className="flex items-center   justify-start w-[140px]">
+                                             <label className=" mr-3  font-semibold  lg:text-lg text-base">
+                                                   {t('Description')}:
+                                             </label>
+                                        </div>
+                                        <div className="flex  w-[70%]">
+                                             <input
+                                                  className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                  type="text"
+                                                  name="description"
+                                                  onChange={handleForm}
+                                                  defaultValue={information.description}
+                                             />
+                                        </div>
+                                   </div>
                                 
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                  Date:
+                                                  {t('Dead line')}:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">
@@ -222,7 +241,7 @@ export default function CreateTaSchedule1() {
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold lg:text-lg text-base">
-                                                  Subject:
+                                                    {t('SubjectName')}:
                                              </label>
                                         </div>
                                         <div className="flex  w-[70%]">
@@ -253,7 +272,7 @@ export default function CreateTaSchedule1() {
                                    </div>
                                    <div className="flex ">
                                         <button onClick={() => setExist(false)} className="py-2 px-4 mt-2 mb-4 round-md font-medium bg-red-600  hover:translate-y-[-1px] transition-all text-white rounded-sm" type="submit">
-                                             Cập nhật
+                                      {t('Update')}
                                         </button>
                                    </div>
                               </div>

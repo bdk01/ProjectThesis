@@ -1,5 +1,5 @@
 import { Table, Input } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 
 import ConfirmModal from "../../components/Modal/ConfirmModal";
@@ -9,6 +9,7 @@ import axios from "../../axios"
 import { useSelector } from "react-redux";
 import EditSubject from "../../components/Admin/ManageSubject/EditSubject";
 import AddNewSubject from "../../components/Admin/ManageSubject/AddNewSubject";
+import { Excel } from "antd-table-saveas-excel";
 
 
 
@@ -18,7 +19,7 @@ function ManageSubject() {
      const [loading, setLoading] = useState(false);
      const [pagination, setPagination] = useState({
           current: 1,
-          pageSize: 5,
+          pageSize: 6,
           total: null,
      });
      const [isAddVisible, setIsAddVisible] = useState(false);
@@ -45,6 +46,11 @@ function ManageSubject() {
                title: "SubjectName",
                dataIndex: "subjectName",
                sorter: true,
+          },
+          {
+               title: "SubjectCode",
+               dataIndex: "subjectCode",
+              
           },
 
           {
@@ -100,6 +106,10 @@ function ManageSubject() {
                ),
           },
      ];
+     const newColumnExport = useMemo(() => {
+          const arr = columns?.filter((col) => col.dataIndex !== 'action' )
+          return arr
+        }, [columns])
      const fetchData = async (params = {}) => {
           setLoading(true);
           /*  console.log(auth.accesstoken) */
@@ -167,10 +177,24 @@ function ManageSubject() {
                keyword: value,
           });
      };
+     const handleExportExcel = () => {
+       
+          const excel = new Excel();
+          excel
+            .addSheet("test")
+            .addColumns(newColumnExport)
+            .addDataSource(data, {
+              str2Percent: true
+            })
+            .saveAs("Subjects.xlsx");
+        };
      return (
           <div className=" mt-2 overflow-x-auto">
-               <div className="mx-3 flex justify-between mb-4">
-                    <span className="text-3xl font-bold uppercase">Manage Subject</span>
+               <div className="text-3xl text-center mb-2 md:hidden font-bold uppercase">Manage Subjects</div>
+               <div className="mx-3 flex md:flex-wrap justify-between mb-4">
+                 
+
+                    <span className="text-3xl font-bold uppercase hidden md:block">Manage Subjects</span>
 
                     <Input.Search
                          className="w-1/3 lg:w-[400px]"
@@ -178,10 +202,16 @@ function ManageSubject() {
                          onSearch={searchByKeyword}
                     />
                     <button
-                         className="px-5 py-2 border border-neutral-800 text-center hover:bg-slate-300"
+                         className="px-4 py-2 border border-neutral-800 text-center hover:bg-slate-300"
                          onClick={() => setIsAddVisible(true)}
                     >
                          + Thêm mới
+                    </button>
+                    <button
+                         className="px-4 py-2 border border-neutral-800 text-center bg-green-500"
+                         onClick={handleExportExcel}
+                         >
+                         + Export
                     </button>
                </div>
                <Table

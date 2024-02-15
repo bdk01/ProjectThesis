@@ -2,6 +2,7 @@ import Posts from '../models/postModel'
 import Comments from'../models/commentModel'
 import Users from '../models/userModel'
 
+import clientRedis from '../config/connectRedis'
 class APIfeatures {
     constructor(query, queryString){
         this.query = query;
@@ -21,7 +22,7 @@ const postCtrl = {
     createPost: async (req, res) => {
         try {
             const { content, images } = req.body
-         
+        
           /*   if(images.length === 0) return res.status(400).json({msg: "Please add your photo."}) */
        
             const newPost = new Posts({
@@ -43,6 +44,54 @@ const postCtrl = {
     },
     getPosts: async (req, res) => {
         try {
+            const { filter } = req.query;
+       /*     
+            clientRedis.get(`posts/${filter}`, async (err, cachedposts) => {
+                if (err) throw err;
+          
+                if (cachedposts) {
+                  res.json(JSON.parse(cachedposts));
+                } else {
+             
+                  const users = await Users.find({
+                    role: "teacher",
+                  })
+                 
+                  const teacherUser = users.map(user=>user._id)
+                 
+                const newArr = [...req.user.following, req.user._id,...teacherUser]
+               
+               const uniq = [...new Set(newArr)]
+             
+    
+                const features =  new APIfeatures(Posts.find({
+                    user: uniq
+                }), req.query).paginating()
+       
+                const posts = await features.query.sort(filter)
+                .populate("user likes","avatar username fullname followers")
+                .populate({
+                    path: "comments",
+                     options: { strictPopulate: false },
+                    populate: {
+                        path: "user likes",
+                        select: "-password"
+                    }
+                })
+                const obj = {
+                    msg: 'Success!',
+                    result: posts.length,
+                    posts
+                }
+              
+                clientRedis.setex(`posts/${filter}`, 3600, JSON.stringify(obj));
+                res.json({
+                    msg: 'Success!',
+                    result: posts.length,
+                    posts
+                })
+                }
+              }); */
             const users = await Users.find({
                 role: "teacher",
               })
@@ -58,7 +107,7 @@ const postCtrl = {
                 user: uniq
             }), req.query).paginating()
    
-            const posts = await features.query.sort('-createdAt')
+            const posts = await features.query.sort(filter)
             .populate("user likes", "avatar username fullname followers")
             .populate({
                 path: "comments",
@@ -78,10 +127,61 @@ const postCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
+    getMonthlyPost: async (req, res) => {
+        try {
+          const currentYear = new Date().getFullYear();
+          const monthlyPostRegistrations = await Posts.aggregate([
+            {
+              $group: {
+                _id: {
+                  month: { $month: '$createdAt' },
+                  year: { $year: '$createdAt' },
+                },
+                count: { $sum: 1 },
+              },
+            },
+            {
+              $addFields: {
+                monthName: {
+                  $concat: [
+                    { $switch: { branches: [
+                      { case: { $eq: ['$_id.month', 1] }, then: 'January' },
+                      { case: { $eq: ['$_id.month', 2] }, then: 'February' },
+                      { case: { $eq: ['$_id.month', 3] }, then: 'March' },
+                      { case: { $eq: ['$_id.month', 4] }, then: 'April' },
+                      { case: { $eq: ['$_id.month', 5] }, then: 'May' },
+                      { case: { $eq: ['$_id.month', 6] }, then: 'June' },
+                      { case: { $eq: ['$_id.month', 7] }, then: 'July' },
+                      { case: { $eq: ['$_id.month', 8] }, then: 'August' },
+                      { case: { $eq: ['$_id.month', 9] }, then: 'September' },
+                      { case: { $eq: ['$_id.month', 10] }, then: 'October' },
+                      { case: { $eq: ['$_id.month', 11] }, then: 'November' },
+                      { case: { $eq: ['$_id.month', 12] }, then: 'December' },
+                    ], default: 'Invalid Month' } },
+                    ', ',
+                    { $toString: '$_id.year' },
+                  ],
+                },
+              },
+            },
+            {
+              $sort: { '_id.year': 1, '_id.month': 1 },
+            },
+          ]);
+      
+    
+          res.json({ monthlyPostRegistrations })
+    
+        } catch (err) {
+          return res.status(500).json({ msg: err.message })
+        }
+      },
     updatePost: async (req, res) => {
         try {
+          /*   clientRedis.del(`posts/-createdAt`)
+            clientRedis.del(`posts/createdAt`) */
             const { content, images } = req.body
-
+                
             const post = await Posts.findOneAndUpdate({_id: req.params.id}, {
                 content, images
             }).populate("user likes", "avatar username fullname")
@@ -100,6 +200,32 @@ const postCtrl = {
                     content, images
                 }
             })
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    reportPost: async (req, res) => {
+        try {
+          /*   const post = await Posts.find({_id: req.params.id, likes: req.user._id})
+            if(post.length > 0) return res.status(400).json({msg: "You liked this post."})
+
+            const like = await Posts.findOneAndUpdate({_id: req.params.id}, {
+                $push: {likes: req.user._id}
+            }, {new: true})
+
+            if(!like) return res.status(400).json({msg: 'This post does not exist.'}) */
+            const updatedPost = await Posts.findOneAndUpdate(
+                {_id: req.params.id},
+                { $inc: { reports: 1 } },
+                { new: true }
+              );
+          
+              if (!updatedPost) {
+                console.error('Post not found');
+                return;
+              }
+            res.json({msg: 'Report success!'})
+
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { follow, unfollow } from '../../api/profileAPI'
+import { useTranslation } from 'react-i18next'
 
 /* import { follow, unfollow } from '../redux/actions/profileAction' */
 
 const FollowBtn = ({user}) => {
     const [followed, setFollowed] = useState(false)
-
+    const { t } = useTranslation();
     const { auth, profile } = useSelector(state => state)
     const {  socket } = useSelector(state => state.socket)
     const dispatch = useDispatch()
@@ -49,11 +50,11 @@ const FollowBtn = ({user}) => {
             followed
             ? <button className="btn btn-outline-danger"
             onClick={handleUnFollow}>
-                UnFollow
+                 {t('unfollow')}
             </button>
             : <button className="btn btn-outline-info"
             onClick={handleFollow}>
-                Follow
+              {t('follow')}
             </button>
         }
         </>

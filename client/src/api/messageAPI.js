@@ -6,6 +6,7 @@ import { AddMessage, GetConversations, GetMessage } from "../redux/messageSlice"
 
 export const getConversations = async ( auth,page ,dispatch) => {
     try {
+    
       const res = await axios.get(`/api/conversations`, {
         headers: { Authorization: auth.accesstoken },
       });
@@ -13,18 +14,16 @@ export const getConversations = async ( auth,page ,dispatch) => {
       res.data.conversations.forEach((item) => {
         newArr.push(...item.event)
       });
-      console.log(res.data)
-      console.log('xemnewArr')
-        console.log(newArr)
+      
       dispatch(GetConversations({ newArr, result: res.data.result }));
- 
+      
     } catch (err) {
      console.log(err)
     }
   };
 export const getMessages = async ( {auth,id,page=1,dispatch}) => {
     try {
-    /*   console.log(page) */
+  
       const res = await axios.get(`/api/message/${id}?limit=${page * 9}`, {
         headers: { Authorization: auth.accesstoken },
       });
@@ -71,7 +70,7 @@ export const addMessages = async ( msg,auth,socket,dispatch,attendees) => {
     const res = await axios.post(`/api/message`,msg,{
       headers: { Authorization: auth.accesstoken },
     }); 
-  
+    
     dispatch(AddMessage({...msg,sender:res.data.sender}));
     } catch (err) {
      console.log(err)

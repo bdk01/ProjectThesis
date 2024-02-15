@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { UserRole } from "../constant";
+
 
 const { Schema } = mongoose;
 

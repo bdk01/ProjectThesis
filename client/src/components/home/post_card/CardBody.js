@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import Carousel from '../Carousel'
+import { useTranslation } from 'react-i18next';
 
 const CardBody = ({post}) => {
     const [readMore, setReadMore] = useState(false)
-    
+    const { t } = useTranslation();
     
     return (
         <div className="card_body">
@@ -19,7 +20,7 @@ const CardBody = ({post}) => {
                 {
                     post.content.length > 65 &&
                     <span className="readMore cursor-pointer " onClick={() => setReadMore(!readMore)}>
-                        {readMore ? 'Hide content' : 'Read more'}
+                        {readMore ?  t('hide') : t('readmore')}
                     </span>
                 }
 

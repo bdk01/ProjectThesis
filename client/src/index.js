@@ -23,7 +23,7 @@ ReactDOM.render(
      
   <React.StrictMode>
 
-    <ToastContainer
+    {/* <ToastContainer
       toastClassName={() =>
         "relative flex py-4 px-3 rounded overflow-hidden cursor-pointer bg-white shadow-lg"
       }
@@ -39,7 +39,7 @@ ReactDOM.render(
       draggable
       pauseOnHover
       theme="light"
-    />
+    /> */}
    <I18nextProvider i18n={i18n}>
    <MantineProvider    theme={{
           components: {

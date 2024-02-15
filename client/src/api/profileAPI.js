@@ -8,10 +8,10 @@ import {  createNotify } from "./notifyAPI";
     dispatch(getIds(id))
     /*   dispatch(loading(true)) */
     try {
-       const res =   axios.get(`/api/user/${id}`,  {
+       const res = await  axios.get(`/api/user/${id}`,  {
                 headers: { Authorization: auth.accesstoken }
             })
-       const res1 =    axios.get(`/api/user_posts/${id}`,  {
+       const res1 =  await  axios.get(`/api/user_posts/${id}`,  {
                 headers: { Authorization: auth.accesstoken }
             })
       
@@ -50,7 +50,7 @@ import {  createNotify } from "./notifyAPI";
          const res =  await axios.post(`/api/user/${user._id}/follow`,{},  {
                 headers: { Authorization: auth.accesstoken }
             })
-            console.log(res)
+        
            
         
              socket.emit('follow', res.data.newUser)
@@ -96,7 +96,7 @@ import {  createNotify } from "./notifyAPI";
        const res =   axios.post(`/api/user/${user._id}/unfollow`,{},  {
                 headers: { Authorization: auth.accesstoken }
             })
-            console.log('success')
+         
 
     } catch (err) {
    
@@ -115,7 +115,7 @@ export const updateProfileUser = async ({userData1, avatar, auth, dispatch}  ) =
         }, {
                 headers: { Authorization: auth.accesstoken }
             })
-            console.log(res)
+          
       /*   dispatch({
             type: GLOBALTYPES.AUTH,
             payload: {
@@ -132,7 +132,7 @@ export const updateProfileUser = async ({userData1, avatar, auth, dispatch}  ) =
             ...auth,
             user: {...auth.user, ...userData1,   avatar: avatar ? avatar : auth.user.avatar,}
         }))
-        showNotification('success','You have change')
+        showNotification('success','Change profile successfully')
       /*   dispatch({type: GLOBALTYPES.ALERT, payload: {success: res.data.msg}}) */
     } catch (err) {
       console.log(err)

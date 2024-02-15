@@ -14,7 +14,7 @@ const { Item } = Form;
 
 function EditSubject({ onClose, data, refetchData }) {
      const [dataEdit, setDataEdit] = useState({ ...data });
-
+/* console.log(dataEdit) */
      function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
           const [fetching, setFetching] = useState(false);
           const [options, setOptions] = useState([]);
@@ -27,11 +27,11 @@ function EditSubject({ onClose, data, refetchData }) {
                     setOptions([]);
                     setFetching(true);
                     fetchOptions(value).then((newOptions) => {
-                         console.log('value')
+                       /*   console.log('value')
                          console.log(value)
                          console.log('offip')
                          console.log(newOptions)
-
+ */
                          if (fetchId !== fetchRef.current) {
 
                               return;
@@ -45,6 +45,7 @@ function EditSubject({ onClose, data, refetchData }) {
           return (
                <Select
                     labelInValue
+                    defaultValue={value1}
                     filterOption={false}
                     onSearch={debounceFetcher}
                     notFoundContent={fetching ? <Spin size="small" /> : null}
@@ -55,7 +56,7 @@ function EditSubject({ onClose, data, refetchData }) {
      }
      async function fetchUserList(username) {
 
-          /*  console.log('fetching user', username); */
+       
           return await axios.get(`/api/user/search?username=${username}`)
                .then((response) => response.data)
                .then((data) =>
@@ -71,11 +72,22 @@ function EditSubject({ onClose, data, refetchData }) {
     
      const [loading, setLoading] = useState(false);
      const [isDisable, setIsDisable] = useState(false);
- /*      console.log("data là", dataEdit); */
+
 
      const { auth } = useSelector(state => state)
-    
+     useEffect(()=>{
+         console.log(data.teacher)
+         const newArray = data.teacher.map(user => ({
+          label: `${user.fullname}`,
+          value: user._id,
+        }));
+        
+       
+        setValue1(newArray)
+
+    },[])
      const [value, setValue] = useState([]);
+     const [value1, setValue1] = useState([]);
    
    
       /*     const gg = dataEdit.teacher.map(user => ({
@@ -86,17 +98,17 @@ function EditSubject({ onClose, data, refetchData }) {
  
      const acceptEditCareer = async () => {
           setLoading(true);
-          // setIsDisable(true);
+        
           try {
                console.log('gg')
                console.log(dataEdit)
                const teacher = value.map(user => ( user.value
                ))
                console.log(value)
-             
-               /*   console.log() */
+                    
                const approve = {
                     subjectName: dataEdit.subjectName,
+                    subjectCode: dataEdit.subjectCode,
                     description: dataEdit.description,
                     teacher:teacher,    
                     id:dataEdit._id
@@ -166,6 +178,26 @@ function EditSubject({ onClose, data, refetchData }) {
                                    />
                               </Item>
                               <Item
+                                   label="subjectCode"
+                                   name="subjectCode"
+                                   rules={[
+                                        {
+                                             required: true,
+                                             message: "Vui lòng nhập descrption",
+                                        },
+                                   ]}
+                              >
+                                   <Input
+                                        value={dataEdit.subjectCode}
+                                        onChange={(e) =>
+                                             setDataEdit({
+                                                  ...dataEdit,
+                                                  subjectCode: e.target.value,
+                                             })
+                                        }
+                                   />
+                              </Item>
+                              <Item
                                    label="Description"
                                    name="description"
                                    rules={[
@@ -185,21 +217,7 @@ function EditSubject({ onClose, data, refetchData }) {
                                         }
                                    />
                               </Item>
-                         {/*      <Item
-                                   label="subjectName"
-                                   name="subjectName"
-
-                              >
-                                   <Input
-                                        value={dataEdit.subjectName}
-                                        onChange={(e) =>
-                                             setDataEdit({
-                                                  ...dataEdit,
-                                                  fullname: e.target.value,
-                                             })
-                                        }
-                                   />
-                              </Item> */}
+                     
                               <Item
                                    label="Teacher"
                                    name="teacher.username"
@@ -208,7 +226,7 @@ function EditSubject({ onClose, data, refetchData }) {
                                    <DebounceSelect
                                         itialvalues ={value}
                                         mode="multiple"
-                                      /*   value={value} */
+                                        value={value}
                                         placeholder="Select users"
                                         fetchOptions={fetchUserList}
                                         onChange={(newValue) => {

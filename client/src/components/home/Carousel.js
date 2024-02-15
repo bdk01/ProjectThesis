@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import AVATAR from '../../assets/img/addphoto.png'
 
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 const Carousel = ({images, id}) => {
 
  
@@ -35,10 +35,21 @@ const Carousel = ({images, id}) => {
                                 ? <video controls src={img.url} className="d-block w-100" alt={img.url}
                                 />
 
-                                : <img src={img.url} className="d-block w-[100%] min-h-[340px] max-h-[440px] object-cover" alt={img.url}
-                                style={{filter: 'invert(0)'}} />
+                                :
+                                <LazyLoadImage
+                                placeholderSrc={img.url}
+                             /*    effect="blur" */
+                                key="#"
+                                alt={img.url}
+                               height={380}
+                               style={{filter: 'invert(0)'}}
+                                src={img.url}
+                                width='100%' 
+                                className="d-block w-[100%] min-h-[340px] max-h-[440px] object-cover" 
+                                />
                             }
-                           
+                            {/* <img src={img.url} loading="lazy" className="d-block w-[100%] min-h-[340px] max-h-[440px] object-cover" alt={img.url}
+                                style={{filter: 'invert(0)'}} /> */}
                         </div>
                     ))
                 }

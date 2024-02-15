@@ -1,11 +1,10 @@
-import { Table, Input } from "antd";
-import { useContext, useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import {  useEffect, useState } from "react";
 import axios from "../../axios"
 import { useSelector } from "react-redux";
 import { CardInform } from "../../components/CardInform/CartInform";
 import { Grid, Paper, Text } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -14,7 +13,7 @@ function ReviewTA() {
      const { auth } = useSelector(state => state)
      const [data, setData] = useState([]);
      const [loading, setLoading] = useState(false);
- 
+     const { t } = useTranslation();
     /*  const fetchData = async (params = {}) => {
           setLoading(true);
         
@@ -59,17 +58,17 @@ function ReviewTA() {
          fetch()
 
      }, []);
-     console.log(data)
+
      return (
           <div className=" mt-2 overflow-x-auto">
-            <Text fw={700}  className="text-[30px]">Review TA</Text>
+            <Text fw={700}  className="text-[30px]">{t('reviewTa')}</Text>
          <Paper withBorder shadow="md" mt={15} radius="md" className=""  >
-                <Grid columns={8} gutter="xl" className="my-2 mx-3">
+                <Grid columns={12} gutter="xl" className="my-2 mx-3">
                {
                     data?.map((user,index)=>
                                 (  
 
-                                                <Grid.Col span={2}  key={index}>
+                                                <Grid.Col span={2} sm={6} md={3}  key={index}>
                                                   <CardInform user={user} />
                                                   </Grid.Col>
 

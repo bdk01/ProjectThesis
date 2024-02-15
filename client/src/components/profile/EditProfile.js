@@ -8,14 +8,14 @@ import axios from '../../axios'
 import { updateProfileUser } from '../../api/profileAPI'
 const EditProfile = ({setOnEdit}) => {
     const initState = {
-        fullname: '',username:''
+        fullname: '',username:'',studentId:''
     }
     const initState1 = {
         phone: '',introduction:''
     }
     const [userData, setUserData] = useState(initState)
     const [profile, setProfile] = useState(initState1)
-    const { fullname,  username } = userData
+    const { fullname,  username,studentId } = userData
 
     const [avatar, setAvatar] = useState('')
 
@@ -67,9 +67,9 @@ const EditProfile = ({setOnEdit}) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log(userData)
-     /*    console.log(avatar) */
-        console.log(profile)
+     
+    
+      
         const userData1 = {...userData,profile}
         console.log(userData1)
         updateProfileUser({userData1, avatar, auth,dispatch})
@@ -134,7 +134,12 @@ const EditProfile = ({setOnEdit}) => {
                     className="form-control" onChange={handleInput} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="username">Introduction</label>
+                    <label htmlFor="studentId">StudentId</label>
+                    <input type="text" name="studentId" value={studentId}
+                    className="form-control" onChange={handleInput} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="introduction">Introduction</label>
                     <input type="text" name="introduction" value={profile.introduction}
                     className="form-control" onChange={handleInput1} />
                 </div>

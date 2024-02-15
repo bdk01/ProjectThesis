@@ -8,11 +8,13 @@ import { Link } from "react-router-dom";
 import axios from "../../axios"
 import { useSelector } from "react-redux";
 import ApproveTa from "../../components/Teacher/ManageScheduleTA/ApproveTa";
+import { useTranslation } from "react-i18next";
 /* import { MainContext } from "../../context/MainContext"; */
 
 
 function ManageTaSchedule() {
   const { auth } = useSelector(state => state)
+  const { t } = useTranslation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
@@ -41,7 +43,7 @@ function ManageTaSchedule() {
   });
   const columns = [
     {
-      title: "MSSV",
+      title: "Student ID",
       dataIndex: "studentId",
       sorter: true,
     },
@@ -75,29 +77,47 @@ function ManageTaSchedule() {
     },
     ,
     {
-      title: "Trạng thái",
+      title: "State",
       dataIndex: "state",
       filters: [
         {
-          text: "Đang mở",
-          value: "open",
+          text: "Pending",
+          value: "pending",
         },
         {
-          text: "Đã đóng",
-          value: "close",
+          text: "Approve",
+          value: "Approve",
+        },
+        {
+          text: "Reject",
+          value: "Reject",
         },
       ],
       render: (state) => (
         <>
-          {state === "open" ? (
-            <div className="text-green-600 font-bold bg-green-200 text-center rounded-lg py-1">
-              Đang mở
+          {state === "pending" && (
+            <div className="text-blue-600 font-bold bg-blue-200 text-center rounded-lg py-1">
+             Pending
             </div>
-          ) : (
-            <div className="text-red-600 font-bold bg-red-300 text-center rounded-lg py-1">
-              Đã đóng
-            </div>
-          )}
+          ) }
+          {
+            state === "approve" &&
+             (
+              <div className="text-green-600 font-bold bg-green-200 text-center rounded-lg py-1">
+                Approve
+              </div>
+            )
+
+          }
+          {
+            state === "reject" &&
+             (
+              <div className="text-white-600 font-bold bg-red-300 text-center rounded-lg py-1">
+               Reject
+              </div>
+            )
+
+          }
         </>
       ),
     },
@@ -111,7 +131,7 @@ function ManageTaSchedule() {
             onClick={() => handleClickEdit(record)}
           >
             <AiFillEdit className="translate-y-[1px]" />
-            Duyệt
+            Review
           </button>
           <button
             className="flex items-baseline gap-x-1 hover:text-red-600"
@@ -122,7 +142,7 @@ function ManageTaSchedule() {
             }}
           >
             <AiOutlineDelete className="translate-y-[1px]" />
-            Xóa
+            Delete
           </button>
         </div>
       ),
@@ -130,9 +150,12 @@ function ManageTaSchedule() {
   ];
   const fetchData = async (params = {}) => {
     setLoading(true);
-/*  console.log(auth.accesstoken) */
+ console.log(auth.accesstoken)
     try {
-      const { data: response } = await axios.get(`/api/taSchedules`, {
+    /*  `, {params}, {
+        headers: { Authorization: auth.accesstoken }
+   } */
+      const { data: response } = await axios.get(`/api/taSchedules/${auth.user._id}`, {
         params
       }, {
         headers: { Authorization: auth.accesstoken }
@@ -198,7 +221,7 @@ function ManageTaSchedule() {
   return (
     <div className=" mt-2 overflow-x-auto">
       <div className="mx-3 flex justify-between mb-4">
-        <span className="text-3xl font-bold uppercase">Manage TA Schedules</span>
+        <span className="text-3xl font-bold uppercase"> {t('ManageTARegister')}</span>
 
         <Input.Search
           className="w-1/3 lg:w-[400px]"

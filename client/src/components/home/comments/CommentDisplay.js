@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import CommentCard from './CommentCard'
+import { useTranslation } from 'react-i18next'
 
 const CommentDisplay = ({comment, post, replyCm}) => {
     const [showRep, setShowRep] = useState([])
     const [next, setNext] = useState(1)
-
+    const { t } = useTranslation();
     useEffect(() => {
         setShowRep(replyCm.slice(replyCm.length - next))
     },[replyCm, next])
@@ -29,13 +30,13 @@ const CommentDisplay = ({comment, post, replyCm}) => {
                         replyCm.length - next > 0
                         ? <div style={{cursor: 'pointer', color: 'crimson'}}
                         onClick={() => setNext(next + 10)}>
-                            See more comments...
+                            {/* See more comments...  */} {t('readmore')}
                         </div>
 
                         : replyCm.length > 1 &&
                         <div style={{cursor: 'pointer', color: 'crimson'}}
                         onClick={() => setNext(1)}>
-                            Hide comments...
+                           {t('hide')}
                         </div>
                     }
                 </div>

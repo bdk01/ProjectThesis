@@ -1,46 +1,61 @@
-version: "3"
+version: "3.9"
+
 services:
-  frontend:
+
+
+  client:
+    container_name: client
     build:
-      context: './client'
-      dockerfile: Dockerfile
-    container_name: react_ui
+      context: ./client
+      dockerfile: Dockerfile.dev
     env_file: ./client/.env
+    restart: always
     ports:
       - "3000:3000"
     stdin_open: true
     tty: true
     depends_on:
-      - backend
+      - api
     networks:
       - mern-network
-  backend:
+
+  api:
+    container_name: api
     build:
-      context: './server'
+      context: ./server
       dockerfile: Dockerfile
-    container_name: node-api
     env_file: ./server/.env
+    restart: always
     ports:
       - "8000:8000"
     depends_on:
-      - mongo
+      - mongo-client
+      - redis-client
     networks:
       - mern-network
-  
-  mongo:
-    image: mongo
-    container_name: mongo-db
+
+  mongo-client:
+    container_name: mongo-client
+    image: mongo:latest
     restart: always
     ports:
-      - "5000:5000"
+      - "27017:27017"
     volumes:
-      - ./home/mongo-backup:/data/db
+      - ./server/.docker/mongo/data/db:/data/db
+    networks:
+      - mern-network
+
+  redis-client:
+    container_name: redis-client
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./server/.docker/redis/data:/data
     networks:
       - mern-network
 
 networks:
   mern-network:
     driver: bridge
-
-
-
