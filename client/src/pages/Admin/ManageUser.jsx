@@ -19,7 +19,7 @@ function ManageUser() {
      const [loading, setLoading] = useState(false);
      const [pagination, setPagination] = useState({
           current: 1,
-          pageSize: 6,
+          pageSize: 8,
           total: null,
      });
      const [isAddVisible, setIsAddVisible] = useState(false);
@@ -63,7 +63,7 @@ function ManageUser() {
           {
                title: "Role",
                dataIndex: 'role',
-
+               sorter: true,
           },
           {
                title: "Profile",
@@ -82,7 +82,7 @@ function ManageUser() {
                               onClick={() => handleClickEdit(record)}
                          >
                               <AiFillEdit className="translate-y-[1px]" />
-                              Sửa
+                              Edit
                          </button>
                          <button
                               className="flex items-baseline gap-x-1 hover:text-red-600"
@@ -93,7 +93,7 @@ function ManageUser() {
                               }}
                          >
                               <AiOutlineDelete className="translate-y-[1px]" />
-                              Xóa
+                              Delete
                          </button>
                     </div>
                ),
@@ -193,7 +193,7 @@ function ManageUser() {
 
                     <Input.Search
                          className="w-1/3 md:w-[400px]"
-                         placeholder="Nhập từ khóa"
+                         placeholder="Search more"
                          onSearch={searchByKeyword}
                     />
                     
@@ -201,7 +201,7 @@ function ManageUser() {
                          className="px-4 py-2 border border-neutral-800 text-center hover:bg-slate-300"
                          onClick={() => setIsAddVisible(true)}
                     >
-                         + Thêm mới
+                         + Add user
                     </button>
                   
 

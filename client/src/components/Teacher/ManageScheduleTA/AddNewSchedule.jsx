@@ -13,7 +13,7 @@ function AddNewSchedule({ onClose, refetchData }) {
     name: "",
     type: "",
     description: "",
-    location: "",
+   /*  location: "", */
     state: "Đang mở",
     bonus: "",
     deadline: "",
@@ -163,7 +163,7 @@ function AddNewSchedule({ onClose, refetchData }) {
                 }
               />
             </Item>
-            <Item
+           {/*  <Item
               name="location"
               label="Địa điểm làm việc"
               rules={[
@@ -182,7 +182,7 @@ function AddNewSchedule({ onClose, refetchData }) {
                   })
                 }
               />
-            </Item>
+            </Item> */}
             <Item
               name="department"
               label="Phòng ban"

@@ -58,7 +58,11 @@
     "Gotoprofile":"Go to profile",
     "Create form for applying t.a":"Create form for applying t.a",
     "Dead line":"Deadline",
-    "No Post":"No Post"
+    "No Post":"No Post",
+    "update":"Update",
+    "Create Post":"Create Post",
+    "Create":"Create",
+    "submit":"submit"
     
 
 

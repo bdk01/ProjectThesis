@@ -172,21 +172,12 @@ const App = () => {
           }
         />
 
-        {/*  <Route
-                path="/"
-              element={
-                <UserRoute>
-              
-                </UserRoute>
-              }
-            /> */}
-        {/*  <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} /> */}
+    
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
 
-        <Route
+     {/*    <Route
           path="create-post"
           element={
             <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
@@ -196,7 +187,7 @@ const App = () => {
      
        
           }
-        />
+        /> */}
         <Route
           path="review-ta"
           element={

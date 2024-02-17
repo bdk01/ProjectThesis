@@ -45,19 +45,19 @@ function ManageTa() {
           {
                title: "MSSV",
                dataIndex: "studentId",
-               sorter: true,
+              
           },
 
           {
                title: "FullName",
                dataIndex: "fullname",
-               sorter: true,
+              
                render: (a) => <div>{a?.split("T")[0]}</div>,
           },
           {
                title: "Email",
                dataIndex: "email",
-               sorter: true,
+              
           },
          
           {
