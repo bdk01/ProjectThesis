@@ -47,12 +47,16 @@ export default function RightSide() {
         }
   }
   useEffect(()=>{
-    if(refDisplay.current && !setIsLoadMore){
+  /*   if( isLoadMore){
+
+    }
+    else{ */
+
         setTimeout(() => {
               refDisplay.current.scrollIntoView({behavior: 'smooth', block: 'end'})
           },50)
-        }
-  },[message.data])
+  /*   } */
+  },[message.data,message])
     useEffect(() => {
         if(auth.accesstoken){
             const getMessagesData = async () => {
