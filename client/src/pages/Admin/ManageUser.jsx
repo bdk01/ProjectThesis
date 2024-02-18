@@ -52,7 +52,7 @@ function ManageUser() {
                title: "FullName",
                dataIndex: "fullname",
                sorter: true,
-               render: (a) => <div>{a?.split("T")[0]}</div>,
+               render: (a) => <div>{a}</div>,
           },
           {
                title: "Email",

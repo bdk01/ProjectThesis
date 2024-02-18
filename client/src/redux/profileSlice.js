@@ -35,10 +35,16 @@ export const profileSlice = createSlice({
       console.log(payload)
         state.ids=[payload, ...state.ids]
     },
+    resetIds:(state)=>{
+      console.log('reset')
+      state.ids=[]
+      state.users= []
+      state.posts= []
+    }
   },
 });
 export const {
      loading,getUser,getIds,followUser,unfollowUser,getPosts,updatePost
-
+,resetIds
 } = profileSlice.actions;
 export default profileSlice.reducer;

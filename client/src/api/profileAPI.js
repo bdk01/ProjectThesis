@@ -11,7 +11,7 @@ import {  createNotify } from "./notifyAPI";
        const res = await  axios.get(`/api/user/${id}`,  {
                 headers: { Authorization: auth.accesstoken }
             })
-       const res1 =  await  axios.get(`/api/user_posts/${id}`,  {
+       const res1 =  await  axios.get(`/api/user_posts/${id}?limit=${4}`,  {
                 headers: { Authorization: auth.accesstoken }
             })
       

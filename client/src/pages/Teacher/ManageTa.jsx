@@ -52,7 +52,7 @@ function ManageTa() {
                title: "FullName",
                dataIndex: "fullname",
               
-               render: (a) => <div>{a?.split("T")[0]}</div>,
+               render: (a) => <div>{a}</div>,
           },
           {
                title: "Email",
@@ -82,7 +82,7 @@ function ManageTa() {
                               onClick={() => handleClickEdit(record)}
                          >
                               <AiFillEdit className="translate-y-[1px]" />
-                              Sửa
+                              Edit
                          </button>
                         {/*  <button
                               className="flex items-baseline gap-x-1 hover:text-red-600"

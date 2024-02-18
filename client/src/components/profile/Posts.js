@@ -20,6 +20,7 @@ const Posts = ({auth, id, dispatch, profile}) => {
             }
         })
     },[profile.posts, id])
+    
 
     const handleLoadMore = async () => {
         setLoad(true)
@@ -34,15 +35,15 @@ const Posts = ({auth, id, dispatch, profile}) => {
         <div>
             <PostThumb posts={posts} result={result} />
 
-            {
+          {/*   {
                 load && <img src={LoadIcon} alt="loading" className="d-block mx-auto" />
-            }
+            } */}
 
-              <div className="flex justify-center mt-6" id="toggle">
+             {/*  <div className="flex justify-center mt-6" id="toggle">
             <LoadMoreBtn result={result} page={page}
             load={load} handleLoadMore={handleLoadMore} />
 
-              </div>
+              </div> */}
             
         </div>
     )

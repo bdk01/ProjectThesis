@@ -52,7 +52,7 @@ function ManageTaSchedule() {
       title: "FullName",
       dataIndex: "fullName",
       sorter: true,
-      render: (a) => <div>{a?.split("T")[0]}</div>,
+      render: (a) => <div>{a}</div>,
     },
     {
       title: "GpaTotal",
