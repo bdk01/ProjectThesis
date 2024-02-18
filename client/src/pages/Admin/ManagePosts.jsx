@@ -102,7 +102,7 @@ function ManageSubject() {
                               }}
                          >
                               <AiOutlineDelete className="translate-y-[1px]" />
-                              Xóa
+                              Delete
                          </button>
                     </div>
                ),
@@ -198,7 +198,7 @@ function ManageSubject() {
 
                     <Input.Search
                          className="w-1/3 lg:w-[400px]"
-                         placeholder="Nhập từ khóa"
+                         placeholder="Search"
                          onSearch={searchByKeyword}
                     />
                 {/*     <button

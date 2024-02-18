@@ -12,7 +12,7 @@ function EditTA({ onClose, data, refetchData }) {
      const [dataEdit, setDataEdit] = useState({ ...data });
      const [loading, setLoading] = useState(false);
      const [isDisable, setIsDisable] = useState(false);
-     
+       
      const { auth } = useSelector(state => state)
   
      const acceptEditCareer = async () => {
@@ -20,7 +20,7 @@ function EditTA({ onClose, data, refetchData }) {
           // setIsDisable(true);
           try {
                console.log('gg')
-               console.log(dataEdit)
+             
 
              /*   console.log() */
                const approve = {
@@ -28,15 +28,15 @@ function EditTA({ onClose, data, refetchData }) {
                     username: dataEdit.username,
                     fullname: dataEdit.fullname,
                     role: dataEdit.role,
-                    phone: dataEdit.phone,
+                    subjectTaId:dataEdit.subjectTa._id,
                     id:data._id
                }
                console.log(approve)
-               const res = await axios.post(`/api/update-user`, approve, {
+               const res = await axios.post(`/api/update-ta`, approve, {
                     headers: { Authorization: auth.accesstoken }
                });
 
-               console.log(res)
+              
                setLoading(false);
                // setIsDisable(false);
                refetchData();
@@ -51,7 +51,7 @@ function EditTA({ onClose, data, refetchData }) {
                     <div className="relative w-[700px] flex flex-col bg-white p-6 gap-y-3 animate-modal_in mx-4 rounded-xl overflow-auto">
                          <div className="flex justify-between items-center gap-y-3">
                               <span className="text-xl uppercase font-bold h-fit">
-                                  Edit User
+                                  Update TA
                               </span>
                               <Button
                                    size="large"
@@ -85,20 +85,20 @@ function EditTA({ onClose, data, refetchData }) {
                                    name="fullname"
 
                               >
-                                   <input value={dataEdit.fullname}>
+                                   <Input  disabled={true}  value={dataEdit.fullname}>
 
 
-                                   </input>
+                                   </Input>
                               </Item>
                               <Item
                                    label="User name"
                                    name="username"
-                               
+                                   
                               >
-                                   <input value={dataEdit.username}>
+                                   <Input  disabled={true} value={dataEdit.username}>
                                     
 
-                                   </input>
+                                   </Input>
                                 
                               
                               </Item>
@@ -107,21 +107,12 @@ function EditTA({ onClose, data, refetchData }) {
                                    name="email"
                                    
                               >
-                                   <input value={dataEdit.email}>
+                                   <Input  disabled={true} value={dataEdit.email}>
 
 
-                                   </input>
+                                   </Input>
                               </Item>
-                              <Item
-                                   label="Phone"
-                                   name="phone"
-
-                              >
-                                   <input value={dataEdit.phone}>
-
-
-                                   </input>
-                              </Item>
+                          
 
                                <Item label="Role">
                                    <Select
@@ -160,7 +151,7 @@ function EditTA({ onClose, data, refetchData }) {
                                         htmlType="submit"
                                         className="rounded-lg bg-blue-400"
                                    >
-                                        Submit
+                                        Change
                                    </Button>
                               </div>
                          </Form>

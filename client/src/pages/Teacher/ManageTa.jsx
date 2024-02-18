@@ -45,19 +45,19 @@ function ManageTa() {
           {
                title: "MSSV",
                dataIndex: "studentId",
-               sorter: true,
+              
           },
 
           {
                title: "FullName",
                dataIndex: "fullname",
-               sorter: true,
-               render: (a) => <div>{a?.split("T")[0]}</div>,
+              
+               render: (a) => <div>{a}</div>,
           },
           {
                title: "Email",
                dataIndex: "email",
-               sorter: true,
+              
           },
          
           {
@@ -82,7 +82,7 @@ function ManageTa() {
                               onClick={() => handleClickEdit(record)}
                          >
                               <AiFillEdit className="translate-y-[1px]" />
-                              Sửa
+                              Edit
                          </button>
                         {/*  <button
                               className="flex items-baseline gap-x-1 hover:text-red-600"

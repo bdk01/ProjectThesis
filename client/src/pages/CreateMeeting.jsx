@@ -61,7 +61,7 @@ export default function CreateMeeting() {
      const navigate = useNavigate()
      const { auth } = useSelector(state => state)
      const [information, setInformation] = useState({
-          location: "",
+         /*  location: "", */
           description: "",
           meetingName: ""
      });
@@ -180,22 +180,7 @@ export default function CreateMeeting() {
                                              />
                                         </div>
                                    </div>
-                                   <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
-                                        <div className="flex items-center   justify-start w-[140px]">
-                                             <label className=" mr-3 font-semibold lg:text-lg text-base">
-                                                  Location:
-                                             </label>
-                                        </div>
-                                        <div className="flex  w-[70%]">
-                                             <input
-                                                  className="outline-none bg-white border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-black text-base  w-[100%]  line-clamp-1"
-                                                  type="text"
-                                                  name="location"
-                                                  onChange={handleForm}
-                                                  defaultValue={information.location}
-                                             />
-                                        </div>
-                                   </div>
+                            
                                    <div className="flex mb-6 sm:py-1 flex-row  w-[100%]">
                                         <div className="flex items-center   justify-start w-[140px]">
                                              <label className=" mr-3  font-semibold lg:text-lg text-base">

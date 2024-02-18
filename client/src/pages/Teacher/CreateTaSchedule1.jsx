@@ -186,7 +186,7 @@ export default function CreateTaSchedule1() {
                                         </div>
                                         <div className="flex  w-[70%]">
                                              <input
-                                                  className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                  className="outline-none border-black  border-[1px] sm:px-2 rounded-md py-[6px] px-1  text-base  w-[100%]  line-clamp-1"
                                                   type="text"
                                                   name="requirement"
                                                   onChange={handleForm}
@@ -202,7 +202,7 @@ export default function CreateTaSchedule1() {
                                         </div>
                                         <div className="flex  w-[70%]">
                                              <input
-                                                  className="outline-none border-[1px] sm:px-2 rounded-md py-[6px] px-1 border-gray-200 text-base  w-[100%]  line-clamp-1"
+                                                  className="outline-none border-black  border-[1px] sm:px-2 rounded-md py-[6px] px-1  text-base  w-[100%]  line-clamp-1"
                                                   type="text"
                                                   name="description"
                                                   onChange={handleForm}
@@ -272,7 +272,7 @@ export default function CreateTaSchedule1() {
                                    </div>
                                    <div className="flex ">
                                         <button onClick={() => setExist(false)} className="py-2 px-4 mt-2 mb-4 round-md font-medium bg-red-600  hover:translate-y-[-1px] transition-all text-white rounded-sm" type="submit">
-                                      {t('Update')}
+                                      {t('update')}
                                         </button>
                                    </div>
                               </div>

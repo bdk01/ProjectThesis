@@ -66,7 +66,7 @@ export  const moveObjectToFirst = (array, objectId) => {
 export const showNotification = (type ,description) => {
 
   notification[type]({
-    message: 'Notification Title',
+    message: 'Notification',
     description
     
   });

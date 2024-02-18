@@ -18,7 +18,7 @@ const groupSchema = mongoose.Schema(
     creatorId: { type: mongoose.Types.ObjectId, ref: "Users" },
     receiverId: { type: mongoose.Types.ObjectId, ref: "Users" },
     conversation: { type: mongoose.Types.ObjectId, ref: "Conversations" },
-    location: String,
+  
     isCouple: {
       type: Boolean,
       default:false

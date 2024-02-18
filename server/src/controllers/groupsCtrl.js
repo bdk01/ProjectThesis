@@ -4,7 +4,7 @@ const groupsCtrl = {
 
   createEvent: async (req, res) => {
     try {
-     const {  startTime, endTime,description,conversation,location,attendees, meetingName  } = req.body;
+     const {  startTime, endTime,description,conversation,attendees, meetingName  } = req.body;
     /*  attendees.push(req.user._id) */
       const newEvet = new groups({
         conversation: conversation,
@@ -13,7 +13,7 @@ const groupsCtrl = {
         endTime,
         description,
         creatorId: req.user._id,
-        location,
+       
         attendees
       });
         await newEvet.save();

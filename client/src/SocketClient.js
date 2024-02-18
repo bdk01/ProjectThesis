@@ -70,7 +70,7 @@ export default function SocketClient() {
 
   useEffect(() => {
       socket.on('unFollowToClient', newUser =>{
-        /*   dispatch({type: GLOBALTYPES.AUTH, payload: {...auth, user: newUser}}) */
+    
       })
 
       return () => socket.off('unFollowToClient')

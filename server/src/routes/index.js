@@ -3,7 +3,7 @@ import express from "express";
 import userRoute from "./userRoute";
 import messageRoute from "./messageRoute";
 
-import meetingRoute from "./meetingRoute";
+
 import uploadRoute from "./uploadRoute";
 import postRoute from "./postRoute";
 import commentRoute from "./commentRoute";
@@ -20,7 +20,7 @@ appRouter.use("/auth",authRoute);
 appRouter.use("/api",userRoute);
 appRouter.use("/api",messageRoute);
 appRouter.use("/api",groupRoute);
-appRouter.use("/api",meetingRoute);
+
 appRouter.use("/api",uploadRoute);
 appRouter.use("/api",postRoute);
 appRouter.use("/api",notifyRoute);

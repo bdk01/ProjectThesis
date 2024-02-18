@@ -2,6 +2,7 @@ import axios from "../axios"
 import { getDetailPost } from "../redux/detailPostSlice"
 
 import { deleteOnePost, getPost, updatePost, } from "../redux/postSlice"
+import { resetIds } from "../redux/profileSlice"
 import { DeleteData, EditData, showNotification } from "../utils/helper"
 import { createNotify } from "./notifyAPI"
 
@@ -26,8 +27,8 @@ import { createNotify } from "./notifyAPI"
             image: images[0].url
         }
         console.log(msg)
+        dispatch(resetIds())
         dispatch(createNotify({msg, auth,dispatch, socket}))
-
     } catch (err) {
    
     }
@@ -55,7 +56,7 @@ import { createNotify } from "./notifyAPI"
             }) */
           /*   console.log(res.data) */
                  dispatch(updatePost(res.data.newPost))
-          
+                 dispatch(resetIds())
             showNotification('success',"success edit post")
      
 
@@ -100,7 +101,7 @@ import { createNotify } from "./notifyAPI"
                 headers: { Authorization: auth.accesstoken }
             })
          
-      
+            dispatch(resetIds())
        
     } catch (err) {
       console.log(err)

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Info from '../components/profile/Info'
 import Posts from '../components/profile/Posts'
-import Saved from '../components/profile/Saved'
+
 
 import { useSelector, useDispatch } from 'react-redux'
 import LoadIcon from '../assets/img/loading.gif'
@@ -17,7 +17,7 @@ const Profile = () => {
      const dispatch = useDispatch()
    
      const { id } = useParams()
-    /*  const [saveTab, setSaveTab] = useState(false) */
+   
 
      useEffect(() => {
           if (profile.ids.every(item => item !== id) && auth.accesstoken) {

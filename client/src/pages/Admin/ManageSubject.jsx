@@ -89,7 +89,7 @@ function ManageSubject() {
                               onClick={() => handleClickEdit(record)}
                          >
                               <AiFillEdit className="translate-y-[1px]" />
-                              Sửa
+                              Update
                          </button>
                          <button
                               className="flex items-baseline gap-x-1 hover:text-red-600"
@@ -100,7 +100,7 @@ function ManageSubject() {
                               }}
                          >
                               <AiOutlineDelete className="translate-y-[1px]" />
-                              Xóa
+                              Delete
                          </button>
                     </div>
                ),
@@ -196,16 +196,16 @@ function ManageSubject() {
 
                     <span className="text-3xl font-bold uppercase hidden md:block">Manage Subjects</span>
 
-                    <Input.Search
+                   {/*  <Input.Search
                          className="w-1/3 lg:w-[400px]"
-                         placeholder="Nhập từ khóa"
+                         placeholder="Search"
                          onSearch={searchByKeyword}
-                    />
+                    /> */}
                     <button
                          className="px-4 py-2 border border-neutral-800 text-center hover:bg-slate-300"
                          onClick={() => setIsAddVisible(true)}
                     >
-                         + Thêm mới
+                         + Add subject
                     </button>
                     <button
                          className="px-4 py-2 border border-neutral-800 text-center bg-green-500"

@@ -7,13 +7,14 @@ import { createPost, editPost } from '../../api/postAPI';
 import { useNavigate } from "react-router-dom";
 import { updatePost } from '../../redux/postSlice';
 import { imageUpload } from '../../utils/imageUpload';
+import { useTranslation } from 'react-i18next';
 const StatusModal = () => {
     const { auth,status,socket } = useSelector(state => state)
     const dispatch = useDispatch()
   const navigate = useNavigate()
     const [content, setContent] = useState('')
     const [images, setImages] = useState([])
-
+    const { t } = useTranslation();
     const [stream, setStream] = useState(false)
     const videoRef = useRef()
     const refCanvas = useRef()
@@ -120,8 +121,8 @@ const StatusModal = () => {
           className="min-w-[500px] width-[100%] bg-white mt-[30px] p-[20px] rounded-md"
         >
           <div className="flex items-center justify-between border-b-[1px] border-gray-400 pb-2 mb-1">
-           {/*  <h2 className="font-semibold text-2xl">Create Post</h2> */}
-           {status.onEdit ? <h2 className="font-semibold text-2xl">Edit Post</h2> :<h2 className="font-semibold text-2xl">Create Post</h2>  }
+         
+           {status.onEdit ? <h2 className="font-semibold text-2xl">Edit Post</h2> :<h2 className="font-semibold text-2xl">    {t('Create Post')}</h2>  }
             <span
               onClick={() => dispatch(CloseStatus({ status: false }))}
               className="font-bold text-3xl cursor-pointer"
@@ -129,12 +130,12 @@ const StatusModal = () => {
               &times;
             </span>
           </div>
-
+         
           <div className="status_body">
             <textarea
               name="content"
               value={content}
-              placeholder={`${auth.user.username}, what are you thinking?`}
+              placeholder={ t('what are you thinking?')}
               onChange={(e) => setContent(e.target.value)}
               className="w-[95%] h-[150px] mb-1"
             />
@@ -208,13 +209,13 @@ const StatusModal = () => {
               className="py-2 px-4 mt-2 mb-2 round-md w-[80%] font-medium bg-red-600  hover:translate-y-[-1px] transition-all text-white rounded-sm"
               type="submit"
             >
-              Edit
+               {t('submit')}
             </button>
       :  <button
               className="py-2 px-4 mt-2 mb-2 round-md w-[80%] font-medium bg-red-600  hover:translate-y-[-1px] transition-all text-white rounded-sm"
               type="submit"
             >
-              Post
+            {t('submit')}
             </button>
 }
           </div>

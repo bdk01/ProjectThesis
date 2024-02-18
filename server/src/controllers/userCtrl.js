@@ -1,5 +1,5 @@
 import Users from "../models/userModel";
-
+import Subjects from '../models/subjectModel'
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../helper/sendemail";
@@ -129,12 +129,36 @@ const userCtrl = {
   updateUser: async (req, res) => {
     try {
 
-      const { email, username, fullname, role, phone, id } = req.body
+      const { email, username, fullname, role,  id } = req.body
 
 
       await Users.findOneAndUpdate({ _id: id }, {
         email, fullname: fullname, username: username, role
       }, { new: true })
+      clientRedis.del(`user/${id}`);
+      res.json({ msg: "Update Success!" })
+
+    } catch (err) {
+      return res.status(500).json({ msg: err.message })
+    }
+  },
+ 
+  updateTa: async (req, res) => {
+    try {
+
+      const { email, username, fullname, role,  id,subjectTaId } = req.body
+
+   
+      if(role==="ta") return res.json({ msg: "Update Success!" });
+      console.log('te')
+      await Users.findOneAndUpdate({ _id: id }, {
+        email, fullname: fullname, username: username, role ,subjectTa:null
+      }, { new: true })
+      console.log('te2')
+      await Subjects.findOneAndUpdate({_id: subjectTaId}, {
+        $pull: {teachingAssistant: id}
+    }, {new: true})
+    console.log('te3')
       clientRedis.del(`user/${id}`);
       res.json({ msg: "Update Success!" })
 

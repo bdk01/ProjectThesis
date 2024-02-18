@@ -9,6 +9,7 @@ userRoute.post("/user/edit-profile",auth, userCtrl.editProfileUser);
 userRoute.get("/user/getMonthlyUser", userCtrl.getMonthlyUser);
 /* userRoute.post("/resetpassword", userCtrl.resetPassword); */
 userRoute.post('/update-user'/* , auth */, userCtrl.updateUser)
+userRoute.post('/update-ta'/* , auth */, userCtrl.updateTa)
 userRoute.delete('/delete-user/:id'/* , auth */, userCtrl.deleteUser)
 userRoute.get("/user/:id", userCtrl.getUser);
 userRoute.post('/user/:id/follow', auth, userCtrl.follow)
