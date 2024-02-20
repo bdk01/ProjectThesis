@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { DatePicker, Space,Select,Spin } from 'antd';
 import debounce from 'lodash/debounce';
 import dayjs from 'dayjs';
-import axios from '../axios';
+import axios from '../../axios';
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useClipboard } from "@mantine/hooks";
 import { Button, Text } from "@mantine/core";
-import { showNotification } from "../utils/helper";
-import { useGetUserData } from "../hooks/getUserTa";
+import { showNotification } from "../../utils/helper";
+import { useGetUserData } from "../../hooks/getUserTa";
 import { useTranslation } from "react-i18next";
 
 export default function RegisterTA() {
@@ -17,6 +17,7 @@ export default function RegisterTA() {
        const { t } = useTranslation();
        const {id} = useParams()
      const [informationTA, setInformationTA] = useState({});
+     const [editForm, setEditForm] = useState(false);
      const [loading, setLoading] = useState(false);
      const [information, setInformation] = useState({
           fullName:"",
@@ -71,10 +72,10 @@ export default function RegisterTA() {
                          const res = await axios.get(`/api/taSchedule/${id}`, {
                               headers: { Authorization: auth.accesstoken },
                          })
-                        
-                         console.log(res.data[0])
-                         console.log(res.data[0].creator.fullname)
-                         console.log(res.data[0].subject.subjectName)
+                         if(res.data.edit===true){
+                              setEditForm(true)
+                         }
+                         
                          setInformationTA(res.data[0])
                          
                     } catch (err) {
@@ -93,7 +94,20 @@ export default function RegisterTA() {
           <Text size={40} fw={600}>Form is closed or does not exist</Text>
 
      </div>)
-  
+  if(editForm) return(
+     <div className="flex justify-center flex-col items-center h-[80vh]">
+          <Text size={40} fw={600}>You have already apply </Text>
+          <Button
+            variant='outline'
+            size='md'
+            className='mx-2 mt-2'
+            radius='sm'
+            onClick={() => {navigate(`/edit-applyTA/${id}`, { replace: true })}}
+          >
+          Edit Form
+          </Button>
+
+     </div>)
   return(
    
   

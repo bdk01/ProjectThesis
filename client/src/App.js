@@ -28,9 +28,7 @@ import Post from "./pages/Post";
 import { getPosts } from "./api/postAPI";
 import { getNotifies } from "./api/notifyAPI";
 
-import Profile from "./pages/Profile";
-import RegisterTA from "./pages/RegisterTA";
-import RegisterSubject from "./pages/Teacher/CreateSubject";
+
 import CreateSubject from "./pages/Teacher/CreateSubject";
 
 import ManageTaSchedule from "./pages/Teacher/ManageTaSchedule";
@@ -46,16 +44,17 @@ import ManageUser from "./pages/Admin/ManageUser";
 import ScrollToTop from "./hooks/ScrollToTop";
 import { Pages } from "./routes/routers";
 
-import i18n from "./i18ns/i18n.config";
+
 import { getSuggestions } from "./api/suggestionsAPI";
-import LayoutAdmin from "./Layout/LayoutAdmin";
-import NewPage from "./pages/NewPage";
+
 import CreateTaSchedule1 from "./pages/Teacher/CreateTaSchedule1";
 import AdminLayout from "./Layout/adminLayout/adminLayout";
 import ConversationAdmin from "./pages/MessageAdmin/ConversationAdmin";
 import ManagePosts from "./pages/Admin/ManagePosts";
 import Loading from "./components/Loading/Loading";
 import Statitics from "./pages/Admin/Statitics";
+import RegisterTA from "./pages/EnrollmentTA/RegisterTA";
+import EditTAEnrollment from "./pages/EnrollmentTA/EditTAEnrollment";
 
 
 
@@ -263,6 +262,18 @@ const App = () => {
             <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
             <Layout>
               <RegisterTA />
+            </Layout>
+
+   </Suspense>
+          
+          }
+        />
+        <Route
+          path="/edit-applyTA/:id"
+          element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+            <Layout>
+              <EditTAEnrollment/>
             </Layout>
 
    </Suspense>

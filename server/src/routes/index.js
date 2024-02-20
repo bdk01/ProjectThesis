@@ -9,7 +9,8 @@ import postRoute from "./postRoute";
 import commentRoute from "./commentRoute";
 import notifyRoute from "./notifyRoute";
 import subjectRoute from "./subjectRoute";
-import taScheduleRoute from "./taScheduleRoute";
+import taEnrollmentRoute from "./taEnrollmentRoute";
+
 import groupRoute from "./groupRoute";
 
 
@@ -26,6 +27,6 @@ appRouter.use("/api",postRoute);
 appRouter.use("/api",notifyRoute);
 appRouter.use("/api",commentRoute);
 appRouter.use("/api",subjectRoute);
-appRouter.use("/api",taScheduleRoute);
+appRouter.use("/api",taEnrollmentRoute);
 
 export default appRouter;

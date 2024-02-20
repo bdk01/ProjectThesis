@@ -364,7 +364,7 @@ export const LeftNavItemVi = [
         <FaWpforms className='w-[35px] h-[35px] cursor-pointer' />
       ),
       path: 'createTaSchedule',
-      name: 'TaSchedule',
+      name: 'TaEnrollment',
       subIcon: [],
     },
     {
@@ -389,7 +389,7 @@ export const LeftNavItemVi = [
         <AiOutlineSchedule className='w-[35px] h-[35px] cursor-pointer' />
       ),
       path: 'manageTaSchedule',
-      name: 'Schedule',
+      name: 'TaEnrollment',
       subIcon: [],
     },
     

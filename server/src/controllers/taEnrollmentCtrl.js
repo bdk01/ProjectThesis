@@ -1,8 +1,8 @@
 import Subjects from '../models/subjectModel'
 import Users from '../models/userModel'
-import TaSchedules from '../models/taScheduleModel'
+import TaEnrollment from '../models/taEnrollmentModel'
 import dayjs from 'dayjs';
-import clientRedis from '../config/connectRedis';
+
 class APIfeatures {
     constructor(query, queryString) {
         this.query = query;
@@ -28,12 +28,12 @@ class APIfeatures {
     }
 }
 
-const taScheduleCtrl = {
+const taEnrollmentCtrl = {
     createTaSchedule: async (req, res) => {
         try {
             const { subject, requirement, dateCloseForm, description } = req.body
             console.log(description)
-            const newTaSchedules = new TaSchedules({
+            const newTaSchedules = new TaEnrollment({
                 subject, requirement, description, creator: req.user._id, dateCloseForm, expireAt: dateCloseForm
             })
             await newTaSchedules.save()
@@ -44,7 +44,7 @@ const taScheduleCtrl = {
 
             let expire = end - start
             console.log(expire)
-            const NewTaSchedules = await TaSchedules.findByIdAndUpdate(
+            const NewTaSchedules = await TaEnrollment.findByIdAndUpdate(
                 newTaSchedules._id,
                 { $set: { link: `/registerTA/${newTaSchedules._id}`/* ,expireAt:expire */ } },
                 { new: true }
@@ -62,23 +62,41 @@ const taScheduleCtrl = {
     },
     applyTaSchedule: async (req, res) => {
         try {
-           
+
             const { fullName, studentId, gpaTotal, gpaSubject, creator, link, requirement, subject, description } = req.body
-            /*  const TaSchedule =    await TaSchedules.findOneAndUpdate(
-                  { _id: req.params.id },
-                  {
-                fullName,studentId,gpaTotal,gpaSubject,candidate:req.user._id,apply:true
-                  }, 
-              { new: true }
-              ); */
-            const newTaSchedules = new TaSchedules({
+
+
+
+            const newTaSchedules = new TaEnrollment({
                 link, subject, requirement, creator, fullName, studentId, gpaTotal, gpaSubject, candidate: req.user._id, fill: true, description
             })
-           
+
             await newTaSchedules.save()
             res.json({
                 msg: "Apply success",
                 newTaSchedules
+            })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    editEnrollment: async (req, res) => {
+        try {
+
+            const { fullName, studentId, gpaTotal, gpaSubject,id } = req.body
+
+           const newtaerollment= await TaEnrollment.findOneAndUpdate({ _id: id }, {
+            fullName,gpaTotal,gpaSubject,studentId
+            }, { new: true })
+
+            /* const newTaSchedules = new TaEnrollment({
+                link, subject, requirement, creator, fullName, studentId, gpaTotal, gpaSubject, candidate: req.user._id, fill: true, description
+            }) */
+
+         
+            res.json({
+                msg: "Edit success",
+              
             })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
@@ -110,12 +128,12 @@ const taScheduleCtrl = {
                 query.state = state;
             }
 
-            const taSchedules = await TaSchedules.find({ $and: [query, keywordCondition] })
+            const taSchedules = await TaEnrollment.find({ $and: [query, keywordCondition] })
                 .limit(pageSize)
                 .skip(pageSize * page)
                 .sort(`${sortBy}`)
                 .populate("candidate subject creator")
-            var length = await TaSchedules.find({ $and: [query, keywordCondition] }).count();
+            var length = await TaEnrollment.find({ $and: [query, keywordCondition] }).count();
             if (taSchedules)
 
                 res.status(200).json({
@@ -155,12 +173,12 @@ const taScheduleCtrl = {
                 query.state = state;
             }
 
-            const taSchedules = await TaSchedules.find({ $and: [query, keywordCondition,{creator:req.params.id}] })
+            const taSchedules = await TaEnrollment.find({ $and: [query, keywordCondition, { creator: req.params.id }] })
                 .limit(pageSize)
                 .skip(pageSize * page)
                 .sort(`${sortBy}`)
                 .populate("candidate subject creator")
-            var length = await TaSchedules.find({ $and: [query, keywordCondition,{creator:req.params.id}] }).count();
+            var length = await TaEnrollment.find({ $and: [query, keywordCondition, { creator: req.params.id }] }).count();
             if (taSchedules)
 
                 res.status(200).json({
@@ -176,11 +194,39 @@ const taScheduleCtrl = {
     },
     getTaSchedule: async (req, res) => {
         try {
-          
-            const newTaSchedule = await TaSchedules.find({ _id: req.params.id }).populate('subject creator')
+            const user = await TaEnrollment.find({ candidate: req.user._id })
+            if (user) {
+                return res.status(200).json(
+                    {
+                        "edit": true
+                    }
+                )
+            }
+            const newTaSchedule = await TaEnrollment.find({ _id: req.params.id }).populate('subject creator')
 
 
-            res.status(200).json(
+            return res.status(200).json(
+                newTaSchedule,
+            )
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    getTaEnrollmentEdit: async (req, res) => {
+        try {
+
+            console.log(req.user._id)
+            console.log(req.params.id)
+            const newTaSchedule = await TaEnrollment.find({
+                $and: [
+                    { link: `/registerTA/${req.params.id}` },
+                    { candidate: req.user._id }
+                ]
+            }
+            ).populate('subject creator')
+           
+
+            return res.status(200).json(
                 newTaSchedule,
             )
         } catch (err) {
@@ -191,7 +237,7 @@ const taScheduleCtrl = {
         try {
 
 
-            const newTaSchedule = await TaSchedules.findOneAndDelete({ _id: req.params.id })
+            const newTaSchedule = await TaEnrollment.findOneAndDelete({ _id: req.params.id })
             res.status(200).json({
                 msg: 'Deleted success!',
             }
@@ -207,4 +253,4 @@ const taScheduleCtrl = {
 
 }
 
-export default taScheduleCtrl
+export default taEnrollmentCtrl

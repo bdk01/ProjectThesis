@@ -90,7 +90,7 @@ const userCtrl = {
          if (!user) return res.status(400).json({ msg: "User does not exist." })
 
          
-         clientRedis.setex(`user/${req.params.id}`, 3600, JSON.stringify({user}));
+         clientRedis.setex(`user/${req.params.id}`, 360, JSON.stringify({user}));
          res.json({ user })
        
        }

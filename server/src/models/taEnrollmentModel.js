@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { State } from '../constant';
 
 
-const taScheduleSchema = mongoose.Schema(
+const taEnrollmentSchema = mongoose.Schema(
   {
     subject: { type: mongoose.Types.ObjectId, ref: "Subjects" },
     requirement: String,
@@ -28,5 +28,5 @@ const taScheduleSchema = mongoose.Schema(
   }
 );
 
-taScheduleSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 0 });
-export default mongoose.model("TaSchedules", taScheduleSchema);
+taEnrollmentSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 0 });
+export default mongoose.model("TaEnrollment", taEnrollmentSchema);
