@@ -55,6 +55,9 @@ import Loading from "./components/Loading/Loading";
 import Statitics from "./pages/Admin/Statitics";
 import RegisterTA from "./pages/EnrollmentTA/RegisterTA";
 import EditTAEnrollment from "./pages/EnrollmentTA/EditTAEnrollment";
+import ForumPage from "./pages/Forum/ForumPage";
+import ForumDetailPage from "./pages/Forum/DetailForum";
+import ManageForum from "./pages/Admin/ManageForum";
 
 
 
@@ -249,6 +252,32 @@ const App = () => {
           }
         />
         <Route
+          path="/forum"
+          element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                  <Layout>
+
+              <ForumPage />
+              </Layout>
+
+         </Suspense>
+         
+          }
+        />
+        <Route
+          path="/forum/:id"
+          element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                  <Layout>
+
+              <ForumDetailPage />
+              </Layout>
+
+         </Suspense>
+         
+          }
+        />
+        <Route
           path="/post/:id"
           element={
             <Layout>
@@ -359,6 +388,14 @@ const App = () => {
           element={
             <AdminLayout>
               <ManageSubject />
+              </AdminLayout>
+          }
+        />
+        <Route
+          path="/review-forum"
+          element={
+            <AdminLayout>
+              <ManageForum />
               </AdminLayout>
           }
         />

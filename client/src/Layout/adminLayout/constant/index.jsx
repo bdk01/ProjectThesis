@@ -9,7 +9,7 @@ import {
 	HiOutlineCog
 } from 'react-icons/hi'
 import { SiCoursera } from 'react-icons/si'
-import { MdOutlineManageAccounts } from "react-icons/md";
+import { MdForum, MdGroup, MdOutlineManageAccounts } from "react-icons/md";
 import { BsFilePostFill } from "react-icons/bs";
 import { FaChartLine } from "react-icons/fa";
 export const DASHBOARD_SIDEBAR_LINKS = [
@@ -37,8 +37,13 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		path: '/review-subject',
 		icon: <SiCoursera />
 	},
-	
-	
+	{
+		key: 'Manage-forum',
+		label: 'Manage-forum',
+		path: '/review-forum',
+		icon: <MdGroup />
+	},
+
 	{
 		key: 'Conversation',
 		label: 'Conversation',

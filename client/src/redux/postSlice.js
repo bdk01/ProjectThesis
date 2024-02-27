@@ -29,11 +29,19 @@ export const postSlice = createSlice({
    
      state.posts = DeleteData(state.posts, payload._id)
     },
- 
+    resetPosts:(state)=>{
+      console.log('reset')
+      state.posts=[]
+      state.result= 0
+      state.page= 2
+    
+      
+
+    }
   },
 });
 export const {
-  createPost,getPost,updatePost,deleteOnePost
+  createPost,getPost,updatePost,deleteOnePost,resetPosts
 
 } = postSlice.actions;
 export default postSlice.reducer;

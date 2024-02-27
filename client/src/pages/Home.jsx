@@ -22,7 +22,7 @@ export default function Home() {
     const [value, setValue] = useState('-createdAt');
     const handleLoadMore = async () => {
         setLoad(true)
-        /*   const res = await getDataAPI(`posts?limit=${homePosts.page * 9}`, auth.token) */
+       
         console.log('handle')
         const res = await axios.get(`/api/get-posts?limit=${homePosts.page * 2}&filter=${value}`, {
             headers: { Authorization: auth.accesstoken }
@@ -43,7 +43,7 @@ export default function Home() {
     }, [auth.accesstoken, dispatch, status,value])
 
     return <div className="mx-3">
-
+        
         <div className="lg:flex justify-center lg:space-x-10 lg:space-y-0 space-y-5">
             <div className="space-y-5 flex-shrink-0 lg:px-14 sm:px-2 md:px-8 lg:w-7/12">
                 <div className="flex justify-between items-center mt-4">
@@ -61,6 +61,9 @@ export default function Home() {
                 </div>
                 <Suspense fallback={<h2>Loading...</h2>}>
                     <Status />
+                  {/*   {
+                        auth
+                    } */}
                     {
                         homePosts.loading
                             ? <img src={LoadIcon} alt="loading" className="d-block mx-auto" />

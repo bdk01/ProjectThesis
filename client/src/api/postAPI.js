@@ -9,15 +9,13 @@ import { createNotify } from "./notifyAPI"
 
   export const createPost = async ({content, images, auth,socket,dispatch}) => {
     try {
-    
+        
        const res =   await axios.post("/api/create-post", {content, images }, {
                 headers: { Authorization: auth.accesstoken }
             })
          
             showNotification('success',"success create post")
-          /*   console.log(res) */
-        // Notify
-        /* console.log(images) */
+      
         const msg = {
             id: res.data.newPost._id,
             text: 'added a new post.',
@@ -29,6 +27,30 @@ import { createNotify } from "./notifyAPI"
         console.log(msg)
         dispatch(resetIds())
         dispatch(createNotify({msg, auth,dispatch, socket}))
+    } catch (err) {
+   
+    }
+}
+  export const createForumPost = async ({content, images, auth,socket,dispatch,forumId}) => {
+    try {
+        console.log({content, images,forumId })
+       const res =   await axios.post("/api/create-forum-post", {content, images,forumId }, {
+                headers: { Authorization: auth.accesstoken }
+            })
+         
+            showNotification('success',"success create post")
+            
+        /* const msg = {
+            id: res.data.newPost._id,
+            text: 'added a new post.',
+            recipients: res.data.newPost.user.followers,
+            url: `/post/${res.data.newPost._id}`,
+            content, 
+            image: images[0].url
+        }
+        console.log(msg) */
+        dispatch(resetIds())
+       /*  dispatch(createNotify({msg, auth,dispatch, socket})) */
     } catch (err) {
    
     }
@@ -69,6 +91,18 @@ import { createNotify } from "./notifyAPI"
     try {
 
        const res =   await axios.get(`/api/get-posts?filter=${value}`, {
+                headers: { Authorization: auth.accesstoken }
+            })
+            dispatch(getPost( {...res.data, page: 2}))
+       
+    } catch (err) {
+      console.log(err)
+    }
+}
+  export const getForumPosts = async (auth,dispatch,value,id) => {
+    try {
+
+       const res =   await axios.get(`/api/get-forum/posts/${id}`, {
                 headers: { Authorization: auth.accesstoken }
             })
             dispatch(getPost( {...res.data, page: 2}))

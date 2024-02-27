@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { CloseStatus } from '../../redux/statusSlice'
 import axios from '../../axios'
 import { BsCardImage } from "react-icons/bs";
-import { createPost, editPost } from '../../api/postAPI';
-import { useNavigate } from "react-router-dom";
+import { createForumPost, createPost, editPost } from '../../api/postAPI';
+import { useNavigate, useParams } from "react-router-dom";
 import { updatePost } from '../../redux/postSlice';
 import { imageUpload } from '../../utils/imageUpload';
 import { useTranslation } from 'react-i18next';
@@ -16,10 +16,12 @@ const StatusModal = () => {
     const [images, setImages] = useState([])
     const { t } = useTranslation();
     const [stream, setStream] = useState(false)
+    const [forum, setForum] = useState(false)
     const videoRef = useRef()
     const refCanvas = useRef()
     const [tracks, setTracks] = useState('')
-
+    const { id } = useParams()
+   
     const handleChangeImages = async(e) => {
    /*    const files =e.target.files[0];
       if (!files) return alert("file is not exist!");
@@ -75,7 +77,13 @@ const StatusModal = () => {
         setImages([...images, {camera: URL}])
 
     }
-
+    useEffect(()=>{
+      
+      if(id){
+        setForum(true)
+      }
+     
+    },[])
     const handleStopStream = () => {
         tracks.stop()
         setStream(false)
@@ -95,7 +103,14 @@ const StatusModal = () => {
           await editPost({ content, images, auth, status, dispatch })
         }else{
      /*      createPost({content, images, auth, socket,dispatch}) */
-          await  createPost({images:images,content:content,auth:auth,socket,dispatch})
+     if(forum){
+      
+      await  createForumPost({images:images,content:content,auth:auth,socket,dispatch,forumId:id})
+     }
+     else {
+       
+         await  createPost({images:images,content:content,auth:auth,socket,dispatch})
+     }
            
         }
 
@@ -103,7 +118,7 @@ const StatusModal = () => {
         setImages([])
        dispatch(CloseStatus({ status: false }))
        navigate('/home')
-       /*  if(tracks) tracks.stop() */
+     
 
     }
 

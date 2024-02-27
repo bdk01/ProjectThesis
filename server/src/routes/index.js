@@ -12,6 +12,7 @@ import subjectRoute from "./subjectRoute";
 import taEnrollmentRoute from "./taEnrollmentRoute";
 
 import groupRoute from "./groupRoute";
+import forumRoute from "./forumRoute";
 
 
 const appRouter = express.Router();
@@ -28,5 +29,6 @@ appRouter.use("/api",notifyRoute);
 appRouter.use("/api",commentRoute);
 appRouter.use("/api",subjectRoute);
 appRouter.use("/api",taEnrollmentRoute);
+appRouter.use("/api",forumRoute);
 
 export default appRouter;

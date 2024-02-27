@@ -103,10 +103,12 @@ const postCtrl = {
            const uniq = [...new Set(newArr)]
          
 
-            const features =  new APIfeatures(Posts.find({
+            /* const features =  new APIfeatures(Posts.find({
                 user: uniq
+            }), req.query).paginating() */
+            const features =  new APIfeatures(Posts.find({
+                user: uniq,forumId:null
             }), req.query).paginating()
-   
             const posts = await features.query.sort(filter)
             .populate("user likes", "avatar username fullname followers")
             .populate({

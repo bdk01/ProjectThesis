@@ -5,7 +5,7 @@ import { SiGooglemeet} from "react-icons/si";
 
 import { AiOutlineSchedule } from "react-icons/ai";
 import { FaUserGraduate } from "react-icons/fa";
-
+import { MdOutlineGroups } from "react-icons/md";
 
 
 export const LeftNavItem = [
@@ -57,19 +57,7 @@ export const LeftNavItem = [
     },
    
     
-/*     {
-      index: 3,
-      icon: (
-        <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer'/>
-      ),
-      iconActive: (
-        <SiGooglemeet className='w-[35px] h-[35px] cursor-pointer'/>
-      ),
-      path: 'meeting',
-      name: 'Meeting',
-      subIcon: [],
-    },
-     */
+
     
     {
       index: 4,
@@ -81,6 +69,18 @@ export const LeftNavItem = [
       ),
       path: 'review-ta',
       name: 'Information Ta',
+      subIcon: [],
+    },
+    {
+      index: 5,
+      icon: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      iconActive: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      path: 'forum',
+      name: 'Forum',
       subIcon: [],
     },
   
@@ -159,6 +159,18 @@ export const LeftNavItemVi = [
       ),
       path: 'review-ta',
       name: 'Thông tin TA',
+      subIcon: [],
+    },
+    {
+      index: 5,
+      icon: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      iconActive: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      path: 'forum',
+      name: 'Hội nhóm',
       subIcon: [],
     },
   
@@ -392,6 +404,18 @@ export const LeftNavItemVi = [
       name: 'TaEnrollment',
       subIcon: [],
     },
+    {
+      index: 8,
+      icon: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      iconActive: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      path: 'forum',
+      name: 'Forum',
+      subIcon: [],
+    },
     
    
     
@@ -526,7 +550,18 @@ export const LeftNavItemVi = [
       name: 'Quản lý đăng ký',
       subIcon: [],
     },
-    
+    {
+      index: 5,
+      icon: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      iconActive: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      path: 'forum',
+      name: 'Hội nhóm',
+      subIcon: [],
+    },
    
     
   
@@ -635,7 +670,18 @@ export const LeftNavItemVi = [
       name: 'Information TA',
       subIcon: [],
     },
-  
+    {
+      index: 6,
+      icon: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      iconActive: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      path: 'forum',
+      name: 'Forum',
+      subIcon: [],
+    },
   ]
   
  export const TaNavItemVi = [
@@ -740,6 +786,18 @@ export const LeftNavItemVi = [
       ),
       path: 'review-ta',
       name: 'Thông tin TA',
+      subIcon: [],
+    },
+    {
+      index:6,
+      icon: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      iconActive: (
+        <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
+      ),
+      path: 'forum',
+      name: 'Hội nhóm',
       subIcon: [],
     },
   

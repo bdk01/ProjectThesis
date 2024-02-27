@@ -13,9 +13,7 @@ const userCtrl = {
         username: { $regex: req.query.username },
       })
         .limit(8)
-        .select("fullname username avatar")
-      
-
+        .select("fullname username avatar")    
       res.json({ users });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
