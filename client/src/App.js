@@ -76,17 +76,7 @@ const App = () => {
     return () => socket.close();
   }, [dispatch]);
 
- /*  const isMobile = window.matchMedia(
-    "only screen and (max-width: 768px)"
-  ).matches;
-
-  useEffect(() => {
-    if (isMobile) {
-      window.onbeforeunload = () => {
-        return "Are you sure you want to exit?";
-      };
-    }
-  }, [isMobile]); */
+ 
   useEffect(() => {
     if (auth.accesstoken) {
       /*     dispatch(getPosts(auth.token))
@@ -95,9 +85,7 @@ const App = () => {
       getNotifies({ auth, dispatch })
     }
   }, [dispatch, auth.accesstoken, socket])
-  /*  useEffect(()=>{
-     i18n.changeLanguage('vi')
-   },[]) */
+  
   const Home = lazy(() => import('./pages/Home'));
   return (
     <Router>

@@ -37,20 +37,28 @@ import { createNotify } from "./notifyAPI"
        const res =   await axios.post("/api/create-forum-post", {content, images,forumId }, {
                 headers: { Authorization: auth.accesstoken }
             })
-         
+            const { data:data1 } = await axios.get(`/api/forum/${forumId}`, {
+              headers: { Authorization: auth.accesstoken },
+          })
+          console.log(data1[0])
             showNotification('success',"success create post")
             
-        /* const msg = {
+          const newattendees =  data1[0].attendees.filter((att)=>
+           
+              att._id !== auth.user._id
+           
+          )
+        const msg = {
             id: res.data.newPost._id,
-            text: 'added a new post.',
-            recipients: res.data.newPost.user.followers,
-            url: `/post/${res.data.newPost._id}`,
+            text: `${data1[0].forumName} have a new post `,
+            recipients: newattendees,
+            url: `/forum/${forumId}`,
             content, 
             image: images[0].url
         }
-        console.log(msg) */
-        dispatch(resetIds())
-       /*  dispatch(createNotify({msg, auth,dispatch, socket})) */
+        console.log(msg)
+        /* dispatch(resetIds()) */
+        dispatch(createNotify({msg, auth,dispatch, socket}))
     } catch (err) {
    
     }
@@ -102,7 +110,7 @@ import { createNotify } from "./notifyAPI"
   export const getForumPosts = async (auth,dispatch,value,id) => {
     try {
 
-       const res =   await axios.get(`/api/get-forum/posts/${id}`, {
+       const res =   await axios.get(`/api/get-forum/posts/${id}?filter=${value}`, {
                 headers: { Authorization: auth.accesstoken }
             })
             dispatch(getPost( {...res.data, page: 2}))

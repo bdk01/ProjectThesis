@@ -35,6 +35,7 @@ export function useAcceptJoinForumDetail() {
     },
     onSettled: () =>{
       queryClient.invalidateQueries({ queryKey: ['forum-detail'] })
+      queryClient.invalidateQueries({ queryKey: ['groups'] })
       queryClient.invalidateQueries({ queryKey: ['forum-status'] })
     }
   })
@@ -68,11 +69,32 @@ export function useKickForumDetail() {
       const { data } =   await axios.post(`/api/kickMember/${id}`,{userId},{
         headers: { Authorization: auth.accesstoken }
     })
- 
+      console.log(data)
     },
 
     onSettled: () =>{
       queryClient.invalidateQueries({ queryKey: ['forum-detail'] })
+      queryClient.invalidateQueries({ queryKey: ['groups'] })
+      queryClient.invalidateQueries({ queryKey: ['forum-status'] })
+    }
+  })
+}
+export function useJoinPublicForumDetail() {
+
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({userId,auth,id}) => {
+      
+    
+      const { data } =   await axios.post(`/api/joinPublic/${id}`,{userId},{
+        headers: { Authorization: auth.accesstoken }
+    })
+    console.log(data)
+    },
+
+    onSettled: () =>{
+      queryClient.invalidateQueries({ queryKey: ['forum-detail'] })
+      queryClient.invalidateQueries({ queryKey: ['groups'] })
       queryClient.invalidateQueries({ queryKey: ['forum-status'] })
     }
   })
@@ -123,6 +145,7 @@ export function useDeleteForumDetail() {
     },
     onSettled: () =>{
       queryClient.invalidateQueries({ queryKey: ['forum-detail'] })
+      
       queryClient.invalidateQueries({ queryKey: ['forum-status'] })
     }
   })

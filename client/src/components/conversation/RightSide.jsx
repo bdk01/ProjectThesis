@@ -7,6 +7,7 @@ import { addMessages, getMessages, getMoreMessages } from "../../api/messageAPI"
 import { v4 as uuidv4 } from 'uuid';
 import { getRoom } from "../../redux/peerSlice";
 import { Text } from "@mantine/core";
+import { fetchMessage } from "../../redux/messageSlice";
 export default function RightSide() {
     const { auth, message} = useSelector(state => state)
     const { socket } = useSelector(state => state.socket)
@@ -104,7 +105,8 @@ export default function RightSide() {
         setTimeout(()=>{
             if (isLoadMore > 1) {
                 if (result >= page * 9) {
-                    dispatch(getMoreMessages({ auth, id:id, page: page + 1,dispatch }))
+                   /*  dispatch(getMoreMessages({ auth, id:id, page: page + 1,dispatch })) */
+                   dispatch(fetchMessage({ auth, id:id, page: page + 1,dispatch }))
                     setIsLoadMore(1)
                 }
             }

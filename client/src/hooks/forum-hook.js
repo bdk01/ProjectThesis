@@ -38,12 +38,12 @@ export function useGetGroup({type,auth,page}) {
     queryKey: ['groups',{type,page}],
     queryFn: async () => {
       console.log(type)
-      const response = await axios.get(`/api/Allforum?type=${type}&&page=${page}`,{
+      const response = await axios.get(`/api/Allforum?type=${type}&&page=${page}&&limit=${6}`,{
         headers: { Authorization: auth.accesstoken }
     })
      
       const { data } = response
-      return data.forum
+      return data
     },
     staleTime: 30000
   })

@@ -44,7 +44,8 @@ const postCtrl = {
     },
     getPosts: async (req, res) => {
         try {
-            const { filter } = req.query;
+           /*  const { filter } = req.query; */
+            const filter = req.query.filter ? req.query.filter : '-createdAt';
        /*     
             clientRedis.get(`posts/${filter}`, async (err, cachedposts) => {
                 if (err) throw err;
@@ -439,7 +440,21 @@ const postCtrl = {
                return res.status(500).json({msg: err.message})
            }
   },
-  
+   
+  getNumberOfAll: async (req, res) => {
+      try {
+        var lengthUsers = await  Users.find({}).count();
+        var lengthPosts = await  Posts.find({}).count();
+
+          res.json({
+            lengthUsers,
+            lengthPosts
+          })
+
+      } catch (err) {
+          return res.status(500).json({msg: err.message})
+      }
+    }
 }
 
 export default postCtrl

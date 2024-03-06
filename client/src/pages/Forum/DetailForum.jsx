@@ -25,7 +25,7 @@ export default function ForumDetailPage() {
     const [forumData, setForumData] = useState([])
     const dispatch = useDispatch()
     const { t } = useTranslation();
-    const [value, setValue] = useState('-createdAt');
+    const [value, setValue] = useState('createdAt');
     const { id } = useParams()
     const { mutateAsync: requestJoin ,isLoading:loadingRequest,isSuccess } =useRequestJoinForumDetail()
     const { data, isError, isFetching, isLoading, refetch } = useGetForumDetail({
@@ -34,7 +34,7 @@ export default function ForumDetailPage() {
     const { data:dataStatus,isLoading:loadingStatus } = useGetStatusForumDetail({
         auth,id
       })
-     console.log('test',dataStatus)
+  
     useEffect(() => {
         const call = async () => {
 
@@ -72,6 +72,7 @@ export default function ForumDetailPage() {
    
     useEffect(() => {
         if ((auth.accesstoken || status.status)&& data &&!isFetching ) {
+            const value = "-createdAt"
             getForumPosts(auth, dispatch, value, id)
         }
     }, [auth.accesstoken, dispatch, status, value, id,isFetching])
@@ -122,7 +123,7 @@ export default function ForumDetailPage() {
                     </div>
                     <div className="lg:w-5/12">
 
-                        <RightSideForum forumData={data} />
+                        <RightSideForum isJoining={isJoining} setIsJoining={setIsJoining}  forumData={data} />
  
                     </div>
                 </div>
@@ -150,7 +151,7 @@ export default function ForumDetailPage() {
                     </div>
                     <div className="lg:w-5/12">
 
-                        <RightSideForum forumData={data} />
+                        <RightSideForum isJoining={isJoining} setIsJoining={setIsJoining} forumData={data} />
 
                     </div>
                 </div>

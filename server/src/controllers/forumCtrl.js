@@ -8,7 +8,7 @@ class APIfeatures {
 
     paginating(){
         const page = this.queryString.page * 1 || 1
-        const limit = this.queryString.limit * 1 || 2
+        const limit = this.queryString.limit * 1 || 3
         const skip = (page - 1) * limit
         this.query = this.query.skip(skip).limit(limit)
         return this;
@@ -108,7 +108,23 @@ const forumCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
-  
+    joinPublic: async (req, res) => {
+        try {
+            const { userId } = req.body
+            await Forum.findOneAndUpdate(
+                { _id: req.params.id },
+               {
+                $push: { attendees: userId }
+               } 
+                , {new: true}
+              );
+            res.status(200).json({ msg:"success"});
+          
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+
     kickMember: async (req, res) => {
         try {
             const { userId } = req.body
@@ -143,7 +159,7 @@ const forumCtrl = {
             /* const posts = await Posts.find({
                 forumId:req.params.id,
             }) */
-            const { filter } = req.query;
+            const { filter,page } = req.query;
             const features =  new APIfeatures(Posts.find({
                 forumId:req.params.id,
             }), req.query).paginating()
@@ -171,12 +187,80 @@ const forumCtrl = {
         try {
             const {type} = req.query
             if(type=="myforum"){
-                const forum = await Forum.find({creator:req.user._id})
-                res.json({ forum });
+              /*   const forum = await Forum.find({creator:req.user._id})
+                res.json({ forum }); */
+              
+                const pageSize = req.query.limit ? parseInt(req.query.limit) : 5
+                const page = req.query.page ? parseInt(req.query.page-1) : 0;
+         
+              const { keyword, sortBy,  description,  forumName } = req.query;
+        
+              var query = {};
+              var keywordCondition = keyword
+                ? {
+                  $or: [
+                 
+                    { forumName: { $regex: keyword, $options: "i" } },
+                    { description: { $regex: keyword, $options: "i" } },
+                  ],
+                }
+                : {};
+        
+              if (forumName) {
+                query.forumName = forumName;
+              }
+              if (description) {
+                query.description = description;
+              }
+          
+              const forum = await Forum.find({ $and: [query, keywordCondition,{creator:req.user._id}] })
+                .limit(pageSize)
+                .skip(pageSize * page)
+                .sort(`${sortBy}`)
+             
+              var length = await Forum.find({ $and: [query, keywordCondition,{creator:req.user._id}] }).count();
+              res.status(200).json({
+                status: 'success',
+                result:length,
+                forum
+              })   
             }
             if(type=="all"){
-                const forum = await Forum.find().limit(8)
-                res.json({ forum });
+               const pageSize = req.query.limit ? parseInt(req.query.limit) : 5
+               const page = req.query.page ? parseInt(req.query.page-1) : 0;
+           
+                const { keyword, sortBy,  description,  forumName } = req.query;
+          
+                var query = {};
+                var keywordCondition = keyword
+                  ? {
+                    $or: [
+                   
+                      { forumName: { $regex: keyword, $options: "i" } },
+                      { description: { $regex: keyword, $options: "i" } },
+                    ],
+                  }
+                  : {};
+          
+                if (forumName) {
+                  query.forumName = forumName;
+                }
+                if (description) {
+                  query.description = description;
+                }
+            
+                const forum = await Forum.find({ $and: [query, keywordCondition] })
+                  .limit(pageSize)
+                  .skip(pageSize * page)
+                  .sort(`${sortBy}`)
+               
+                var length = await Forum.find({ $and: [query, keywordCondition] }).count();
+                res.status(200).json({
+                  status: 'success',
+                  result:length,
+                  forum
+                })   
+             
             }
                
           
@@ -187,18 +271,11 @@ const forumCtrl = {
   
     getForums: async (req, res) => {
         try {
-          /*   const {type} = req.query
-            if(type=="myforum"){
-                const forum = await Forum.find({creator:req.user._id})
-                res.json({ forum });
-            }
-            if(type=="all"){
-            } */
-        /*     const forum = await Forum.find().limit(8)
-            res.json({ forum }); */
+           
             const pageSize = req.query.pageSize ? parseInt(req.query.pageSize) : 5
             const page = req.query.page ? parseInt(req.query.page) : 0;
             /*  console.log(req.query.sorting)
+            
              console.log(req.query.globalFilter) */
             const { keyword, sortBy,  description,  forumName } = req.query;
       
@@ -220,6 +297,7 @@ const forumCtrl = {
               query.description = description;
             }
             /*  const users = await Users.find({}).select("-password"); */
+            console.log('qwd')
             const forum = await Forum.find({ $and: [query, keywordCondition] })
               .limit(pageSize)
               .skip(pageSize * page)

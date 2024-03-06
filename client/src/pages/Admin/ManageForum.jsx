@@ -120,7 +120,9 @@ function ManageForum() {
              /*   const response = await axios.get(`/api/Allforum?type=${type}`,{
                     headers: { Authorization: auth.accesstoken }
                 }) */
-               const { data: response } = await axios.get(`/api/Allforums`,  {
+               const { data: response } = await axios.get(`/api/Allforums`,/*  {
+                    params
+               }, */  {
                     headers: { Authorization: auth.accesstoken }
                });
                console.log(response)
@@ -200,7 +202,7 @@ function ManageForum() {
 
                     <span className="text-3xl font-bold uppercase hidden md:block">Manage Forums</span>
 
-                   {/*  <Input.Search
+               {/*      <Input.Search
                          className="w-1/3 lg:w-[400px]"
                          placeholder="Search"
                          onSearch={searchByKeyword}

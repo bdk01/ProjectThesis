@@ -42,18 +42,25 @@ function GroupComponent({type}) {
           <div className='flex items-center'></div>
           <div className='flex justify-between '></div>
         </div>
-        <div className=' z-[20] h-[44px] w-[180px] flex items-center '>
+        <div className='flex w-[100%] items-center justify-between'>
+        
+          <div className=' z-[20] h-[44px] w-[180px] flex start '>
+            
+      {
+        auth?.user.role!=="user" &&
+
+              <Button
+                    variant='outline'
+                    size='md'
+                    className=' mb-1'
+                    onClick={() => openAddModal()}
+                  >
+                    Create Forum
+                  </Button>
+      }
+
           
-
-             <Button
-                  variant='outline'
-                  className=' mb-1'
-                  onClick={() => openAddModal()}
-                >
-                  Create Forum
-                </Button>
-
-         
+          </div>
         </div>
       </div>
 
@@ -66,13 +73,11 @@ function GroupComponent({type}) {
           </Flex>
             : 
             
-              data?.map((group) => (
+              data?.forum?.map((group) => (
                 <Grid.Col span={2} key={group._id} >
                   <CardGroup group={group} type={type} />
                 </Grid.Col>
               ))
-            
-         
 
           }
         </Grid>
@@ -80,7 +85,7 @@ function GroupComponent({type}) {
           !isFetching  &&
           <Flex className='justify-center items-center my-2'>
 
-              <Pagination value={activePage} siblings={1} onChange={setPage} total={2} styles={(theme) => ({
+              <Pagination value={activePage} /* siblings={1} */ onChange={setPage} total={Math.ceil(data?.result/6)} styles={(theme) => ({
                   control: {
                     '&[data-active]': {
                       backgroundImage: theme.fn.gradient({ from: 'blue', to: 'purple' }),

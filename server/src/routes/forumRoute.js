@@ -10,6 +10,7 @@ forumRoute.get("/get-forum/posts/:id",forumCtrl.getPostsForum);
 forumRoute.get("/checkforum/:id",auth,forumCtrl.checkForum);
 forumRoute.post("/accept-join/:id",auth,forumCtrl.acceptJoining);
 forumRoute.post("/kickMember/:id",auth,forumCtrl.kickMember);
+forumRoute.post("/joinPublic/:id",auth,forumCtrl.joinPublic);
 forumRoute.post("/reject-join/:id",auth,forumCtrl.rejectJoining);
 forumRoute.post("/requestJoin/:id",auth,forumCtrl.requestJoining);
 forumRoute.post("/create-forum", forumCtrl.createForum);

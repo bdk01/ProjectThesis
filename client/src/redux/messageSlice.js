@@ -1,6 +1,34 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { moveObjectToFirst } from "../utils/helper";
-
+import axios from '../axios'
+export const fetchMessage = createAsyncThunk(
+  'data/fetchMessage',
+  async (additionalParam, thunkAPI) => {
+    try {
+      // Here you can access additionalParam
+      console.log('Additional Param:', additionalParam.id);
+      
+      // Perform your async operation, for example fetching data from an API
+      const res = await axios.get(`/api/message/${additionalParam.id}?limit=${additionalParam.page * 9}`, {
+        headers: { Authorization: additionalParam.auth.accesstoken },
+      });
+      console.log(additionalParam.dispatch)
+   
+       const newData = {
+         ...res.data,
+         messages: res.data.messages.reverse(),
+       };
+      /*  await  */    thunkAPI.dispatch(GetMessage({...newData,_id:additionalParam.id,page:additionalParam.page} ));
+      // You can also access the Redux store state and dispatch additional actions
+    /*   thunkAPI.dispatch(someOtherAction()); */
+      
+      /* return data; */
+    } catch (error) {
+      // Handle errors
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 export const messageSlice = createSlice({
   name: "message",
   initialState: {
@@ -48,32 +76,26 @@ export const messageSlice = createSlice({
                result: item.result + 1
             } ]
         })
-      /*   const moveObjectToFirst = (array, objectId) => {
-          const newArray = [...array];
-          const indexToMove = newArray.findIndex(obj => obj.id === objectId);
-        
-          if (indexToMove !== -1) {
-            const objectToMove = newArray.splice(indexToMove, 1)[0];
-            newArray.unshift(objectToMove);
-          }
-        
-          return newArray;
-        }; */
-        state.users=moveObjectToFirst(state.users,payload.conversation)
-     /*    const gg1 = [...state.users]
-        console.log(gg1) */
-
-
-   /*    if(state.users.every(user => user.conversation === payload.conversation)){
-        state.users=[payload, ...state.users]
-      } */
-    /*  const  gg = state.users.filter(
-         (user) =>  user.conversation !== payload.conversation
-       );
   
-         state.users=[{ ...state.userChat  } , ...gg] 
-     */
+        state.users=moveObjectToFirst(state.users,payload.conversation)
+  
     },
+ 
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchMessage.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchMessage.fulfilled, (state, {payload}) => {
+        state.loading = false;
+        state.data = [payload]
+      })
+      .addCase(fetchMessage.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
   },
 });
 export const { GetMessage, GetConversations, AddUser,CheckOnline,AddMessage,GetUserChat } = messageSlice.actions;
