@@ -9,10 +9,12 @@ import CreateGroupModal from '../../components/Forum/CreateGroupModal'
 import { useEffect, useState } from 'react'
 import { useGetGroup } from '../../hooks/forum-hook'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 function GroupComponent({type}) {
   const {  auth } = useSelector(state => state)
   const [activePage, setPage] = useState(1);
+  const { t } = useTranslation();
   const [opened, { open, close }] = useDisclosure(false)
   const [typefetch,setTypefetch]=useState("")
   const { data, isError, isFetching, isLoading, refetch } = useGetGroup({type:typefetch,auth,page:activePage})
@@ -55,7 +57,7 @@ function GroupComponent({type}) {
                     className=' mb-1'
                     onClick={() => openAddModal()}
                   >
-                    Create Forum
+                    {t('Create forum')}
                   </Button>
       }
 

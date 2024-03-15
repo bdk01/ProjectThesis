@@ -45,7 +45,7 @@ export function useGetGroup({type,auth,page}) {
       const { data } = response
       return data
     },
-    staleTime: 30000
+    staleTime: 1000
   })
 }
 

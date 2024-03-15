@@ -2,12 +2,12 @@ import axios from "../axios"
 import { getNotify, removeAllNotify, updateNotify } from "../redux/notifySlice"
 export const createNotify = async ({msg, auth, dispatch,socket}) => {
     try {
-     /*    console.log(msg) */
+     
        const res =   await axios.post("/api/notify", msg , {
                 headers: { Authorization: auth.accesstoken }
             })
-       /*   console.log(res) */
      
+     console.log(res)
              socket.emit('createNotify', {
             ...res.data.notify,
             user: {

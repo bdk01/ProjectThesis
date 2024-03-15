@@ -170,7 +170,7 @@ export const LeftNavItemVi = [
         <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
       ),
       path: 'forum',
-      name: 'Hội nhóm',
+      name: 'Diễn đàn',
       subIcon: [],
     },
   
@@ -559,7 +559,7 @@ export const LeftNavItemVi = [
         <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
       ),
       path: 'forum',
-      name: 'Hội nhóm',
+      name: 'Diễn đàn',
       subIcon: [],
     },
    
@@ -797,7 +797,7 @@ export const LeftNavItemVi = [
         <MdOutlineGroups  className='w-[35px] h-[35px] cursor-pointer'/>
       ),
       path: 'forum',
-      name: 'Hội nhóm',
+      name: 'Diễn đàn',
       subIcon: [],
     },
   

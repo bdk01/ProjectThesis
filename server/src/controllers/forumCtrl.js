@@ -1,5 +1,6 @@
 import Forum from "../models/forumModel";
-import Posts from '../models/postModel'
+import Posts from '../models/postModel';
+import Users from "../models/userModel";
 class APIfeatures {
     constructor(query, queryString){
         this.query = query;
@@ -15,7 +16,6 @@ class APIfeatures {
     }
 }
 const forumCtrl = {
-
     createForum: async (req, res) => {
         try {
             const { forumName,description,creator,isPrivate} = req.body;
@@ -348,6 +348,21 @@ const forumCtrl = {
                   );
 
                   res.json({ msg:'sucess'});
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+
+  
+    getUserOutsideForum: async (req, res) => {
+        try {
+       
+             const forum =   await Forum.find( { _id: req.params.id });
+     
+             const newforum = forum[0].attendees
+             const user = await  Users.find({ _id: { $not: { $in: newforum } } })
+
+                  res.json({ msg:'sucess',user});
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

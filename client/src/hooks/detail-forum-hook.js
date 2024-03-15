@@ -114,7 +114,23 @@ export function useGetForumDetail({
     
       return data[0]
     },
-    staleTime: 40000
+    staleTime: 1000
+  })
+}
+export function useGetOutsideUser({
+  auth,id
+}) {
+  return useQuery({
+    queryKey: ['forum-outside',id],
+    queryFn: async () => {
+      const { data } = await axios.get(`/api/getUserOutside/${id}`, {
+        headers: { Authorization: auth.accesstoken },
+    })
+     console.log(data)
+    
+      return data.user
+    },
+    staleTime: 1000
   })
 }
 export function useGetStatusForumDetail({
@@ -128,7 +144,7 @@ export function useGetStatusForumDetail({
     })  
       return data
     },
-    staleTime: 40000
+    staleTime: 1000
   })
 }
 

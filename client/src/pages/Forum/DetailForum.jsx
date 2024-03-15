@@ -12,8 +12,8 @@ import { Button, Flex, Loader, Select, Text } from "@mantine/core";
 import axios from "../../axios"
 import { useParams } from "react-router-dom";
 import RightSideForum from "./RightSideForum";
-import { useGetForumDetail, useGetStatusForumDetail, useRequestJoinForumDetail } from "../../hooks/detail-forum-hook";
-import forum from "../../assets/img/forum1.jpg"
+import { useGetForumDetail, useGetOutsideUser, useGetStatusForumDetail, useRequestJoinForumDetail } from "../../hooks/detail-forum-hook";
+import forum from "../../assets/img/forum.JPG"
 
 
 export default function ForumDetailPage() {
@@ -34,7 +34,9 @@ export default function ForumDetailPage() {
     const { data:dataStatus,isLoading:loadingStatus } = useGetStatusForumDetail({
         auth,id
       })
-  
+      const { data:dataOuside } =  useGetOutsideUser({
+        auth,id
+      })
     useEffect(() => {
         const call = async () => {
 
@@ -123,7 +125,7 @@ export default function ForumDetailPage() {
                     </div>
                     <div className="lg:w-5/12">
 
-                        <RightSideForum isJoining={isJoining} setIsJoining={setIsJoining}  forumData={data} />
+                        <RightSideForum isJoining={isJoining} setIsJoining={setIsJoining}  forumData={data} outsideUser={dataOuside} />
  
                     </div>
                 </div>
@@ -151,7 +153,7 @@ export default function ForumDetailPage() {
                     </div>
                     <div className="lg:w-5/12">
 
-                        <RightSideForum isJoining={isJoining} setIsJoining={setIsJoining} forumData={data} />
+                        <RightSideForum isJoining={isJoining} setIsJoining={setIsJoining} forumData={data} outsideUser={dataOuside} />
 
                     </div>
                 </div>

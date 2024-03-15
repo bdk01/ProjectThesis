@@ -16,6 +16,7 @@ forumRoute.post("/requestJoin/:id",auth,forumCtrl.requestJoining);
 forumRoute.post("/create-forum", forumCtrl.createForum);
 forumRoute.post("/create-forum-post",auth, forumCtrl.createForumPost);
 forumRoute.post('/update-forum/:id', forumCtrl.updateForum)
+forumRoute.get('/getUserOutside/:id',auth, forumCtrl.getUserOutsideForum)
 forumRoute.delete('/delete-forum/:id',auth, forumCtrl.deleteForum)
 
 export default forumRoute;

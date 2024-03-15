@@ -64,11 +64,15 @@
     "Create":"Create",
     "submit":"Submit",
     "All Forum":"All Forum",
-    "My Forum":"My Forum",
+    "My Forum":"Manange Forum",
     "List of waitingUsers":"List of waitingUsers",
     "List of Member":"List of Member",
     "Leave":"Leave",
-    "Join":"Join"
+    "Join":"Join",
+    "Invite":"Invite",
+    "Go to forum":"Go to forum",
+    "member":"member",
+    "Create forum":"Create forum"
 
 
 }

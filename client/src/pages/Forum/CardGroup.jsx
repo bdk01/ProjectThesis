@@ -12,8 +12,10 @@ import { TbLockBolt } from "react-icons/tb";
 import { useSelector } from 'react-redux'
 import { IoTrashBinOutline } from "react-icons/io5";
 import { MdEdit } from 'react-icons/md'
+import { useTranslation } from 'react-i18next'
 function CardGroup({ group,type }) {
   const { auth } = useSelector(state => state)
+  const { t } = useTranslation();
   const [isOpenedEditModal, { open: openEditModal, close: closeEditModal }] =
     useDisclosure(false)
   const { mutateAsync: deleteGroup } =
@@ -87,14 +89,14 @@ function CardGroup({ group,type }) {
         </Group>
         <Flex className=' mt-2 justify-between'>
           <Text size='sm' c='dimmed'>
-            {group?.attendees?.length } member
+            {group?.attendees?.length } {t('member')}
           </Text>
           <Button
                   variant='outline'
                   className=' mb-1'
                   onClick={() => handleNavigate(group._id)}
                 >
-                 Go to group
+                 {t('Go to forum')}
             </Button>
         </Flex>
       </Card>

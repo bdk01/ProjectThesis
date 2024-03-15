@@ -1,22 +1,40 @@
 import React from 'react'
 /* import Avatar from './Avatar' */
 import { Link, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, Flex } from '@mantine/core'
 import {  useKickForumDetail } from '../../hooks/detail-forum-hook'
+import { createNotify } from '../../api/notifyAPI'
+import axios from '../../axios'
+import { useTranslation } from 'react-i18next'
+const UserCardForumInvite = ({children, user, border, handleClose, setShowFollowers, setShowFollowing, forum}) => {
+    const dispatch = useDispatch()
+    const { auth,socket} = useSelector(state => state)
+    const { t } = useTranslation();
 
-const UserCardForumMember = ({children, user, border, handleClose, setShowFollowers, setShowFollowing, msg}) => {
-   
-    const { auth} = useSelector(state => state)
-    console.log(user)
-    const { mutateAsync: kickMember } =useKickForumDetail()
     const { id } = useParams()
     const handleCloseAll = () => {
         if(handleClose) handleClose()
         if(setShowFollowers) setShowFollowers(false)
         if(setShowFollowing) setShowFollowing(false)
     }
-
+    const Share = async()=>{
+        console.log(forum)
+        const msg = {
+           /*  id: res.data.newPost._id, */
+            text: `has invite you`,
+            recipients: [user._id],
+            url: `/forum/${forum._id}`,
+            content:'New invite for you', 
+            image: 'https://thumbs.dreamstime.com/b/group-people-logo-handshake-circle-teamwork-icon-vector-illustrator-150899205.jpg'
+        }
+        console.log(msg)
+        /* dispatch(createNotify({msg, auth,dispatch, socket:socket.socket})) */
+        const res =   await axios.post("/api/notify", msg , {
+            headers: { Authorization: auth.accesstoken }
+        })
+        console.log(res)
+    }
     return (
         <div className={`d-flex p-2 align-items-center justify-between w-100 mb-1 ${border}`}>
             <div className='flex  items-center'>
@@ -27,7 +45,6 @@ const UserCardForumMember = ({children, user, border, handleClose, setShowFollow
                             <img
                                 src={user.avatar}
                                 className=" w-[100%] h-[100%] rounded-[50%]"
-                          
                             />
                             </div>
 
@@ -46,11 +63,11 @@ const UserCardForumMember = ({children, user, border, handleClose, setShowFollow
                 <Button
                 variant='filled'
             
-                color='red'
-                className=' ml-1 mb-1 bg-red-400'
-                onClick={()=>kickMember({id,userId:user._id,auth})}
+                color='blue'
+                className=' ml-1 mb-1 bg-blue-500 '
+                onClick={Share}
             >
-               Kick
+                {t('Invite')}
             </Button>
               }
                 </Flex>
@@ -60,4 +77,4 @@ const UserCardForumMember = ({children, user, border, handleClose, setShowFollow
     )
 }
 
-export default UserCardForumMember
+export default UserCardForumInvite

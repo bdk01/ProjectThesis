@@ -34,11 +34,7 @@ const Posts = () => {
                 homePosts.posts.map(post => (
                     <PostCard key={post._id} post={post} />
                 ))
-            }
-
-          
-
-            
+            }          
        
         </div>
     )
