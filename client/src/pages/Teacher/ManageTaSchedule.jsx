@@ -71,9 +71,9 @@ function ManageTaSchedule() {
     },
     {
       title: "Link",
-      dataIndex: "link",
+      dataIndex: "_id",
      /*  render: (a) => <a>{`$${URL}/a`}</a>, */
-      render: text => <Link to={`${text}`}>Link</Link>
+      render: text => <Link to={`/registerTA/${text}`}>Link</Link>
     },
     ,
     {

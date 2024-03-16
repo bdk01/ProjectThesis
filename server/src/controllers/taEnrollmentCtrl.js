@@ -37,7 +37,7 @@ const taEnrollmentCtrl = {
                 subject, requirement, description, creator: req.user._id, dateCloseForm, expireAt: dateCloseForm
             })
             await newTaSchedules.save()
-
+      /*       console.log(newTaSchedules) */
             let end = dayjs(dateCloseForm).valueOf()
             let start = dayjs(newTaSchedules.createdAt).valueOf()
 
@@ -63,12 +63,12 @@ const taEnrollmentCtrl = {
     applyTaSchedule: async (req, res) => {
         try {
 
-            const { fullName, studentId, gpaTotal, gpaSubject, creator, link, requirement, subject, description } = req.body
+            const { fullName, studentId, gpaTotal, gpaSubject, creator, link, requirement, subject, description,expireAt } = req.body
 
 
 
             const newTaSchedules = new TaEnrollment({
-                link, subject, requirement, creator, fullName, studentId, gpaTotal, gpaSubject, candidate: req.user._id, fill: true, description
+                link, subject, requirement, creator, fullName, studentId, gpaTotal, gpaSubject, candidate: req.user._id, fill: true, description,expireAt
             })
 
             await newTaSchedules.save()
@@ -195,18 +195,30 @@ const taEnrollmentCtrl = {
     getTaSchedule: async (req, res) => {
         try {
             const user = await TaEnrollment.find({ candidate: req.user._id })
-            if (user) {
+            const creator = await TaEnrollment.find({ creator  : req.user._id })
+        /*     console.log(user)
+            console.log(creator) */
+            if (user.length!==0&&creator.length==0) {
                 return res.status(200).json(
                     {
                         "edit": true
                     }
                 )
             }
+            else if(creator){
+
+                const newTaSchedule = await TaEnrollment.find({ _id: req.params.id }).populate('subject creator')
+    
+    
+                return res.status(200).json(
+                    newTaSchedule
+                )
+            }
             const newTaSchedule = await TaEnrollment.find({ _id: req.params.id }).populate('subject creator')
 
 
             return res.status(200).json(
-                newTaSchedule,
+                newTaSchedule
             )
         } catch (err) {
             return res.status(500).json({ msg: err.message })

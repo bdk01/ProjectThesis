@@ -33,8 +33,9 @@ function ConfirmModal({ isVisible, onClose, onOk, text = "xóa Item",loading,dis
                                 Hủy
                             </Button>
                             <Button
-                            type="primary"
+                       /*      type="primary" */
                             size="large"
+                            className='bg-red-400 '
                             loading={loading}
                             onClick={onOk}
                             >

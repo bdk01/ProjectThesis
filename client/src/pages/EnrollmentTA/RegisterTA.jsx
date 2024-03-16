@@ -72,11 +72,13 @@ export default function RegisterTA() {
                          const res = await axios.get(`/api/taSchedule/${id}`, {
                               headers: { Authorization: auth.accesstoken },
                          })
+                         console.log(res)
                          if(res.data.edit===true){
                               setEditForm(true)
                          }
-                         
                          setInformationTA(res.data[0])
+                         setInformation(res.data[0])
+                        /*  setInformationTA(res.data[0]) */
                          
                     } catch (err) {
                          console.log(err)
@@ -209,7 +211,7 @@ export default function RegisterTA() {
                                                     type="text"
                                                     name="studentId"
                                                     onChange={handleForm}
-                                                    defaultValue={information?.studentId}
+                                                    defaultValue={informationTA?.studentId}
                                                />
                                           </div>
                                      </div>
@@ -225,7 +227,7 @@ export default function RegisterTA() {
                                                     type="text"
                                                     name="gpaTotal"
                                                     onChange={handleForm}
-                                                    defaultValue={information?.gpaTotal}
+                                                    defaultValue={informationTA?.gpaTotal}
                                                />
                                           </div>
                                      </div>
@@ -241,7 +243,7 @@ export default function RegisterTA() {
                                                     type="text"
                                                     name="gpaSubject"
                                                     onChange={handleForm}
-                                                    defaultValue={information?.gpaSubject}
+                                                    defaultValue={informationTA?.gpaSubject}
                                                />
                                           </div>
                                      </div>
@@ -257,7 +259,7 @@ export default function RegisterTA() {
                                                     type="text"
                                                     name="fullName"
                                                     onChange={handleForm}
-                                                    defaultValue={information?.fullName}
+                                                    defaultValue={informationTA?.fullName}
                                                />
                                           </div>
                                      </div>

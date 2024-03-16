@@ -59,7 +59,7 @@ export default function EditTAEnrollment() {
                })
              
                showNotification('success', "Change form success")
-              /*  navigate(`/home`); */
+               navigate(`/home`);
           }
           catch (err) {
                console.log(err)
@@ -76,7 +76,7 @@ export default function EditTAEnrollment() {
                   /*   if (res.data.edit === true) {
                          setEditForm(true)
                     } */
-                    console.log(res)
+                 
                     setInformationTA(res.data[0])
                     setInformation(res.data[0])
 
