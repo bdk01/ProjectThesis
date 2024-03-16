@@ -49,7 +49,7 @@ function EditForum({ onClose, data, refetchData }) {
                     <div className="relative w-[700px] flex flex-col bg-white p-6 gap-y-3 animate-modal_in mx-4 rounded-xl overflow-auto">
                          <div className="flex justify-between items-center gap-y-3">
                               <span className="text-xl uppercase font-bold h-fit">
-                                  Edit User
+                                  Edit Forum
                               </span>
                               <Button
                                    size="large"
@@ -80,7 +80,7 @@ function EditForum({ onClose, data, refetchData }) {
                          >
                             
                               <Item
-                                   label="User name"
+                                   label="Forum description"
                                    name="description"
                                    rules={[
                                         {
