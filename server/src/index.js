@@ -51,7 +51,11 @@ io.on("connection", socket => {
   console.log(socket.id + ' connected')
   SocketServer(socket);
 });
+/* socket.on('removeNotify', msg => {
+  const client = users.find(user => msg.recipients.includes(user.id))
+  client && socket.to(`${client.socketId}`).emit('removeNotifyToClient', msg)
 
+}) */
 /* Routes */
 app.use(appRouter);
 

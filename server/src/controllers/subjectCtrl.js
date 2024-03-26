@@ -1,7 +1,8 @@
 
 import Users from '../models/userModel'
 import Subjects from '../models/subjectModel'
-import TaSchedules from '../models/taScheduleModel'
+import TaEnrollment from '../models/taEnrollmentModel'
+
 import { UserRole } from '../constant';
 import clientRedis from '../config/connectRedis'
 
@@ -63,7 +64,7 @@ const subjectCtrl = {
             /* taSchedule doi status */
             /* subject push id student */
 
-            await TaSchedules.findOneAndUpdate({ _id: taSchedule }, {
+            await TaEnrollment.findOneAndUpdate({ _id: taSchedule }, {
                 state: 'approve'
             }, { new: true })
             await Users.findOneAndUpdate({ _id: student }, {
@@ -84,16 +85,11 @@ const subjectCtrl = {
         try {
             const { subject, student, taSchedule, studentId } = req.body
           
-
-            await TaSchedules.findOneAndUpdate({ _id: taSchedule }, {
+            
+            await TaEnrollment.findOneAndUpdate({ _id: taSchedule }, {
                 state: 'reject'
             }, { new: true })
-          /*   await Users.findOneAndUpdate({ _id: student }, {
-                role: UserRole.TA, subjectTa: subject, studentId: studentId
-            }, { new: true })
-            await Subjects.findOneAndUpdate({ _id: subject }, {
-                $push: { teachingAssistant: student }
-            }, { new: true }) */
+          
             clientRedis.del(`ta`)
 
             res.status(200).json({ msg: 'success reject' })

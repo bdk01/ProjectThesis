@@ -14,30 +14,7 @@ function ReviewTA() {
      const [data, setData] = useState([]);
      const [loading, setLoading] = useState(false);
      const { t } = useTranslation();
-    /*  const fetchData = async (params = {}) => {
-          setLoading(true);
-        
-          try {
-               const { data: response } = await axios.get(`/api/getAllTa`, {
-                    params
-               }, {
-                    headers: { Authorization: auth.accesstoken }
-               });
-               console.log(response)
-            
-               setData(response.taSchedules);
-               console.log(data)
-             
-               setLoading(false);
-               setPagination({
-                    pageSize: params.pageSize,
-                    current: params.page + 1,
-                    total: response.length,
-               });
-          } catch (error) {
-               console.error(error.message);
-          }
-     }; */
+    
      useEffect(() => {
 
          const fetch = async()=>{

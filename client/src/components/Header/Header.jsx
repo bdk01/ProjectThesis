@@ -217,18 +217,18 @@ export default function Header({ setOpened, opened, openedMobile, setOpenedMobil
         </div>
         {
           open ?
-            <div className=" w-[150px] h-[120px]  absolute top-[102%] right-[0%] rounded-md flex flex-col "  >
+            <div className=" z-50 w-[150px] h-[120px]  absolute top-[102%] right-[0%] rounded-md flex flex-col "  >
               <div id="dropdownAvatar" className="z-10 w-[100px] bg-white divide-y divide-gray-100 rounded-lg shadow  dark:bg-gray-700 dark:divide-gray-600">
                 {/*  <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                   <div className="font-bold text-lg text-gray-700 only:bg-gray-100 truncate">{user.fullname}</div>
                   <div className="font-medium text-gray-700 only:bg-gray-100 truncate">{user.username}</div>
                 </div> */}
-                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                <ul className="py-2  z-50 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                   {/*  <Suspense  fallback={<p>qweqwe</p>}> */}
                   <li>
                     <Link to={`/profile/${user._id}`} className="block pl-4  py-2  text-gray-700 only:bg-gray-100">{t('Profile')}</Link>
                   </li>
-                  {/*   </Suspense> */}
+                  
                 </ul>
                 <div className="py-2">
                   <button onClick={handleLogout} className="block pl-4  py-2 text-sm text-gray-700 only:bg-gray-100 ">{t('Sign out')}</button>

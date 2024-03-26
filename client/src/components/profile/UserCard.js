@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const UserCard = ({children, user, border, handleClose, setShowFollowers, setShowFollowing, msg}) => {
-    console.log(user)
+  /*   console.log(user) */
     const { theme } = useSelector(state => state)
 
     const handleCloseAll = () => {

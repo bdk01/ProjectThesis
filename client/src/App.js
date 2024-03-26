@@ -28,9 +28,7 @@ import Post from "./pages/Post";
 import { getPosts } from "./api/postAPI";
 import { getNotifies } from "./api/notifyAPI";
 
-import Profile from "./pages/Profile";
-import RegisterTA from "./pages/RegisterTA";
-import RegisterSubject from "./pages/Teacher/CreateSubject";
+
 import CreateSubject from "./pages/Teacher/CreateSubject";
 
 import ManageTaSchedule from "./pages/Teacher/ManageTaSchedule";
@@ -46,16 +44,20 @@ import ManageUser from "./pages/Admin/ManageUser";
 import ScrollToTop from "./hooks/ScrollToTop";
 import { Pages } from "./routes/routers";
 
-import i18n from "./i18ns/i18n.config";
+
 import { getSuggestions } from "./api/suggestionsAPI";
-import LayoutAdmin from "./Layout/LayoutAdmin";
-import NewPage from "./pages/NewPage";
+
 import CreateTaSchedule1 from "./pages/Teacher/CreateTaSchedule1";
 import AdminLayout from "./Layout/adminLayout/adminLayout";
 import ConversationAdmin from "./pages/MessageAdmin/ConversationAdmin";
 import ManagePosts from "./pages/Admin/ManagePosts";
 import Loading from "./components/Loading/Loading";
 import Statitics from "./pages/Admin/Statitics";
+import RegisterTA from "./pages/EnrollmentTA/RegisterTA";
+import EditTAEnrollment from "./pages/EnrollmentTA/EditTAEnrollment";
+import ForumPage from "./pages/Forum/ForumPage";
+import ForumDetailPage from "./pages/Forum/DetailForum";
+import ManageForum from "./pages/Admin/ManageForum";
 
 
 
@@ -74,17 +76,7 @@ const App = () => {
     return () => socket.close();
   }, [dispatch]);
 
- /*  const isMobile = window.matchMedia(
-    "only screen and (max-width: 768px)"
-  ).matches;
-
-  useEffect(() => {
-    if (isMobile) {
-      window.onbeforeunload = () => {
-        return "Are you sure you want to exit?";
-      };
-    }
-  }, [isMobile]); */
+ 
   useEffect(() => {
     if (auth.accesstoken) {
       /*     dispatch(getPosts(auth.token))
@@ -93,9 +85,7 @@ const App = () => {
       getNotifies({ auth, dispatch })
     }
   }, [dispatch, auth.accesstoken, socket])
-  /*  useEffect(()=>{
-     i18n.changeLanguage('vi')
-   },[]) */
+  
   const Home = lazy(() => import('./pages/Home'));
   return (
     <Router>
@@ -250,6 +240,32 @@ const App = () => {
           }
         />
         <Route
+          path="/forum"
+          element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                  <Layout>
+
+              <ForumPage />
+              </Layout>
+
+         </Suspense>
+         
+          }
+        />
+        <Route
+          path="/forum/:id"
+          element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+                  <Layout>
+
+              <ForumDetailPage />
+              </Layout>
+
+         </Suspense>
+         
+          }
+        />
+        <Route
           path="/post/:id"
           element={
             <Layout>
@@ -263,6 +279,18 @@ const App = () => {
             <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
             <Layout>
               <RegisterTA />
+            </Layout>
+
+   </Suspense>
+          
+          }
+        />
+        <Route
+          path="/edit-applyTA/:id"
+          element={
+            <Suspense fallback={<p className="text-3xl"> Loading...</p>}>
+            <Layout>
+              <EditTAEnrollment/>
             </Layout>
 
    </Suspense>
@@ -348,6 +376,14 @@ const App = () => {
           element={
             <AdminLayout>
               <ManageSubject />
+              </AdminLayout>
+          }
+        />
+        <Route
+          path="/review-forum"
+          element={
+            <AdminLayout>
+              <ManageForum />
               </AdminLayout>
           }
         />

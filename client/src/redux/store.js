@@ -22,6 +22,7 @@ import detailPostReducer from "./detailPostSlice";
 import modalReducer from "./modalSlice";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import createTransform from "redux-persist/es/createTransform";
+import thunkMiddleware from 'redux-thunk';
 import JSOG from "jsog";
  const JSOGTransform = createTransform(
   (inboundState, key) => JSOG.encode(inboundState),
@@ -33,7 +34,7 @@ const persistConfig = {
   version: 1,
   storage,
   blacklist: ["socket","auth","message",'peer','status','homePosts','notify','profile','detailPost','suggestions','modal'],
-  /*  transforms: [JSOGTransform], */
+/*    transforms: [JSOGTransform], */
 }; 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -46,26 +47,16 @@ const rootReducer = combineReducers({
   profile:profileReducer,
   detailPost:detailPostReducer,
   suggestions:suggestionsReducer,
-  modal:modalReducer
+  modal:modalReducer,
+ /*  middleware: [thunkMiddleware] */
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-     /*  serializableCheck: {
-                ignoredActions: [
-                  FLUSH,
-                  REHYDRATE,
-                  PAUSE,
-                  PERSIST,
-                  PURGE,
-                  REGISTER,
-                ],
-              }, */
-      serializableCheck: false,
-    }),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false
+  }),
 });
 export let persistor = persistStore(store);

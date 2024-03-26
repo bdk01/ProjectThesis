@@ -31,7 +31,7 @@ const CardHeader = ({post}) => {
             deletePost(post, auth, socket,dispatch)
           /*   dispatch(deletePost({post, auth, socket})) */
          
-            return navigate("/home", { replace: true });
+           /*  return navigate("/home", { replace: true }); */
         }
     }
     const handleReportPost = () => {

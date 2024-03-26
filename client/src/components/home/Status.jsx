@@ -7,7 +7,7 @@ import StatusModal from '../Modal/StatusModal'
 import { useTranslation } from 'react-i18next'
 
 
-const Status = () => {
+const Status = ({type}) => {
   const { t } = useTranslation();
     const { auth } = useSelector(state => state)
     const  [open,setOpen] = useState(false)

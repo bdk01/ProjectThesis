@@ -9,7 +9,7 @@ export const socketSlice = createSlice({
   reducers: {
     getSocket: (state,  {payload}) => {
       state.socket = payload;
-       console.log(state.socket);
+      /*  console.log(state.socket); */
     /*   state.socket = payload.socket.emit */
     /*   state.socketEmit = payload.socket.emit; */
     },

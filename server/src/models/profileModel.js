@@ -15,7 +15,7 @@ const ProfileSchema = new Schema(
       type: String,
     },
     userId:{type: mongoose.Types.ObjectId, ref: 'Users'}
-
+    
   }
 );
 

@@ -9,8 +9,10 @@ import postRoute from "./postRoute";
 import commentRoute from "./commentRoute";
 import notifyRoute from "./notifyRoute";
 import subjectRoute from "./subjectRoute";
-import taScheduleRoute from "./taScheduleRoute";
+import taEnrollmentRoute from "./taEnrollmentRoute";
+
 import groupRoute from "./groupRoute";
+import forumRoute from "./forumRoute";
 
 
 const appRouter = express.Router();
@@ -26,6 +28,7 @@ appRouter.use("/api",postRoute);
 appRouter.use("/api",notifyRoute);
 appRouter.use("/api",commentRoute);
 appRouter.use("/api",subjectRoute);
-appRouter.use("/api",taScheduleRoute);
+appRouter.use("/api",taEnrollmentRoute);
+appRouter.use("/api",forumRoute);
 
 export default appRouter;

@@ -20,6 +20,7 @@ postRoute.patch("/unSavePost/:id",auth, postCtrl.unSavePost);
 postRoute.get("/get-save-post",auth, postCtrl.getSavePosts);
 postRoute.get("/get-discover-post",auth, postCtrl.getPostsDicover);
 postRoute.get("/get-All-post", postCtrl.getAllPost);
+postRoute.get("/get-number-all", postCtrl.getNumberOfAll);
 
      
 export default postRoute;

@@ -14,6 +14,7 @@ const postSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    forumId:{ type: mongoose.Types.ObjectId, ref: "Forums" }
   },
   {
     timestamps: true,

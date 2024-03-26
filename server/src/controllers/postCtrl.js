@@ -44,7 +44,8 @@ const postCtrl = {
     },
     getPosts: async (req, res) => {
         try {
-            const { filter } = req.query;
+           /*  const { filter } = req.query; */
+            const filter = req.query.filter ? req.query.filter : '-createdAt';
        /*     
             clientRedis.get(`posts/${filter}`, async (err, cachedposts) => {
                 if (err) throw err;
@@ -103,10 +104,12 @@ const postCtrl = {
            const uniq = [...new Set(newArr)]
          
 
-            const features =  new APIfeatures(Posts.find({
+            /* const features =  new APIfeatures(Posts.find({
                 user: uniq
+            }), req.query).paginating() */
+            const features =  new APIfeatures(Posts.find({
+                user: uniq,forumId:null
             }), req.query).paginating()
-   
             const posts = await features.query.sort(filter)
             .populate("user likes", "avatar username fullname followers")
             .populate({
@@ -437,7 +440,21 @@ const postCtrl = {
                return res.status(500).json({msg: err.message})
            }
   },
-  
+   
+  getNumberOfAll: async (req, res) => {
+      try {
+        var lengthUsers = await  Users.find({}).count();
+        var lengthPosts = await  Posts.find({}).count();
+
+          res.json({
+            lengthUsers,
+            lengthPosts
+          })
+
+      } catch (err) {
+          return res.status(500).json({msg: err.message})
+      }
+    }
 }
 
 export default postCtrl

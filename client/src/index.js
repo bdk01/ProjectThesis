@@ -46,7 +46,7 @@ ReactDOM.render(
             Button: {
               defaultProps: {
                 size: 'xs',
-                color: 'cyan',
+                color:  "red",
               },
             },
            }}} withCSSVariables withGlobalStyles withNormalizeCSS >
