@@ -23,6 +23,9 @@ Then you can check the status of the containers by running:
 ```bash
   $ docker ps
 ```
+
+See Dockerfile and docker-compose.yml for more details.
+
 The port of App should be :
 
 Client : http://localhost:3000
