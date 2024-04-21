@@ -5,7 +5,8 @@ The primary responsibility of this system is to provide students with a user-fri
 It focuses on serving as a teaching assistant, empowering them to effectively manage the forum and maintain control over student interactions via the posts. 
 
 # Install & Start
-
+# Setup environment
+I have created the file .env.example. Based on that, you can create the .env file
 ## Prerequisites:
 You must have Docker Installed in your System !
 Follow this link to install the docker https://docs.docker.com/desktop/install/windows-install/
