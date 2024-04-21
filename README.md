@@ -9,6 +9,7 @@ It focuses on serving as a teaching assistant, empowering them to effectively ma
 I have created the file .env.example. Based on that, you can create the .env file
 ## Prerequisites:
 You must have Docker Installed in your System !
+
 Follow this link to install the docker https://docs.docker.com/desktop/install/windows-install/
 
 ## How to run the App :
